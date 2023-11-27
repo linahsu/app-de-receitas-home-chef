@@ -1,5 +1,7 @@
 import { Outlet, useLocation, Link } from 'react-router-dom';
+import { useState } from 'react';
 import { TitleObj } from '../types';
+import SearchBar from './SearchBar';
 
 function Header() {
   const titleObj: TitleObj = {
@@ -11,6 +13,8 @@ function Header() {
   };
 
   const { pathname } = useLocation();
+
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <div>
@@ -25,13 +29,17 @@ function Header() {
         />
       </Link>
 
-      <button>
-        <img
-          src="src/images/searchIcon.svg"
-          alt="ícone de pesquisa"
-          data-testid="search-top-btn"
-        />
-      </button>
+      {(titleObj[pathname] === 'Meals' || titleObj[pathname] === 'Drinks') && (
+        <button onClick={ () => setShowSearch((prev) => !prev) }>
+          <img
+            src="src/images/searchIcon.svg"
+            alt="ícone de pesquisa"
+            data-testid="search-top-btn"
+          />
+        </button>
+      )}
+
+      {showSearch && <SearchBar />}
 
       <Outlet />
 

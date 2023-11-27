@@ -17,8 +17,8 @@ function App() {
       <Route path="/drinks/:id-da-receita" element={ <RecipeDetails /> } />
       <Route path="/meals/:id-da-receita/in-progress" element={ <RecipeInProgress /> } />
       <Route path="/drinks/:id-da-receita/in-progress" element={ <RecipeInProgress /> } />
-      <Route path="/meals" element={ <Header /> }>
-        <Route index element={ <Recipes /> } />
+      <Route path="/" element={ <Header /> }>
+        <Route path="/meals" element={ <Recipes /> } />
         <Route path="/drinks" element={ <Recipes /> } />
         <Route path="/profile" element={ <Profile /> } />
         <Route path="/done-recipes" element={ <DoneRecipes /> } />

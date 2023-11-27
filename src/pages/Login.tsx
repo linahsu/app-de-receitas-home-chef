@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 
 export default function Login() {
   const navigate = useNavigate();
-  const [, setValue] = useLocalStorage('user', { user: { email: '' } });
+  const [, setValue] = useLocalStorage('user');
 
   const [userLogin, setUserLogin] = useState(INITIAL_STATE);
   const [disabled, setDisabled] = useState(true);

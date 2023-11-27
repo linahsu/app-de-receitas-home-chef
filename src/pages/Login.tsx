@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { validatePasswordAndEmail } from '../utils/validation';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const INITIAL_STATE = {
   user: {
@@ -11,6 +12,7 @@ const INITIAL_STATE = {
 
 export default function Login() {
   const navigate = useNavigate();
+  const [, setValue] = useLocalStorage('user', { user: { email: '' } });
 
   const [userLogin, setUserLogin] = useState(INITIAL_STATE);
   const [disabled, setDisabled] = useState(true);
@@ -54,7 +56,7 @@ export default function Login() {
           type="submit"
           onClick={ (event) => {
             event?.preventDefault();
-            localStorage.setItem('user', JSON.stringify({ email: userLogin.user.email }));
+            setValue({ email: userLogin.user.email });
             navigate('/meals');
           } }
           disabled={ disabled }

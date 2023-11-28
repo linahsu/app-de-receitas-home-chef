@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from '../utils/renderWithRouter';
+import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';
 
 describe('Teste o componente Footer - Requisitos 15-17', () => {
   it('Testa se existe um rodapé fixo na página de receitas de comida', () => {
-    renderWithRouter(<App />, { route: '/meals' });
+    renderWithRouterAndRedux(<App />, '/meals');
 
     expect(window.location.pathname).toBe('/meals');
 
@@ -13,7 +13,7 @@ describe('Teste o componente Footer - Requisitos 15-17', () => {
   });
 
   it('Testa se existe um rodapé fixo na página de receitas de bebida', () => {
-    renderWithRouter(<App />, { route: '/drinks' });
+    renderWithRouterAndRedux(<App />, '/drinks');
 
     expect(window.location.pathname).toBe('/drinks');
 
@@ -21,7 +21,7 @@ describe('Teste o componente Footer - Requisitos 15-17', () => {
   });
 
   it('Testa se existe um rodapé fixo na página de perfil', () => {
-    renderWithRouter(<App />, { route: '/profile' });
+    renderWithRouterAndRedux(<App />, '/profile');
 
     expect(window.location.pathname).toBe('/profile');
 
@@ -29,7 +29,7 @@ describe('Teste o componente Footer - Requisitos 15-17', () => {
   });
 
   it('Testa se o botão do rodapé redireciona à página de bebidas', async () => {
-    renderWithRouter(<App />, { route: '/profile' });
+    renderWithRouterAndRedux(<App />, '/profile');
 
     const drinksBtn = screen.getByTestId('drinks-bottom-btn');
 
@@ -38,7 +38,7 @@ describe('Teste o componente Footer - Requisitos 15-17', () => {
   });
 
   it('Testa se o botão do rodapé redireciona à página de comidas', async () => {
-    renderWithRouter(<App />, { route: '/profile' });
+    renderWithRouterAndRedux(<App />, '/profile');
 
     const mealsBtn = screen.getByTestId('meals-bottom-btn');
 

@@ -1,10 +1,13 @@
 import { screen } from '@testing-library/dom';
-import renderWithRouter from '../utils/renderWithRouter';
+import userEvent from '@testing-library/user-event';
+import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';
+
+const user = userEvent.setup();
 
 describe('Teste o componente Header - Requisitos 7 ao 9', () => {
   it('Testa se o componente contém ícone de perfil, o ícone de busca e o título da página', () => {
-    renderWithRouter(<App />, { route: '/meals' });
+    renderWithRouterAndRedux(<App />, '/meals');
 
     expect(window.location.pathname).toBe('/meals');
 
@@ -14,7 +17,7 @@ describe('Teste o componente Header - Requisitos 7 ao 9', () => {
   });
 
   it('Testa se ao clicar no ícone de perfil, a página é redirecionada para a página Profile e o título muda para "Profile"', async () => {
-    const { user } = renderWithRouter(<App />, { route: '/meals' });
+    renderWithRouterAndRedux(<App />, '/meals');
 
     expect(window.location.pathname).toBe('/meals');
 
@@ -26,7 +29,7 @@ describe('Teste o componente Header - Requisitos 7 ao 9', () => {
   });
 
   it('Testa se ao clicar no ícone de busca, o campo de busca aparece, ao clicar novamente o campo de busca desaparece', async () => {
-    const { user } = renderWithRouter(<App />, { route: '/meals' });
+    renderWithRouterAndRedux(<App />, '/meals');
 
     expect(window.location.pathname).toBe('/meals');
 

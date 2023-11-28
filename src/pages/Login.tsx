@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { validatePasswordAndEmail } from '../utils/validation';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { ActionLogin } from '../redux/actions/actions';
 
 const INITIAL_STATE = {
   user: {
@@ -11,6 +13,7 @@ const INITIAL_STATE = {
 };
 
 export default function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [, setValue] = useLocalStorage('user');
 
@@ -57,6 +60,7 @@ export default function Login() {
           onClick={ (event) => {
             event?.preventDefault();
             setValue({ email: userLogin.user.email });
+            dispatch(ActionLogin(userLogin.user));
             navigate('/meals');
           } }
           disabled={ disabled }

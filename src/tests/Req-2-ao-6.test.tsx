@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';
-import renderWithRouter from '../utils/renderWithRouter';
 
 const emailBase = 'fabiolessa@gmail.com';
 const emailTestId = 'email-input';
@@ -9,7 +10,7 @@ const buttonTestId = 'login-submit-btn';
 
 describe('Teste o componente Login - Requisitos 2 ao 6', () => {
   it('Testa se a página contém dois inputs e um botão', () => {
-    renderWithRouter(<App />);
+    renderWithRouterAndRedux(<App />);
     expect(window.location.pathname).toBe('/');
     const emailInput = screen.getByTestId(emailTestId);
     const passwordInput = screen.getByTestId(passwordTestId);
@@ -19,14 +20,16 @@ describe('Teste o componente Login - Requisitos 2 ao 6', () => {
     expect(submitButton).toBeInTheDocument();
   });
   it('Testa se é possível digitar nos inputs', async () => {
-    const { user } = renderWithRouter(<App />);
+    renderWithRouterAndRedux(<App />);
+    const user = userEvent.setup();
     await user.type(screen.getByTestId(emailTestId), emailBase);
     await user.type(screen.getByTestId(passwordTestId), '1234567');
     expect(screen.getByTestId('email-input')).toHaveValue(emailBase);
     expect(screen.getByTestId(passwordTestId)).toHaveValue('1234567');
   });
   it('Testa se o botão está desabilitado com email invalido', async () => {
-    const { user } = renderWithRouter(<App />);
+    renderWithRouterAndRedux(<App />);
+    const user = userEvent.setup();
     expect(window.location.pathname).toBe('/');
     await user.type(screen.getByTestId(emailTestId), 'fabiolessa');
     await user.type(screen.getByTestId(passwordTestId), '1234567');
@@ -34,13 +37,15 @@ describe('Teste o componente Login - Requisitos 2 ao 6', () => {
     expect(submitButton).toBeDisabled();
   });
   it('Testa se o botão será habilitado com dados válidos e se muda a rota para MEALS', async () => {
-    const { user } = renderWithRouter(<App />);
+    renderWithRouterAndRedux(<App />);
+    const user = userEvent.setup();
     expect(window.location.pathname).toBe('/');
     await user.type(screen.getByTestId(emailTestId), emailBase);
     await user.type(screen.getByTestId(passwordTestId), '1234567');
     const submitButton = screen.getByTestId(buttonTestId);
     expect(submitButton).toBeEnabled();
     await user.click(submitButton);
-    expect(window.location.pathname).toBe('/meals');
+    const meals = screen.getByText(/Meals/i);
+    expect(meals).toBeInTheDocument();
   });
 });

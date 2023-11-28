@@ -45,7 +45,7 @@ export type MainReducerType = {
 };
 
 export type RootState = {
-  login: LoginType,
+  userLoginReducer: LoginType,
   mainReducer: MainReducerType,
 };
 

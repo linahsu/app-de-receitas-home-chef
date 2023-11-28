@@ -68,6 +68,6 @@ describe('Teste a página Profile - Req. 51 ao 61', () => {
     const logoutBtn = screen.getByTestId('profile-logout-btn');
     await user.click(logoutBtn);
 
-    expect(window.localStorage).toBe(null);
+    expect(Object.keys(localStorage).length).toEqual(0);
   });
 });

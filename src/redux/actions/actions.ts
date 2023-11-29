@@ -58,23 +58,28 @@ export const takeDinamicRecipe = (searchInputs: SearchType, place: string) => {
     }
 
     let selectPlace = '';
-    switch (place) {
+    if (place === 'drinks') {
+      selectPlace = 'thecocktaildb'
+    } else {
+      selectPlace = 'themealdb';
+    }
+    /*switch (place) {
       case 'meals':
         selectPlace = 'themealdb';
         break;
       default:
         selectPlace = 'thecocktaildb';
-    }
+    }*/
 
     const inputLetterCheck = () => {
       if (inputValue.length > 1 && type === 'first-letter') {
-        return alert('Sua busca deve conter somente 1 (um) caracter');
+        return alert('Your search must have only 1 (one) character');
       }
     };
 
     const recipeIsEmpty = (recipe: null | []) => {
       if (recipe === null) {
-        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        return alert("Sorry, we haven't found any recipes for these filters");
       }
     };
 

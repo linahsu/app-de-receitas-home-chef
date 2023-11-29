@@ -1,9 +1,10 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';
 
-const user = userEvent.setup();
+const user = userEvent;
 
 const ai = 'search-top-btn';
 const ui = 'search-input';
@@ -11,7 +12,24 @@ const ayaya = 'ingredient-search-radio';
 const ei = 'name-search-radio';
 const oi = 'first-letter-search-radio';
 
+const MOCK_DATA = {
+  idMeal: '52771',
+  strMeal: 'Spicy Arrabiata Penne',
+};
+
+const fetch = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => {
+    return Promise.resolve({ meals: [MOCK_DATA] });
+  },
+});
+
 describe('Teste o componente Search Bar - Requisitos 10 ao 14', () => {
+  beforeEach(() => {
+    global.fetch = vi.fn(fetch) as any;
+  });
+
   it('Testa se a barra de pesquisa, os radio buttons e o botão Search são renderizados na página', async () => {
     renderWithRouterAndRedux(<App />, '/meals');
 
@@ -68,7 +86,7 @@ describe('Teste o componente Search Bar - Requisitos 10 ao 14', () => {
     expect(firstLetterRadio).toBeChecked();
   });
 
-  /* it('Testa se a barra de pesquisa, os radio buttons e o botão Search estão funcionando', async () => {
+  it('Testa se a barra de pesquisa, os radio buttons e o botão Search estão funcionando', async () => {
     renderWithRouterAndRedux(<App />, '/meals');
 
     expect(window.location.pathname).toBe('/meals');
@@ -93,5 +111,5 @@ describe('Teste o componente Search Bar - Requisitos 10 ao 14', () => {
     expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Search' }));
-  }); */
+  });
 });

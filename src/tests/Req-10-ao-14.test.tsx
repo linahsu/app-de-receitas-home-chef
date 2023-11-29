@@ -1,48 +1,49 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
+import {vi} from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';
 
 const user = userEvent;
 
-const ai = 'search-top-btn';
-const ui = 'search-input';
-const ayaya = 'ingredient-search-radio';
-const ei = 'name-search-radio';
-const oi = 'first-letter-search-radio';
+const topBtnId = 'search-top-btn';
+const searchId = 'search-input';
+const ingredientId = 'ingredient-search-radio';
+const nameId = 'name-search-radio';
+const firstLetterId = 'first-letter-search-radio';
 
 const MOCK_DATA = {
   idMeal: '52771',
   strMeal: 'Spicy Arrabiata Penne',
-};
+}
 
+// fetch e beforeEach feito em monitoria com o Willian
 const fetch = () => Promise.resolve({
   status: 200,
   ok: true,
   json: () => {
-    return Promise.resolve({ meals: [MOCK_DATA] });
-  },
-});
+    return Promise.resolve({meals: [MOCK_DATA]})
+  }
+})
 
 describe('Teste o componente Search Bar - Requisitos 10 ao 14', () => {
   beforeEach(() => {
     global.fetch = vi.fn(fetch) as any;
-  });
+  })
 
   it('Testa se a barra de pesquisa, os radio buttons e o botão Search são renderizados na página', async () => {
     renderWithRouterAndRedux(<App />, '/meals');
 
     expect(window.location.pathname).toBe('/meals');
 
-    const searchTopBtn = screen.getByTestId(ai);
+    const searchTopBtn = screen.getByTestId(topBtnId);
     await user.click(searchTopBtn);
 
-    expect(screen.getByTestId(ui)).toBeInTheDocument();
+    expect(screen.getByTestId(searchId)).toBeInTheDocument();
 
-    const ingredientRadio = screen.getByTestId(ayaya);
-    const nameRadio = screen.getByTestId(ei);
-    const firstLetterRadio = screen.getByTestId(oi);
+    const ingredientRadio = screen.getByTestId(ingredientId);
+    const nameRadio = screen.getByTestId(nameId);
+    const firstLetterRadio = screen.getByTestId(firstLetterId);
 
     expect(ingredientRadio).toBeInTheDocument();
     expect(nameRadio).toBeInTheDocument();
@@ -56,12 +57,12 @@ describe('Teste o componente Search Bar - Requisitos 10 ao 14', () => {
 
     expect(window.location.pathname).toBe('/meals');
 
-    const searchTopBtn = screen.getByTestId(ai);
+    const searchTopBtn = screen.getByTestId(topBtnId);
     await user.click(searchTopBtn);
 
-    const ingredientRadio = screen.getByTestId(ayaya);
-    const nameRadio = screen.getByTestId(ei);
-    const firstLetterRadio = screen.getByTestId(oi);
+    const ingredientRadio = screen.getByTestId(ingredientId);
+    const nameRadio = screen.getByTestId(nameId);
+    const firstLetterRadio = screen.getByTestId(firstLetterId);
 
     expect(ingredientRadio).toBeInTheDocument();
     expect(nameRadio).toBeInTheDocument();
@@ -91,16 +92,16 @@ describe('Teste o componente Search Bar - Requisitos 10 ao 14', () => {
 
     expect(window.location.pathname).toBe('/meals');
 
-    const searchTopBtn = screen.getByTestId(ai);
+    const searchTopBtn = screen.getByTestId(topBtnId);
     await user.click(searchTopBtn);
 
-    expect(screen.getByTestId(ui)).toBeInTheDocument();
+    expect(screen.getByTestId(searchId)).toBeInTheDocument();
 
-    await user.type(screen.getByTestId(ui), 'arrabiata');
+    await user.type(screen.getByTestId(searchId), 'arrabiata');
 
-    expect(screen.getByTestId(ui)).toHaveValue('arrabiata');
+    expect(screen.getByTestId(searchId)).toHaveValue('arrabiata');
 
-    const nameRadio = screen.getByTestId(ei);
+    const nameRadio = screen.getByTestId(nameId);
     expect(nameRadio).toBeInTheDocument();
     expect(nameRadio).not.toBeChecked();
 

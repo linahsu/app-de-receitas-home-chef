@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
-import { Dispatch, RootState } from '../types';
+import { Dispatch, RecipeType } from '../types';
 import { takeDinamicRecipe } from '../redux/actions/actions';
 
 const INITIAL_VALUE = {
@@ -12,11 +12,11 @@ const INITIAL_VALUE = {
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState(INITIAL_VALUE);
-  const { place, drinks, meals } = useSelector((state: RootState) => state.mainReducer);
   const navigate = useNavigate();
   const dispatch: Dispatch = useDispatch();
 
   const { pathname } = useLocation();
+  const path = pathname.includes('meals') ? 'meals' : 'drinks';
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -38,35 +38,17 @@ function SearchBar() {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(takeDinamicRecipe(searchValue, pathname));
+    const result = await dispatch(takeDinamicRecipe(searchValue, path));
+    recipeCheck(result);
   };
 
-  const recipeCheck = () => {
-    switch (place) {
-      case 'drinks':
-        if (drinks.length === 1) {
-          const lala = drinks[0];
-          return navigate(`/${place}/${lala.idDrink}`);
-        }
-        break;
-
-      case 'meals':
-        if (meals.length === 1) {
-          const lala = meals[0];
-          return navigate(`/${place}/${lala.idMeal}`);
-        }
-        break;
-
-      default:
-        break;
+  const recipeCheck = (result: RecipeType[] = []) => {
+    if (result?.length === 1) {
+      navigate(`/${path}/${result[0].idMeal || result[0].idDrink}`);
     }
   };
-
-  useEffect(() => {
-    recipeCheck();
-  }, [drinks, meals]);
 
   return (
     <div>

@@ -59,7 +59,7 @@ export const takeDinamicRecipe = (searchInputs: SearchType, place: string) => {
 
     let selectPlace = '';
     switch (place) {
-      case '/meals':
+      case 'meals':
         selectPlace = 'themealdb';
         break;
       default:
@@ -73,7 +73,7 @@ export const takeDinamicRecipe = (searchInputs: SearchType, place: string) => {
     };
 
     const recipeIsEmpty = (recipe: null | []) => {
-      if (recipe === null) {
+      if (!recipe) {
         return window.alert("Sorry, we haven't found any recipes for these filters");
       }
     };
@@ -84,6 +84,7 @@ export const takeDinamicRecipe = (searchInputs: SearchType, place: string) => {
       const data = await response.json();
       recipeIsEmpty(data[place]);
       dispatch(dinamicRecipe(data[place], place));
+      return data[place];
     } catch (error) {
       return error;
     }

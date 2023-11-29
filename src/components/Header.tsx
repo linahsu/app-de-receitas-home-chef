@@ -1,10 +1,9 @@
+import React, { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
-import { useState } from 'react';
-import { TitleObj } from '../types';
 import SearchBar from './SearchBar';
 
 function Header() {
-  const titleObj: TitleObj = {
+  const titleObj: { [key: string]: string } = {
     '/meals': 'Meals',
     '/drinks': 'Drinks',
     '/profile': 'Profile',
@@ -13,14 +12,11 @@ function Header() {
   };
 
   const { pathname } = useLocation();
-
   const [showSearch, setShowSearch] = useState(false);
 
   return (
     <div>
-
-      <h1 data-testid="page-title">{ titleObj[pathname] }</h1>
-
+      <h1 data-testid="page-title">{titleObj[pathname]}</h1>
       <Link to="/profile">
         <img
           src="src/images/profileIcon.svg"
@@ -28,7 +24,6 @@ function Header() {
           data-testid="profile-top-btn"
         />
       </Link>
-
       {(titleObj[pathname] === 'Meals' || titleObj[pathname] === 'Drinks') && (
         <button onClick={ () => setShowSearch((prev) => !prev) }>
           <img
@@ -38,11 +33,8 @@ function Header() {
           />
         </button>
       )}
-
       {showSearch && <SearchBar />}
-
       <Outlet />
-
     </div>
   );
 }

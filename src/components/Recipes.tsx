@@ -14,7 +14,8 @@ function Recipes({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (pathname === '/meals' && meals.length === 0) {
       fetchMeals().then((data) => dispatch(MealsAction(data)));
-    } else if (pathname === '/drinks' && drinks.length === 0) {
+    }
+    if (pathname === '/drinks' && drinks.length === 0) {
       fetchDrinks().then((data) => dispatch(DrinksAction(data)));
     }
   }, [dispatch, pathname, meals, drinks]);

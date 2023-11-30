@@ -10,11 +10,11 @@ type MealsCardProps = {
 function MealsCard({ meal, index }: MealsCardProps) {
   return (
     <NavLink to={ `/meals/${meal.idMeal}` } data-testid={ `${index}-recipe-card` }>
-      <h4 data-testid={ `${index}-card-name` }>{meal.strMeal}</h4>
+      <h3 data-testid={ `${index}-card-name` }>{meal.strMeal}</h3>
       <img
         data-testid={ `${index}-card-img` }
         src={ meal.strMealThumb }
-        alt="meal thumb"
+        alt="meal thumbnail"
       />
     </NavLink>
   );

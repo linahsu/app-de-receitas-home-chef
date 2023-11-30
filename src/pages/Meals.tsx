@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
 import { PlaceAction, MealsAction } from '../redux/actions/actions';
@@ -15,7 +14,7 @@ function Meals() {
 
   useEffect(() => {
     dispatch(PlaceAction('meals'));
-  });
+  }, []);
 
   const setMeals = async () => {
     const response = await fetchMeals();
@@ -23,16 +22,18 @@ function Meals() {
   };
 
   const switchCategory = (category: string) => {
-    if (chosenCategory === category) return setMeals();
-    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
-      .then((response) => response.json())
-      .then((data) => dispatch(MealsAction(data.meals.slice(0, 12))))
-      .then(() => setChosenCategory(category));
+    return (chosenCategory === category ? (
+      setMeals()
+    ) : (
+      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
+        .then((response) => response.json())
+        .then((data) => dispatch(MealsAction(data.meals.slice(0, 12))))
+        .then(() => setChosenCategory(category))
+    ));
   };
   return (
     <>
       <Recipes>
-        <Header />
         {mealsCategories.map((category) => (
           <button
             key={ category.strCategory }
@@ -45,6 +46,7 @@ function Meals() {
         ))}
         <button
           data-testid="All-category-filter"
+          type="button"
           onClick={ setMeals }
         >
           All

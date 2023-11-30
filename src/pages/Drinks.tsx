@@ -1,28 +1,66 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
-import DrinkRecipeCard from '../components/DrinksCard';
-import { PlaceAction, takeDinamicRecipe } from '../redux/actions/actions';
-import { DrinkType, MainReducerType } from '../types';
+import DrinksCard from '../components/DrinksCard';
+import { RootState, DrinkType } from '../types';
+import { DrinksAction, PlaceAction } from '../redux/actions/actions';
+import { fetchDrinks } from '../utils/apiDrinks';
 
 function Drinks() {
+  const [chosenCategory, setChosenCategory] = useState('All');
   const dispatch = useDispatch();
-  const drinks = useSelector((state: MainReducerType) => state.drinks);
 
+  const {
+    drinks, drinkCategories } = useSelector((state: RootState) => state.mainReducer);
   useEffect(() => {
     dispatch(PlaceAction('drinks'));
-    dispatch(takeDinamicRecipe({ type: 'category', inputValue: '' }, 'drinks') as any);
-  }, [dispatch]);
+  });
 
+  const setDrinks = async () => {
+    const response = await fetchDrinks();
+    dispatch(DrinksAction(response));
+  };
+
+  const switchCategory = (category: string) => {
+    if (chosenCategory === category) return setDrinks();
+
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`)
+      .then((response) => response.json())
+      .then((data) => dispatch(
+        (data.drinks.slice(0, 12)),
+      ))
+      .then(() => setChosenCategory(category));
+  };
   return (
-    <Recipes place="drinks">
-      <div>
-        <h1>Drinks</h1>
-        {drinks.map((drink: DrinkType, index: number) => (
-          <DrinkRecipeCard key={ drink.idDrink } drink={ drink } index={ index } />
-        ))}
-      </div>
+    <Recipes>
+      <Header />
+      {drinkCategories.map((category) => (
+        <button
+          key={ category.strCategory }
+          type="button"
+          data-testid={ `${category.strCategory}-category-filter` }
+          onClick={ () => switchCategory(category.strCategory) }
+        >
+          {category.strCategory}
+        </button>
+      ))}
+
+      <button
+        data-testid="All-category-filter"
+        onClick={ setDrinks }
+      >
+        All
+      </button>
+
+      {drinks.map((drink, index) => (
+        <DrinksCard
+          key={ drink.idDrink }
+          drink={ drink as DrinkType }
+          index={ index }
+        />
+      ))}
       <Footer />
     </Recipes>
   );

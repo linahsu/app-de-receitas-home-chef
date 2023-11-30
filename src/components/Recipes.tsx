@@ -1,20 +1,23 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { takeDinamicRecipe } from '../redux/actions/actions';
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { MealsAction, DrinksAction } from '../redux/actions/actions';
+import { fetchMeals } from '../utils/apiMeals';
+import { fetchDrinks } from '../utils/apiDrinks';
+import { RootState } from '../types';
 
-interface RecipesProps {
-  place: string;
-  children: React.ReactNode;
-}
-
-function Recipes({ place, children }: RecipesProps) {
+function Recipes({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const { meals, drinks } = useSelector((state: RootState) => state.mainReducer);
 
   useEffect(() => {
-    dispatch(takeDinamicRecipe({ type: 'category', inputValue: 'Beef' }, 'meals') as any);
-    dispatch(takeDinamicRecipe({
-      type: 'category', inputValue: 'Cocktail' }, 'drinks') as any);
-  }, [dispatch]);
+    if (pathname === '/meals' && meals.length === 0) {
+      fetchMeals().then((data) => dispatch(MealsAction(data)));
+    } else if (pathname === '/drinks' && drinks.length === 0) {
+      fetchDrinks().then((data) => dispatch(DrinksAction(data)));
+    }
+  }, [dispatch, pathname, meals, drinks]);
 
   return <div>{children}</div>;
 }

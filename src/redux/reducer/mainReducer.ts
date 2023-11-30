@@ -10,8 +10,8 @@ export const INITIAL_STATE = {
   place: '',
   meals: [],
   drinks: [],
-  drinkCategories: await fetchCategoriesMeals(),
-  mealsCategories: await fetchCategoriesDrinks(),
+  drinkCategories: await fetchCategoriesDrinks(),
+  mealsCategories: await fetchCategoriesMeals(),
 };
 
 export const mainReducer = (state = INITIAL_STATE, action: AnyAction) => {

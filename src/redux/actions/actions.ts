@@ -68,13 +68,13 @@ export const takeDinamicRecipe = (searchInputs: SearchType, place: string) => {
 
     const inputLetterCheck = () => {
       if (inputValue.length > 1 && type === 'first-letter') {
-        return alert('Sua busca deve conter somente 1 (um) caracter');
+        return window.alert('Your search must have only 1 (one) character');
       }
     };
 
     const recipeIsEmpty = (recipe: null | []) => {
-      if (recipe === null) {
-        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      if (!recipe) {
+        return window.alert("Sorry, we haven't found any recipes for these filters");
       }
     };
 
@@ -82,11 +82,11 @@ export const takeDinamicRecipe = (searchInputs: SearchType, place: string) => {
       inputLetterCheck();
       const response = await fetch(`https://www.${selectPlace}.com/api/json/v1/1/${selectType}=${inputValue}`);
       const data = await response.json();
-      // console.log(data);
       recipeIsEmpty(data[place]);
       dispatch(dinamicRecipe(data[place], place));
-    } catch {
-      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      return data[place];
+    } catch (error) {
+      return error;
     }
   };
 };

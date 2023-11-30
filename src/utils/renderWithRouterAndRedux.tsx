@@ -2,16 +2,15 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import { legacy_createStore as createStore } from 'redux';
+import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import { render } from '@testing-library/react';
+import thunk from 'redux-thunk';
 import rootReducer from '../redux/reducer/rootReducer';
-import { RootState } from '../types';
 
 export default function renderWithRouterAndRedux(
   component: JSX.Element,
   route: string = '/',
-  state: RootState | undefined = undefined,
-  store = createStore(rootReducer, state),
+  store = createStore(rootReducer, applyMiddleware(thunk)),
 ) {
   window.history.pushState({}, 'Test page', route);
 

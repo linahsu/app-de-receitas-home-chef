@@ -36,6 +36,15 @@ export type DrinkType = {
   strDrinkThumb?: string,
 };
 
+export type RecipeType = {
+  idMeal?: string,
+  strMeal?: string,
+  strMealThumb?: string,
+  idDrink?:string,
+  strDrink?:string,
+  strDrinkThumb?: string,
+};
+
 export type MainReducerType = {
   place: string,
   drinks: DrinkType[],

@@ -18,6 +18,8 @@ function MealInProgress() {
   const [mesureList, setMesureList] = useState<[string, string][]>([]);
   const [ingredientCheckedList, setIngredientCheckedList] = useState<number[]>([]);
 
+  const currentUrl = window.location.href;
+
   useEffect(() => {
     if (currentMeal) {
       const details = Object.entries(currentMeal);
@@ -56,7 +58,7 @@ function MealInProgress() {
     }
   };
 
-  const handleFavorite = () => {
+  const handleFavoriteBtn = () => {
     setIsFavorite(!isFavorite);
     if (!getFavorites.includes(currentMeal?.idMeal)) {
       setFavorites([
@@ -78,6 +80,15 @@ function MealInProgress() {
     }
   };
 
+  const handleShareBtn = () => {
+    try {
+      navigator.clipboard.writeText(currentUrl);
+      window.alert('Link copied!');
+    } catch (error) {
+      window.alert('Failed to copy!');
+    }
+  };
+
   return (
     <div>
       <h2 data-testid="recipe-title">
@@ -93,7 +104,7 @@ function MealInProgress() {
       <div>
         <button
           data-testid="favorite-btn"
-          onClick={ handleFavorite }
+          onClick={ handleFavoriteBtn }
         >
           {!isFavorite ? (
             <img src="src/images/whiteHeartIcon.svg" alt="" />
@@ -104,6 +115,7 @@ function MealInProgress() {
 
         <button
           data-testid="share-btn"
+          onClick={ handleShareBtn }
         >
           <img src="src/images/shareIcon.svg" alt="Share Icon" />
         </button>

@@ -24,26 +24,31 @@ export type CategoryType = {
   strCategory: string,
 };
 
+// Adicionadas a chaves strCategory e strArea e strInstructions
 export type MealType = {
   idMeal: string,
   strMeal: string,
   strMealThumb?: string,
   strCategory: string,
+  strArea: string,
+  strInstructions: string,
 };
 
+// Adicionadas as chaves strAlcoholic e strArea
 export type DrinkType = {
-  idDrink:string,
-  strDrink:string,
+  idDrink: string,
+  strDrink: string,
   strDrinkThumb?: string,
   strAlcoholic: string,
+  strArea: string,
 };
 
 export type RecipeType = {
   idMeal?: string,
   strMeal?: string,
   strMealThumb?: string,
-  idDrink?:string,
-  strDrink?:string,
+  idDrink?: string,
+  strDrink?: string,
   strDrinkThumb?: string,
 };
 
@@ -61,3 +66,34 @@ export type RootState = {
 };
 
 export type Dispatch = ThunkDispatch<RootState, null, AnyAction>;
+
+export type DoneRecipes = {
+  id: string,
+  type: string,
+  nationality: string | null,
+  category: string | null,
+  alcoholicOrNot: string | null,
+  name: string,
+  image: string,
+  doneDate: string,
+  tags: string[] | null,
+};
+
+export type FavoriteRecipes = {
+  id: string,
+  type: string,
+  nationality: string | null,
+  category: string | null,
+  alcoholicOrNot: string | null,
+  name: string,
+  image: string,
+};
+
+export type InProgressRecipes = {
+  drinks: {
+    id: string[],
+  },
+  meals: {
+    id: string[],
+  }
+};

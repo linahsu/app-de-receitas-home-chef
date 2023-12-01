@@ -28,12 +28,14 @@ export type MealType = {
   idMeal: string,
   strMeal: string,
   strMealThumb?: string,
+  strCategory: string,
 };
 
 export type DrinkType = {
   idDrink:string,
   strDrink:string,
   strDrinkThumb?: string,
+  strAlcoholic: string,
 };
 
 export type RecipeType = {

@@ -74,7 +74,8 @@ export const takeDinamicRecipe = (searchInputs: SearchType, place: string) => {
 
     const recipeIsEmpty = (recipe: null | []) => {
       if (!recipe) {
-        return window.alert("Sorry, we haven't found any recipes for these filters");
+        window.alert("Sorry, we haven't found any recipes for these filters");
+        throw new Error("Sorry, we haven't found any recipes for these filters");
       }
     };
 

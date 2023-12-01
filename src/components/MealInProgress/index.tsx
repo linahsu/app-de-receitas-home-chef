@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { RootState } from '../../types';
+import { FavoriteRecipes, RootState } from '../../types';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 import './MealInProgress.css';
@@ -30,12 +30,7 @@ function MealInProgress() {
 
   const handleIngredientCheck = (index: number) => {
     if (currentMeal) {
-      setProgress({
-        ...getProgress,
-        [currentMeal?.idMeal]: [...ingredientCheckedList, index],
-      });
-
-      const savedIngredients = getProgress[currentMeal?.idMeal];
+      const savedIngredients = getProgress.meals[currentMeal?.idMeal];
 
       if (!savedIngredients.includes(index)) {
         setIngredientCheckedList([
@@ -47,23 +42,40 @@ function MealInProgress() {
           .filter((ingredient: number) => ingredient !== index);
         setIngredientCheckedList(list);
       }
+
+      setProgress({
+        meals: {
+          ...getProgress,
+          [currentMeal?.idMeal]: savedIngredients.includes(index) ? (
+            savedIngredients.filter((ingredient: number) => ingredient !== index)
+          ) : (
+            [...ingredientCheckedList, index]
+          ),
+        },
+      });
     }
   };
 
   const handleFavorite = () => {
     setIsFavorite(!isFavorite);
-    setFavorites([
-      ...getFavorites,
-      {
-        id: currentMeal?.idMeal,
-        type: 'meal',
-        nationality: currentMeal?.strArea,
-        category: currentMeal?.strCategory,
-        alcoholicOrNot: '',
-        name: currentMeal?.strMeal,
-        image: currentMeal?.strMealThumb,
-      },
-    ]);
+    if (!getFavorites.includes(currentMeal?.idMeal)) {
+      setFavorites([
+        ...getFavorites,
+        {
+          id: currentMeal?.idMeal,
+          type: 'meal',
+          nationality: currentMeal?.strArea,
+          category: currentMeal?.strCategory,
+          alcoholicOrNot: '',
+          name: currentMeal?.strMeal,
+          image: currentMeal?.strMealThumb,
+        },
+      ]);
+    } else {
+      const favoriteList = getFavorites
+        .filter((favorite: FavoriteRecipes) => favorite.id !== currentMeal?.idMeal);
+      setFavorites(favoriteList);
+    }
   };
 
   return (

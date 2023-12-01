@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { RootState } from '../types';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { input } from '@testing-library/user-event/dist/types/event';
+import { RootState } from '../../types';
+import useLocalStorage from '../../hooks/useLocalStorage';
+
+import './MealInProgress.css';
 
 function MealInProgress() {
   const { id } = useParams();
   const { meals } = useSelector((globalState: RootState) => globalState.mainReducer);
   const currentMeal = meals.find((meal) => meal.idMeal === id);
-  const [storedValue, setValue] = useLocalStorage('favoriteRecipes');
+  const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
+  const [getProgress, setProgress] = useLocalStorage('inProgressRecipes');
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [IngredientsList, setIngredientsList] = useState<[string, string][]>([]);
   const [mesureList, setMesureList] = useState<[string, string][]>([]);
+  const [ingredientCheckedList, setIngredientCheckedList] = useState<number[]>([]);
 
   useEffect(() => {
     if (currentMeal) {
@@ -25,10 +28,32 @@ function MealInProgress() {
     }
   }, []);
 
+  const handleIngredientCheck = (index: number) => {
+    if (currentMeal) {
+      setProgress({
+        ...getProgress,
+        [currentMeal?.idMeal]: [...ingredientCheckedList, index],
+      });
+
+      const savedIngredients = getProgress[currentMeal?.idMeal];
+
+      if (!savedIngredients.includes(index)) {
+        setIngredientCheckedList([
+          ...savedIngredients,
+          index,
+        ]);
+      } else {
+        const list = savedIngredients
+          .filter((ingredient: number) => ingredient !== index);
+        setIngredientCheckedList(list);
+      }
+    }
+  };
+
   const handleFavorite = () => {
     setIsFavorite(!isFavorite);
-    setValue([
-      ...storedValue,
+    setFavorites([
+      ...getFavorites,
       {
         id: currentMeal?.idMeal,
         type: 'meal',
@@ -77,10 +102,15 @@ function MealInProgress() {
 
         {IngredientsList.map((ingredient, index) => (
           <div key={ index }>
-            <input type="checkbox" id={ `${index}` } />
+            <input
+              type="checkbox"
+              id={ `${index}` }
+              onClick={ () => handleIngredientCheck(index) }
+            />
             <label
               data-testid={ `${index}-ingredient-step` }
               htmlFor={ `${index}` }
+              className={ getProgress.includes(index) ? 'checked' : undefined }
             >
               {`${ingredient[1]}: ${mesureList[index][1]}`}
             </label>

@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { FavoriteRecipes, RootState } from '../../types';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 import './MealInProgress.css';
 
 function MealInProgress() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { meals } = useSelector((globalState: RootState) => globalState.mainReducer);
   const currentMeal = meals.find((meal) => meal.idMeal === id);
+
   const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
   const [getProgress, setProgress] = useLocalStorage('inProgressRecipes');
+  const [getDoneRecipes, setDoneRecipes] = useLocalStorage('doneRecipes');
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [IngredientsList, setIngredientsList] = useState<[string, string][]>([]);
@@ -89,6 +92,26 @@ function MealInProgress() {
     }
   };
 
+  const handleFinishBtn = () => {
+    if (!getDoneRecipes.includes(currentMeal?.idMeal)) {
+      setDoneRecipes([
+        ...getDoneRecipes,
+        {
+          id: currentMeal?.idMeal,
+          type: 'meal',
+          area: currentMeal?.strArea,
+          category: currentMeal?.strCategory,
+          alcoholicOrNot: '',
+          name: currentMeal?.strMeal,
+          image: currentMeal?.strMealThumb,
+          doneDate: new Date().toLocaleDateString(),
+          tags: currentMeal?.strTags ? currentMeal?.strTags.split(',') : [],
+        },
+      ]);
+    }
+    navigate('/done-recipes');
+  };
+
   return (
     <div>
       <h2 data-testid="recipe-title">
@@ -144,6 +167,15 @@ function MealInProgress() {
         <h4>Instructions</h4>
         <p>{ currentMeal?.strInstructions }</p>
       </div>
+
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={ ingredientCheckedList.length !== IngredientsList.length }
+        className="finish-recipe-btn"
+        onClick={ handleFinishBtn }
+      >
+        Finish Recipe
+      </button>
     </div>
   );
 }

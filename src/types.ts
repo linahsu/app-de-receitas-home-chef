@@ -24,7 +24,7 @@ export type CategoryType = {
   strCategory: string,
 };
 
-// Adicionadas a chaves strCategory e strArea e strInstructions
+// Adicionadas a chaves strCategory, strArea, strInstructions e strTags
 export type MealType = {
   idMeal: string,
   strMeal: string,
@@ -32,15 +32,17 @@ export type MealType = {
   strCategory: string,
   strArea: string,
   strInstructions: string,
+  strTags: string
 };
 
-// Adicionadas as chaves strAlcoholic e strArea
+// Adicionadas as chaves strAlcoholic, strArea e strTags
 export type DrinkType = {
   idDrink: string,
   strDrink: string,
   strDrinkThumb?: string,
   strAlcoholic: string,
   strArea: string,
+  strTags: string,
 };
 
 export type RecipeType = {

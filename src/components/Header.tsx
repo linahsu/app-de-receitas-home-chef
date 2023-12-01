@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import profileicon from '../images/profileIcon.svg';
 
 function Header() {
   const titleObj: { [key: string]: string } = {
@@ -19,7 +20,7 @@ function Header() {
       <h1 data-testid="page-title">{titleObj[pathname]}</h1>
       <Link to="/profile">
         <img
-          src="src/images/profileIcon.svg"
+          src={ profileicon }
           alt="ícone do perfil"
           data-testid="profile-top-btn"
         />

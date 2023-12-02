@@ -8,10 +8,14 @@ import DrinkInProgress from '../components/DrinkInProgress';
 
 function RecipeInProgress() {
   const { pathname } = useLocation();
+  const path = pathname.includes('meals') ? 'meals' : 'drinks';
   const navigate = useNavigate();
-  const { id } = useParams();
-  const { meals } = useSelector((globalState: RootState) => globalState.mainReducer);
+  const { id } = useParams(); // alterar o "id" pelo nome que ficou na rota
+  const { meals, drinks } = useSelector(
+    (globalState: RootState) => globalState.mainReducer,
+  ); // Alterar para allMeals e allDrinks
   const currentMeal = meals.find((meal) => meal.idMeal === id);
+  const currentDrink = drinks.find((drink) => drink.idDrink === id);
 
   const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
   const [getProgress, setProgress] = useLocalStorage('inProgressRecipes');
@@ -27,6 +31,13 @@ function RecipeInProgress() {
   useEffect(() => {
     if (currentMeal) {
       const details = Object.entries(currentMeal);
+      const Ingredients = details.filter((detail) => detail[0].includes('strIngredient'));
+      setIngredientsList(Ingredients);
+      const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
+      setMesureList(mesure);
+    }
+    if (currentDrink) {
+      const details = Object.entries(currentDrink);
       const Ingredients = details.filter((detail) => detail[0].includes('strIngredient'));
       setIngredientsList(Ingredients);
       const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
@@ -60,11 +71,36 @@ function RecipeInProgress() {
         },
       });
     }
+    if (currentDrink) {
+      const savedIngredients = getProgress.meals[currentDrink?.idDrink];
+
+      if (!savedIngredients.includes(index)) {
+        setIngredientCheckedList([
+          ...savedIngredients,
+          index,
+        ]);
+      } else {
+        const list = savedIngredients
+          .filter((ingredient: number) => ingredient !== index);
+        setIngredientCheckedList(list);
+      }
+
+      setProgress({
+        meals: {
+          ...getProgress,
+          [currentDrink?.idDrink]: savedIngredients.includes(index) ? (
+            savedIngredients.filter((ingredient: number) => ingredient !== index)
+          ) : (
+            [...ingredientCheckedList, index]
+          ),
+        },
+      });
+    }
   };
 
   const handleFavoriteBtn = () => {
     setIsFavorite(!isFavorite);
-    if (!getFavorites.includes(currentMeal?.idMeal)) {
+    if (!getFavorites.includes(currentMeal?.idMeal) && path === 'meals') {
       setFavorites([
         ...getFavorites,
         {
@@ -80,6 +116,25 @@ function RecipeInProgress() {
     } else {
       const favoriteList = getFavorites
         .filter((favorite: FavoriteRecipes) => favorite.id !== currentMeal?.idMeal);
+      setFavorites(favoriteList);
+    }
+
+    if (!getFavorites.includes(currentDrink?.idDrink) && path === 'drinks') {
+      setFavorites([
+        ...getFavorites,
+        {
+          id: currentDrink?.idDrink,
+          type: 'drink',
+          nationality: currentDrink?.strArea,
+          category: '',
+          alcoholicOrNot: currentDrink?.strAlcoholic,
+          name: currentDrink?.strDrink,
+          image: currentDrink?.strDrinkThumb,
+        },
+      ]);
+    } else {
+      const favoriteList = getFavorites
+        .filter((favorite: FavoriteRecipes) => favorite.id !== currentDrink?.idDrink);
       setFavorites(favoriteList);
     }
   };
@@ -110,6 +165,22 @@ function RecipeInProgress() {
         },
       ]);
     }
+    if (!getDoneRecipes.includes(currentDrink?.idDrink)) {
+      setDoneRecipes([
+        ...getDoneRecipes,
+        {
+          id: currentDrink?.idDrink,
+          type: 'drink',
+          area: currentDrink?.strArea,
+          category: '',
+          alcoholicOrNot: currentDrink?.strAlcoholic,
+          name: currentDrink?.strDrink,
+          image: currentDrink?.strDrinkThumb,
+          doneDate: new Date().toLocaleDateString(),
+          tags: currentDrink?.strTags ? currentDrink?.strTags.split(',') : [],
+        },
+      ]);
+    }
     navigate('/done-recipes');
   };
 
@@ -128,7 +199,17 @@ function RecipeInProgress() {
           ingredientCheckedList={ ingredientCheckedList }
         />
       ) : (
-        <DrinkInProgress />
+        <DrinkInProgress
+          currentDrink={ currentDrink }
+          handleFavoriteBtn={ handleFavoriteBtn }
+          handleShareBtn={ handleShareBtn }
+          handleIngredientCheck={ handleIngredientCheck }
+          handleFinishBtn={ handleFinishBtn }
+          isFavorite={ isFavorite }
+          IngredientsList={ IngredientsList }
+          mesureList={ mesureList }
+          ingredientCheckedList={ ingredientCheckedList }
+        />
       )}
     </div>
   );

@@ -42,6 +42,7 @@ export type DrinkType = {
   strDrinkThumb?: string,
   strAlcoholic: string,
   strArea: string,
+  strInstructions: string,
   strTags: string,
 };
 

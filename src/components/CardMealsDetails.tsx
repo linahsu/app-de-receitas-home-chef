@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
+import './ButtonStartRecipe.css';
 
 export default function CardMealsDetails() {
   const { detailsMeal, allDrinks } = useSelector((state: RootState) => state.mainReducer);
@@ -35,9 +36,9 @@ export default function CardMealsDetails() {
           <section>
             <h4 data-testid="instructions">
               {detailsMeal.strInstructions
-                  && detailsMeal.strInstructions.split('\r\n').map((line, index) => (
+                  && detailsMeal.strInstructions.split('\r\n').map((text, index) => (
                     <p key={ index }>
-                      {line}
+                      {text}
                       <br />
                     </p>
                   ))}
@@ -61,6 +62,12 @@ export default function CardMealsDetails() {
               />}
           </section>
           <RecommendedRecipes />
+          <button
+            className="start-recipe-btn"
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
           <Footer />
         </>
       )}

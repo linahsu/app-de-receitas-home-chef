@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
-import './ButtonStartRecipe.css';
 
 export default function CardDrinkDetails() {
   const { detailsDrink, allMeals } = useSelector((state: RootState) => state.mainReducer);

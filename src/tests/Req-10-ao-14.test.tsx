@@ -2,7 +2,7 @@ import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
-import { fetchMock, fetchTwelveMock } from './mocks/fetchMock';
+import { fetchTwelveMock } from './mocks/fetchMock';
 import App from '../App';
 
 const user = userEvent;

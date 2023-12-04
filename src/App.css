@@ -71,3 +71,8 @@
     transform: rotate(-10deg);
   }
 }
+
+.start-recipe-btn {
+  bottom: 0;
+  position: fixed;
+}

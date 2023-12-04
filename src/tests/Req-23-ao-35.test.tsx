@@ -13,6 +13,26 @@ describe('Testa a página de detalhes de uma receita', () => {
         {
           idMeal: '53027',
           strMeal: 'Koshari',
+          strIngredient1: 'Brown Lentils',
+          strIngredient2: 'Rice',
+          strIngredient3: 'Coriander',
+          strIngredient4: 'Macaroni',
+          strIngredient5: 'Chickpeas',
+          strIngredient6: 'Onion',
+          strIngredient7: 'Salt',
+          strIngredient8: 'Vegetable Oil',
+          strIngredient9: '',
+          strIngredient10: '',
+          strIngredient11: '',
+          strIngredient12: '',
+          strIngredient13: '',
+          strIngredient14: '',
+          strIngredient15: '',
+          strIngredient16: '',
+          strIngredient17: '',
+          strIngredient18: '',
+          strIngredient19: '',
+          strIngredient20: '',
         },
       ],
     };
@@ -25,6 +45,8 @@ describe('Testa a página de detalhes de uma receita', () => {
     const recipeTitle = await screen.findByTestId('recipe-title');
     expect(recipeTitle).toBeInTheDocument();
     expect(recipeTitle.innerHTML).toBe('Koshari');
+    const ingredient = await screen.findByTestId('0-ingredient-name-and-measure');
+    expect(ingredient).toBeInTheDocument();
   });
 
   it('Testa se a página drinks renderiza a receita correta', async () => {
@@ -33,6 +55,21 @@ describe('Testa a página de detalhes de uma receita', () => {
         {
           idDrink: '17222',
           strDrink: 'A1',
+          strIngredient1: 'Gin',
+          strIngredient2: 'Grand Marnier',
+          strIngredient3: 'Lemon Juice',
+          strIngredient4: 'Grenadine',
+          strIngredient5: null,
+          strIngredient6: null,
+          strIngredient7: null,
+          strIngredient8: null,
+          strIngredient9: null,
+          strIngredient10: null,
+          strIngredient11: null,
+          strIngredient12: null,
+          strIngredient13: null,
+          strIngredient14: null,
+          strIngredient15: null,
         },
       ],
     };
@@ -44,6 +81,8 @@ describe('Testa a página de detalhes de uma receita', () => {
     renderWithRouterAndRedux(<App />, '/drinks/17222');
     const recipeTitle = await screen.findByTestId('recipe-title');
     expect(recipeTitle).toBeInTheDocument();
+    const ingredient = await screen.findByTestId('0-ingredient-name-and-measure');
+    expect(ingredient).toBeInTheDocument();
   });
 
   // it('Testa se Recipe Details renderiza o children', async () => {

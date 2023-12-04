@@ -1,15 +1,29 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchDrinkById, fetchAllCocktails } from '../utils/apiDrinks';
 import { fetchMealById, fetchAllMeals } from '../utils/apiMeals';
 import { ActionDetailsDrink, ActionDetailsMeal,
   AllDrinksAction, AllMealsAction } from '../redux/actions/actions';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { RootState, FavoriteRecipes } from '../types';
 
 function RecipeDetails({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const [, category, id] = pathname.split('/');
+  const currentUrl = window.location.href;
+
+  const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
+  // const [getProgress, setProgress] = useLocalStorage('inProgressRecipes');
+  // const [getDoneRecipes, setDoneRecipes] = useLocalStorage('doneRecipes');
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const {
+    detailsDrink,
+    detailsMeal,
+  } = useSelector((state: RootState) => state.mainReducer);
 
   // Faz o fetch de acordo com a categoria do pathname
   useEffect(() => {
@@ -22,6 +36,56 @@ function RecipeDetails({ children }: { children: React.ReactNode }) {
       fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
     }
   }, [category, id, dispatch]);
+
+  const handleFavoriteBtn = () => {
+    setIsFavorite(!isFavorite);
+    if (!getFavorites.includes(detailsMeal?.idMeal) && category === 'meals') {
+      setFavorites([
+        ...getFavorites,
+        {
+          id: detailsMeal?.idMeal,
+          type: 'meal',
+          nationality: detailsMeal?.strArea,
+          category: detailsMeal?.strCategory,
+          alcoholicOrNot: '',
+          name: detailsMeal?.strMeal,
+          image: detailsMeal?.strMealThumb,
+        },
+      ]);
+    } else {
+      const favoriteList = getFavorites
+        .filter((favorite: FavoriteRecipes) => favorite.id !== detailsMeal?.idMeal);
+      setFavorites(favoriteList);
+    }
+
+    if (!getFavorites.includes(detailsDrink?.idDrink) && category === 'drinks') {
+      setFavorites([
+        ...getFavorites,
+        {
+          id: detailsDrink?.idDrink,
+          type: 'drink',
+          nationality: detailsDrink?.strArea,
+          category: '',
+          alcoholicOrNot: detailsDrink?.strAlcoholic,
+          name: detailsDrink?.strDrink,
+          image: detailsDrink?.strDrinkThumb,
+        },
+      ]);
+    } else {
+      const favoriteList = getFavorites
+        .filter((favorite: FavoriteRecipes) => favorite.id !== detailsDrink?.idDrink);
+      setFavorites(favoriteList);
+    }
+  };
+
+  const handleShareBtn = () => {
+    try {
+      navigator.clipboard.writeText(currentUrl);
+      window.alert('Link copied!');
+    } catch (error) {
+      window.alert('Failed to copy!');
+    }
+  };
 
   return (
     <div>

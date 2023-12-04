@@ -44,7 +44,25 @@ export default function CardDrinkDetails() {
                   ))}
             </h4>
           </section>
+
+          <button
+            data-testid="share-btn"
+          >
+            <img src="src/images/shareIcon.svg" alt="Share icon" />
+          </button>
+
+          <button
+            data-testid="favorite-btn"
+          >
+            {isFavorite ? (
+              <img src="src/images/whiteHeartIcon.svg" alt="White heart" />
+            ) : (
+              <img src="src/images/blackHeartIcon.svg" alt="Black heart" />
+            )}
+          </button>
+
           <RecommendedRecipes />
+
           <button
             className="start-recipe-btn"
             data-testid="start-recipe-btn"

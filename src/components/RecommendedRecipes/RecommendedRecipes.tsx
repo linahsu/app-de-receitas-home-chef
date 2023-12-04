@@ -16,6 +16,8 @@ function RecommendedRecipes() {
     Globalstate: RootState,
   ) => Globalstate.mainReducer); // recupera do estado global
 
+  console.log(allMeals);
+  console.log(allDrinks);
   const recommendedFood = allMeals.slice(0, 6); // pega os 6 primeiros elementos do array de comidas
   const recommendedDrinks = allDrinks.slice(0, 6); // pega os 6 primeiros elementos do array de bebidas
 
@@ -55,7 +57,7 @@ function RecommendedRecipes() {
       { category === 'meals' && recommendedDrinks?.map((drink, index) => (
         <div
           className="carousel-card"
-          key={ index }
+          key={ drink.idDrink }
           data-testid={ `${index}-recommendation-card` }
         >
           <img
@@ -70,7 +72,7 @@ function RecommendedRecipes() {
       { category === 'drinks' && recommendedFood?.map((meal, index) => (
         <div
           className="carousel-card"
-          key={ index }
+          key={ meal.idMeal }
           data-testid={ `${index}-recommendation-card` }
         >
           <img

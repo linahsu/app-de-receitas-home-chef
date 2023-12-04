@@ -4,7 +4,17 @@ import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
 import './ButtonStartRecipe.css';
 
-export default function CardMealsDetails() {
+type CardMealsDetailsProps = {
+  handleFavoriteBtn: () => void,
+  handleshareBtn: () => void,
+  isFavorite: boolean,
+};
+
+export default function CardMealsDetails({
+  handleFavoriteBtn,
+  handleshareBtn,
+  isFavorite,
+}: CardMealsDetailsProps) {
   const { detailsMeal, allDrinks } = useSelector((state: RootState) => state.mainReducer);
   return (
     <div>

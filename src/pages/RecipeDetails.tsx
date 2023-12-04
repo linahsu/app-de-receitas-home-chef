@@ -7,8 +7,10 @@ import { ActionDetailsDrink, ActionDetailsMeal,
   AllDrinksAction, AllMealsAction } from '../redux/actions/actions';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { RootState, FavoriteRecipes } from '../types';
+import CardDrinkDetails from '../components/CardDrinkDetails';
+import CardMealsDetails from '../components/CardMealsDetails';
 
-function RecipeDetails({ children }: { children: React.ReactNode }) {
+function RecipeDetails() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const [, category, id] = pathname.split('/');
@@ -37,44 +39,53 @@ function RecipeDetails({ children }: { children: React.ReactNode }) {
     }
   }, [category, id, dispatch]);
 
+  const checkFavorite = (recepeId: string) => {
+    return getFavorites
+      .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
+  };
+
   const handleFavoriteBtn = () => {
     setIsFavorite(!isFavorite);
-    if (!getFavorites.includes(detailsMeal?.idMeal) && category === 'meals') {
-      setFavorites([
-        ...getFavorites,
-        {
-          id: detailsMeal?.idMeal,
-          type: 'meal',
-          nationality: detailsMeal?.strArea,
-          category: detailsMeal?.strCategory,
-          alcoholicOrNot: '',
-          name: detailsMeal?.strMeal,
-          image: detailsMeal?.strMealThumb,
-        },
-      ]);
-    } else {
-      const favoriteList = getFavorites
-        .filter((favorite: FavoriteRecipes) => favorite.id !== detailsMeal?.idMeal);
-      setFavorites(favoriteList);
+    if (detailsMeal) {
+      if (!checkFavorite(detailsMeal?.idMeal) && category === 'meals') {
+        setFavorites([
+          ...getFavorites,
+          {
+            id: detailsMeal?.idMeal,
+            type: 'meal',
+            nationality: detailsMeal?.strArea,
+            category: detailsMeal?.strCategory,
+            alcoholicOrNot: '',
+            name: detailsMeal?.strMeal,
+            image: detailsMeal?.strMealThumb,
+          },
+        ]);
+      } else {
+        const favoriteList = getFavorites
+          .filter((favorite: FavoriteRecipes) => favorite.id !== detailsMeal?.idMeal);
+        setFavorites(favoriteList);
+      }
     }
 
-    if (!getFavorites.includes(detailsDrink?.idDrink) && category === 'drinks') {
-      setFavorites([
-        ...getFavorites,
-        {
-          id: detailsDrink?.idDrink,
-          type: 'drink',
-          nationality: detailsDrink?.strArea,
-          category: '',
-          alcoholicOrNot: detailsDrink?.strAlcoholic,
-          name: detailsDrink?.strDrink,
-          image: detailsDrink?.strDrinkThumb,
-        },
-      ]);
-    } else {
-      const favoriteList = getFavorites
-        .filter((favorite: FavoriteRecipes) => favorite.id !== detailsDrink?.idDrink);
-      setFavorites(favoriteList);
+    if (detailsDrink) {
+      if (!checkFavorite(detailsDrink?.idDrink) && category === 'drinks') {
+        setFavorites([
+          ...getFavorites,
+          {
+            id: detailsDrink?.idDrink,
+            type: 'drink',
+            nationality: detailsDrink?.strArea,
+            category: '',
+            alcoholicOrNot: detailsDrink?.strAlcoholic,
+            name: detailsDrink?.strDrink,
+            image: detailsDrink?.strDrinkThumb,
+          },
+        ]);
+      } else {
+        const favoriteList = getFavorites
+          .filter((favorite: FavoriteRecipes) => favorite.id !== detailsDrink?.idDrink);
+        setFavorites(favoriteList);
+      }
     }
   };
 
@@ -89,10 +100,25 @@ function RecipeDetails({ children }: { children: React.ReactNode }) {
 
   return (
     <div>
-      {
-      (category === 'meals' ? <h1>Detalhes da Comida</h1> : <h1>Detalhes da Bebida</h1>)
-      }
-      {children}
+      {category === 'meals' ? (
+        <div>
+          <h1>Detalhes da Comida</h1>
+          <CardMealsDetails
+            handleFavoriteBtn={ handleFavoriteBtn }
+            handleshareBtn={ handleShareBtn }
+            isFavorite={ isFavorite }
+          />
+        </div>
+      ) : (
+        <div>
+          <h1>Detalhes da Bebida</h1>
+          <CardDrinkDetails
+            handleFavoriteBtn={ handleFavoriteBtn }
+            handleshareBtn={ handleShareBtn }
+            isFavorite={ isFavorite }
+          />
+        </div>
+      )}
     </div>
   );
 }

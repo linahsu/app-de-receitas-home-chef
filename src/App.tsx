@@ -8,8 +8,7 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import Header from './components/Header';
 import Drinks from './pages/Drinks';
 import Meals from './pages/Meals';
-import DetailsOfDrinks from './pages/DetailsOfDrinks';
-import DetailsOfMeals from './pages/DetailsOfMeals';
+import RecipeDetails from './pages/RecipeDetails';
 
 function App() {
   return (
@@ -20,8 +19,8 @@ function App() {
       <Route path="/" element={ <Header /> }>
         <Route path="/meals" element={ <Meals /> } />
         <Route path="/drinks" element={ <Drinks /> } />
-        <Route path="/meals/:idDaReceita" element={ <DetailsOfMeals /> } />
-        <Route path="/drinks/:idDaReceita" element={ <DetailsOfDrinks /> } />
+        <Route path="/meals/:idDaReceita" element={ <RecipeDetails /> } />
+        <Route path="/drinks/:idDaReceita" element={ <RecipeDetails /> } />
         <Route path="/profile" element={ <Profile /> } />
         <Route path="/done-recipes" element={ <DoneRecipes /> } />
         <Route path="/favorite-recipes" element={ <FavoriteRecipes /> } />

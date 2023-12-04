@@ -4,7 +4,17 @@ import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
 import './ButtonStartRecipe.css';
 
-export default function CardDrinkDetails() {
+type CardDrinksDetailsProps = {
+  handleFavoriteBtn: () => void,
+  handleshareBtn: () => void,
+  isFavorite: boolean,
+};
+
+export default function CardDrinkDetails({
+  handleFavoriteBtn,
+  handleshareBtn,
+  isFavorite,
+}: CardDrinksDetailsProps) {
   const { detailsDrink, allMeals } = useSelector((state: RootState) => state.mainReducer);
   return (
     <div>
@@ -47,17 +57,19 @@ export default function CardDrinkDetails() {
 
           <button
             data-testid="share-btn"
+            onClick={ handleshareBtn }
           >
-            <img src="src/images/shareIcon.svg" alt="Share icon" />
+            <img src="/src/images/shareIcon.svg" alt="Share icon" />
           </button>
 
           <button
             data-testid="favorite-btn"
+            onClick={ handleFavoriteBtn }
           >
             {isFavorite ? (
-              <img src="src/images/whiteHeartIcon.svg" alt="White heart" />
+              <img src="/src/images/blackHeartIcon.svg" alt="Black heart" />
             ) : (
-              <img src="src/images/blackHeartIcon.svg" alt="Black heart" />
+              <img src="/src/images/whiteHeartIcon.svg" alt="White heart" />
             )}
           </button>
 

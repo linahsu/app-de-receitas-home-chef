@@ -209,10 +209,9 @@ export type InProgressRecipes = {
 };
 
 export type InProgressProps = {
-  currentMeal: MealType | undefined;
-  currentDrink: DrinkType | undefined;
+  currentMeal?: MealType | undefined;
+  currentDrink?: DrinkType | undefined;
   handleFavoriteBtn: () => void;
-  handleShareBtn: () => void;
   handleIngredientCheck: (index: number) => void;
   handleFinishBtn: () => void;
   isFavorite: boolean;
@@ -220,5 +219,4 @@ export type InProgressProps = {
   mesureList: string[][];
   instructionsList: [string, string][];
   ingredientCheckedList: number[];
-  isCopied: boolean;
 };

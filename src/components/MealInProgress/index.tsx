@@ -1,13 +1,13 @@
 import './MealInProgress.css';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { MealType, RootState, InProgressProps } from '../../types';
+import { RootState, InProgressProps } from '../../types';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 function MealInProgress({
   currentMeal,
   handleFavoriteBtn,
-  handleShareBtn,
   handleIngredientCheck,
   handleFinishBtn,
   isFavorite,
@@ -15,9 +15,21 @@ function MealInProgress({
   mesureList,
   instructionsList,
   ingredientCheckedList,
-  isCopied,
 }: InProgressProps) {
   const { allMeals } = useSelector((state: RootState) => state.mainReducer);
+  const [isCopied, setIsCopied] = useState(false);
+  const currentUrl = window.location.href;
+
+  const handleShareBtn = () => {
+    try {
+      navigator.clipboard.writeText(currentUrl);
+      setIsCopied(true);
+    } catch (error) {
+      console.error('Failed to copy:', error);
+      window.alert('Failed to copy the link!');
+      setIsCopied(false);
+    }
+  };
 
   return (
     <div>

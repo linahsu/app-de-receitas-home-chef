@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router';
-import { FavoriteRecipes, RootState } from '../types';
+import { FavoriteRecipes, MealType, DrinkType, RootState } from '../types';
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
 import DrinkInProgress from '../components/DrinkInProgress';
@@ -30,45 +30,36 @@ function RecipeInProgress() {
   const [mesureList, setMesureList] = useState<[string, string][]>([]);
   const [instructionsList, setInstructionsList] = useState<[string, string][]>([]);
   const [ingredientCheckedList, setIngredientCheckedList] = useState<number[]>([]);
-  const [isCopied, setIsCopied] = useState(false);
-
-  const currentUrl = window.location.href;
 
   const checkFavorite = (recepeId: string) => {
     return getFavorites
       .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
   };
 
+  const createRecipeLists = (currentRecipe: MealType | DrinkType) => {
+    const details = Object.entries(currentRecipe);
+    const Ingredients = details
+      .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== null);
+    setIngredientsList(Ingredients);
+
+    const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
+    setMesureList(mesure);
+
+    const instructions = details
+      .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== null);
+    setInstructionsList(instructions);
+  };
+
   useEffect(() => {
     fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
     fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
     if (currentMeal) {
-      const details = Object.entries(currentMeal);
-      const Ingredients = details
-        .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== null);
-      setIngredientsList(Ingredients);
-
-      const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
-      setMesureList(mesure);
-
-      const instructions = details
-        .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== null);
-      setInstructionsList(instructions);
+      createRecipeLists(currentMeal);
     }
     if (currentDrink) {
-      const details = Object.entries(currentDrink);
-      const Ingredients = details
-        .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== null);
-      setIngredientsList(Ingredients);
-
-      const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
-      setMesureList(mesure);
-
-      const instructions = details
-        .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== null);
-      setInstructionsList(instructions);
+      createRecipeLists(currentDrink);
     }
-  }, []);
+  }, [currentMeal, currentDrink]);
 
   const handleIngredientCheck = (index: number) => {
     if (currentMeal) {
@@ -147,6 +138,7 @@ function RecipeInProgress() {
     }
 
     if (currentDrink?.idDrink && path === 'drinks') {
+      console.log('teste');
       if (!checkFavorite(currentDrink?.idDrink)) {
         setFavorites([
           ...getFavorites,
@@ -165,17 +157,6 @@ function RecipeInProgress() {
           .filter((favorite: FavoriteRecipes) => favorite.id !== currentDrink?.idDrink);
         setFavorites(favoriteList);
       }
-    }
-  };
-
-  const handleShareBtn = () => {
-    try {
-      navigator.clipboard.writeText(currentUrl);
-      setIsCopied(true);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-      window.alert('Failed to copy the link!');
-      setIsCopied(false);
     }
   };
 
@@ -221,7 +202,6 @@ function RecipeInProgress() {
         <MealInProgress
           currentMeal={ currentMeal }
           handleFavoriteBtn={ handleFavoriteBtn }
-          handleShareBtn={ handleShareBtn }
           handleIngredientCheck={ handleIngredientCheck }
           handleFinishBtn={ handleFinishBtn }
           isFavorite={ isFavorite }
@@ -229,13 +209,11 @@ function RecipeInProgress() {
           mesureList={ mesureList }
           instructionsList={ instructionsList }
           ingredientCheckedList={ ingredientCheckedList }
-          isCopied={ isCopied }
         />
       ) : (
         <DrinkInProgress
           currentDrink={ currentDrink }
           handleFavoriteBtn={ handleFavoriteBtn }
-          handleShareBtn={ handleShareBtn }
           handleIngredientCheck={ handleIngredientCheck }
           handleFinishBtn={ handleFinishBtn }
           isFavorite={ isFavorite }
@@ -243,7 +221,6 @@ function RecipeInProgress() {
           mesureList={ mesureList }
           instructionsList={ instructionsList }
           ingredientCheckedList={ ingredientCheckedList }
-          isCopied={ isCopied }
         />
       )}
     </div>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, InProgressProps } from '../../types';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
@@ -6,7 +7,6 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 function DrinkInProgress({
   currentDrink,
   handleFavoriteBtn,
-  handleShareBtn,
   handleIngredientCheck,
   handleFinishBtn,
   isFavorite,
@@ -14,10 +14,22 @@ function DrinkInProgress({
   mesureList,
   instructionsList,
   ingredientCheckedList,
-  isCopied,
 }: InProgressProps) {
   const { allDrinks } = useSelector((state: RootState) => state.mainReducer);
-  console.log(instructionsList);
+  const [isCopied, setIsCopied] = useState(false);
+  const currentUrl = window.location.href;
+
+  const handleShareBtn = () => {
+    try {
+      navigator.clipboard.writeText(currentUrl);
+      setIsCopied(true);
+    } catch (error) {
+      console.error('Failed to copy:', error);
+      window.alert('Failed to copy the link!');
+      setIsCopied(false);
+    }
+  };
+
   return (
     <div>
       {allDrinks.length > 0 && currentDrink && IngredientsList.length > 0 && (

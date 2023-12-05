@@ -1,10 +1,42 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../types';
+import { useEffect, useState } from 'react';
+import { DoneRecipes, RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function CardDrinkDetails() {
   const { detailsDrink, allMeals } = useSelector((state: RootState) => state.mainReducer);
+
+  const [hideButton, setHideButton] = useState(false);
+  const [buttonText, setButtonText] = useState('Start Recipe');
+
+  const doneRecipes = useLocalStorage('doneRecipes')[0];
+  const inProgressRecipes = useLocalStorage('inProgressRecipes')[0];
+
+  const isDrinkDone = () => {
+    setHideButton(
+      doneRecipes.some((recipe: DoneRecipes) => recipe.id === detailsDrink.idDrink),
+    );
+  };
+
+  const isDrinkInProgress = () => {
+    if (Object.keys(inProgressRecipes.drinks).includes(detailsDrink.idDrink)) {
+      setButtonText('Continue Recipe');
+    } else {
+      setButtonText('Start Recipe');
+    }
+  };
+
+  useEffect(() => {
+    if (doneRecipes) {
+      isDrinkDone();
+    }
+    if (inProgressRecipes) {
+      isDrinkInProgress();
+    }
+  }, [detailsDrink]);
+
   return (
     <div>
       {allMeals.length > 0 && Object.keys(detailsDrink).length > 0 && (
@@ -43,13 +75,20 @@ export default function CardDrinkDetails() {
                   ))}
             </h4>
           </section>
+          {
+            !hideButton
+              ? (
+                <button
+                  className="start-recipe-btn"
+                  data-testid="start-recipe-btn"
+                >
+                  { buttonText }
+                </button>
+
+              )
+              : <p />
+          }
           <RecommendedRecipes />
-          <button
-            className="start-recipe-btn"
-            data-testid="start-recipe-btn"
-          >
-            Start Recipe
-          </button>
           <Footer />
         </>
       )}

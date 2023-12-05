@@ -1,10 +1,43 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../types';
+import { useEffect, useState } from 'react';
+import { DoneRecipes, RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function CardMealsDetails() {
   const { detailsMeal, allDrinks } = useSelector((state: RootState) => state.mainReducer);
+
+  const [hideButton, setHideButton] = useState(false);
+  const [buttonText, setButtonText] = useState('Start Recipe');
+
+  const doneRecipes = useLocalStorage('doneRecipes')[0];
+  const inProgressRecipes = useLocalStorage('inProgressRecipes')[0];
+
+  const isMealDone = () => {
+    setHideButton(
+      doneRecipes.some((recipe: DoneRecipes) => recipe.id === detailsMeal.idMeal),
+    );
+  };
+
+  const isMealInProgress = () => {
+    // if (Object.keys(inProgressRecipes.drinks).includes(detailsDrink.idDrink))
+    if (Object.keys(inProgressRecipes.meals).includes(detailsMeal.idMeal)) {
+      setButtonText('Continue Recipe');
+    } else {
+      setButtonText('Start Recipe');
+    }
+  };
+
+  useEffect(() => {
+    if (doneRecipes) {
+      isMealDone();
+    }
+    if (inProgressRecipes) {
+      isMealInProgress();
+    }
+  }, [detailsMeal]);
+
   return (
     <div>
       {allDrinks.length > 0 && Object.keys(detailsMeal).length > 0 && (
@@ -60,13 +93,20 @@ export default function CardMealsDetails() {
                 data-testid="video"
               />}
           </section>
+          {
+            !hideButton
+              ? (
+                <button
+                  className="start-recipe-btn"
+                  data-testid="start-recipe-btn"
+                >
+                  { buttonText }
+                </button>
+
+              )
+              : <p />
+          }
           <RecommendedRecipes />
-          <button
-            className="start-recipe-btn"
-            data-testid="start-recipe-btn"
-          >
-            Start Recipe
-          </button>
           <Footer />
         </>
       )}

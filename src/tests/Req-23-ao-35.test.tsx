@@ -123,3 +123,72 @@ describe('Testa a página de detalhes de uma receita', () => {
 //   it('Testa se as recomendações de bebidas são renderizadas corretamente', async () => {});
 //   it('Testa se as recomendações de bebidas são renderizadas corretamente', async () => {});
 // });
+
+const mockedLocalStorage = {
+  doneRecipes: [
+    {
+      id: '52977',
+      type: 'meal',
+      nationality: 'Turkish',
+      category: 'Side',
+      alcoholicOrNot: null,
+      name: 'Corba',
+      image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+      doneDate: '04-12-2023',
+      tags: ['soup'],
+    },
+    {
+      id: '17222',
+      type: 'drink',
+      nationality: null,
+      category: 'Cocktail',
+      alcoholicOrNot: 'Alcoholic',
+      name: 'A1',
+      image: 'https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg',
+      doneDate: '03-12-2023',
+      tags: null,
+    },
+  ],
+
+  inProgressRecipes: {
+    drinks: {
+      15997: [],
+    },
+    meals: {
+      53065: [],
+    },
+  },
+};
+
+describe('Testes do botão "Start/Continue Recipe"', () => {
+  beforeEach(() => {
+    localStorage.setItem('doneRecipes', JSON.stringify(mockedLocalStorage.doneRecipes));
+    localStorage.setItem('inProgressRecipes', JSON.stringify(mockedLocalStorage.inProgressRecipes));
+  });
+
+  const btnTestId = 'start-recipe-btn';
+
+  it('Testa se o botão está disponível com o texto "Start Recipe" para receitas nunca feitas', async () => {
+    renderWithRouterAndRedux(<App />, '/meals/53060');
+
+    const startRecipeBtn = await screen.findByTestId(btnTestId);
+
+    expect(startRecipeBtn).toHaveTextContent(/Start Recipe/i);
+  });
+
+  it('Testa se o botão está disponível com o texto "Continue Recipe" para bebidas em progresso', async () => {
+    renderWithRouterAndRedux(<App />, '/drinks/15997');
+
+    const startRecipeBtn = await screen.findByTestId(btnTestId);
+
+    expect(startRecipeBtn).toHaveTextContent(/Continue Recipe/i);
+  });
+
+  it('Testa se o botão está disponível com o texto "Continue Recipe" para comidas em progresso', async () => {
+    renderWithRouterAndRedux(<App />, '/meals/53065');
+
+    const startRecipeBtn = await screen.findByTestId(btnTestId);
+
+    expect(startRecipeBtn).toHaveTextContent(/Continue Recipe/i);
+  });
+});

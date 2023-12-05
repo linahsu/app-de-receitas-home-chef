@@ -1,12 +1,11 @@
 import { screen } from '@testing-library/dom';
 import { vi } from 'vitest';
+import { userEvent } from '@testing-library/user-event';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';
-import { userEvent } from '@testing-library/user-event';
 // import RecipeDetails from '../pages/RecipeDetails';
 // import MOCK_ALL_DRINKS from './mocks/mockAllDrinks';
 // import MOCK_ALL_MEALS from './mocks/mockAllMeals';
-
 
 const user = userEvent.setup();
 
@@ -202,7 +201,7 @@ describe('Testes do botão "Start/Continue Recipe"', () => {
     const startRecipeBtn = await screen.findByTestId(btnTestId);
 
     await user.click(startRecipeBtn);
-  })
+  });
 
   it('Testa o clique no botão "Start Recipe" numa página de bebida', async () => {
     renderWithRouterAndRedux(<App />, '/drinks/17141');
@@ -210,5 +209,5 @@ describe('Testes do botão "Start/Continue Recipe"', () => {
     const startRecipeBtn = await screen.findByTestId(btnTestId);
 
     await user.click(startRecipeBtn);
-  })
+  });
 });

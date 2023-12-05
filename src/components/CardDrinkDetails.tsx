@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DoneRecipes, RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useNavigate } from 'react-router-dom';
 
 export default function CardDrinkDetails() {
   const { detailsDrink, allMeals } = useSelector((state: RootState) => state.mainReducer);
@@ -83,7 +83,9 @@ export default function CardDrinkDetails() {
                 <button
                   className="start-recipe-btn"
                   data-testid="start-recipe-btn"
-                  onClick={() => navigate(`/drinks/${detailsDrink.idDrink}/in-progress`)}
+                  onClick={
+                    () => navigate(`/drinks/${detailsDrink.idDrink}/in-progress`)
+                  }
                 >
                   { buttonText }
                 </button>

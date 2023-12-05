@@ -100,7 +100,6 @@ function RecipeDetails() {
     setIsFavorite(!isFavorite);
     if (detailsMeal.idMeal && category === 'meals') {
       if (!checkFavorite(detailsMeal?.idMeal)) {
-        console.log('meals');
         setFavorites([
           ...getFavorites,
           {

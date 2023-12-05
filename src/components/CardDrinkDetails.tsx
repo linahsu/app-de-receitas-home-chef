@@ -29,7 +29,7 @@ export default function CardDrinkDetails({
   return (
     <div>
       {allMeals.length > 0 && Object.keys(detailsDrink).length > 0 && (
-        <>
+        <div>
           <img
             src={ detailsDrink.strDrinkThumb }
             alt="Foto da bebida"
@@ -67,7 +67,6 @@ export default function CardDrinkDetails({
           </section>
 
           <button
-            // data-testid="favorite-btn"
             onClick={ handleFavoriteBtn }
           >
             <img
@@ -103,7 +102,7 @@ export default function CardDrinkDetails({
 
           <RecommendedRecipes />
           <Footer />
-        </>
+        </div>
       )}
     </div>
   );

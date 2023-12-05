@@ -1,17 +1,8 @@
 import './MealInProgress.css';
-import { MealType } from '../../types';
-
-type MealInProgressProps = {
-  currentMeal: MealType | undefined;
-  handleFavoriteBtn: () => void;
-  handleShareBtn: () => void;
-  handleIngredientCheck: (index: number) => void;
-  handleFinishBtn: () => void;
-  isFavorite: boolean;
-  IngredientsList: string[][];
-  mesureList: string[][];
-  ingredientCheckedList: number[];
-};
+import { useSelector } from 'react-redux';
+import { MealType, RootState, InProgressProps } from '../../types';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 function MealInProgress({
   currentMeal,
@@ -22,74 +13,88 @@ function MealInProgress({
   isFavorite,
   IngredientsList,
   mesureList,
+  instructionsList,
   ingredientCheckedList,
-}: MealInProgressProps) {
+  isCopied,
+}: InProgressProps) {
+  const { allMeals } = useSelector((state: RootState) => state.mainReducer);
+
   return (
     <div>
-      <h2 data-testid="recipe-title">
-        { currentMeal?.strMeal }
-      </h2>
+      {allMeals.length > 0 && currentMeal && IngredientsList.length > 0 && (
+        <div>
+          <h2 data-testid="recipe-title">
+            { currentMeal.strMeal }
+          </h2>
 
-      <h4 data-testid="recipe-category">
-        { `Category: ${currentMeal?.strCategory}` }
-      </h4>
+          <h4 data-testid="recipe-category">
+            { `Category: ${currentMeal.strCategory}` }
+          </h4>
 
-      <img src={ currentMeal?.strMealThumb } alt="Imagem da receita" />
+          <img src={ currentMeal.strMealThumb } alt="Imagem da receita" />
 
-      <div>
-        <button
-          data-testid="favorite-btn"
-          onClick={ handleFavoriteBtn }
-        >
-          {!isFavorite ? (
-            <img src="src/images/whiteHeartIcon.svg" alt="" />
-          ) : (
-            <img src="src/images/blackHeartIcon.svg" alt="" />
-          )}
-        </button>
-
-        <button
-          data-testid="share-btn"
-          onClick={ handleShareBtn }
-        >
-          <img src="src/images/shareIcon.svg" alt="Share Icon" />
-        </button>
-      </div>
-
-      <div data-testid="instructions">
-        <h4>Ingredients List</h4>
-
-        {IngredientsList.map((ingredient, index) => (
-          <div key={ index }>
-            <input
-              type="checkbox"
-              id={ `${index}` }
-              onClick={ () => handleIngredientCheck(index) }
-            />
-            <label
-              data-testid={ `${index}-ingredient-step` }
-              htmlFor={ `${index}` }
-              className={
-                ingredientCheckedList.includes(index) ? 'checked' : undefined
-              }
+          <div>
+            <button
+              onClick={ handleFavoriteBtn }
             >
-              {`${ingredient[1]}: ${mesureList[index][1]}`}
-            </label>
+              <img
+                data-testid="favorite-btn"
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
+              />
+            </button>
+
+            <button
+              data-testid="share-btn"
+              onClick={ handleShareBtn }
+            >
+              <img src="/src/images/shareIcon.svg" alt="Share icon" />
+            </button>
+
+            {isCopied && <p>Link copied!</p>}
           </div>
-        ))}
 
-        <h4>Instructions</h4>
-        <p>{ currentMeal?.strInstructions }</p>
-      </div>
+          <div data-testid="instructions">
+            <h4>Ingredients List</h4>
 
-      <button
-        data-testid="finish-recipe-btn"
-        disabled={ ingredientCheckedList.length !== IngredientsList.length }
-        className="finish-recipe-btn"
-        onClick={ handleFinishBtn }
-      >
-        Finish Recipe
-      </button>
+            {IngredientsList.map((ingredient, index) => (
+              <div key={ index }>
+                <input
+                  type="checkbox"
+                  id={ `${index}` }
+                  onClick={ () => handleIngredientCheck(index) }
+                />
+                <label
+                  data-testid={ `${index}-ingredient-step` }
+                  htmlFor={ `${index}` }
+                  className={
+                    ingredientCheckedList.includes(index) ? 'checked' : undefined
+                  }
+                >
+                  {`${ingredient[1]}: ${mesureList[index][1]}`}
+                </label>
+              </div>
+            ))}
+
+            <h4>Instructions</h4>
+            {instructionsList.map((instruction, index) => (
+              <p key={ index }>
+                { instruction[1] }
+                <br />
+              </p>
+            ))}
+          </div>
+
+          <button
+            data-testid="finish-recipe-btn"
+            disabled={ ingredientCheckedList.length !== IngredientsList.length }
+            className="finish-recipe-btn"
+            onClick={ handleFinishBtn }
+          >
+            Finish Recipe
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,7 +4,6 @@ export const fetchMeals = async () => {
   const response = await fetch(endPoint);
   const data = await response.json();
   const Meals = data.meals.slice(0, 12);
-  console.log(Meals);
   return Meals;
 };
 
@@ -30,8 +29,6 @@ export const fetchMealById = async (mealId: string) => {
 export const fetchAllMeals = async () => {
   const endPointMeals = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const response = await fetch(endPointMeals);
-  console.log(endPointMeals);
   const data = await response.json();
-  console.log(data);
   return data.meals;
 };

@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router';
 import { FavoriteRecipes, RootState } from '../types';
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
 import DrinkInProgress from '../components/DrinkInProgress';
+import { fetchAllCocktails } from '../utils/apiDrinks';
+import { fetchAllMeals } from '../utils/apiMeals';
+import { AllDrinksAction, AllMealsAction } from '../redux/actions/actions';
 
 function RecipeInProgress() {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const path = pathname.includes('meals') ? 'meals' : 'drinks';
   const navigate = useNavigate();
-  const { id } = useParams(); // alterar o "id" pelo nome que ficou na rota
-  const { meals, drinks } = useSelector(
+  const { idDaReceita } = useParams();
+  const { allMeals, allDrinks } = useSelector(
     (globalState: RootState) => globalState.mainReducer,
-  ); // Alterar para allMeals e allDrinks
-  const currentMeal = meals.find((meal) => meal.idMeal === id);
-  const currentDrink = drinks.find((drink) => drink.idDrink === id);
+  );
+  const currentMeal = allMeals.find((meal) => meal.idMeal === idDaReceita);
+  const currentDrink = allDrinks.find((drink) => drink.idDrink === idDaReceita);
 
   const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
   const [getProgress, setProgress] = useLocalStorage('inProgressRecipes');
@@ -24,24 +28,45 @@ function RecipeInProgress() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [IngredientsList, setIngredientsList] = useState<[string, string][]>([]);
   const [mesureList, setMesureList] = useState<[string, string][]>([]);
+  const [instructionsList, setInstructionsList] = useState<[string, string][]>([]);
   const [ingredientCheckedList, setIngredientCheckedList] = useState<number[]>([]);
+  const [isCopied, setIsCopied] = useState(false);
 
   const currentUrl = window.location.href;
 
+  const checkFavorite = (recepeId: string) => {
+    return getFavorites
+      .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
+  };
+
   useEffect(() => {
+    fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
+    fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
     if (currentMeal) {
       const details = Object.entries(currentMeal);
-      const Ingredients = details.filter((detail) => detail[0].includes('strIngredient'));
+      const Ingredients = details
+        .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== null);
       setIngredientsList(Ingredients);
+
       const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
       setMesureList(mesure);
+
+      const instructions = details
+        .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== null);
+      setInstructionsList(instructions);
     }
     if (currentDrink) {
       const details = Object.entries(currentDrink);
-      const Ingredients = details.filter((detail) => detail[0].includes('strIngredient'));
+      const Ingredients = details
+        .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== null);
       setIngredientsList(Ingredients);
+
       const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
       setMesureList(mesure);
+
+      const instructions = details
+        .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== null);
+      setInstructionsList(instructions);
     }
   }, []);
 
@@ -100,51 +125,57 @@ function RecipeInProgress() {
 
   const handleFavoriteBtn = () => {
     setIsFavorite(!isFavorite);
-    if (!getFavorites.includes(currentMeal?.idMeal) && path === 'meals') {
-      setFavorites([
-        ...getFavorites,
-        {
-          id: currentMeal?.idMeal,
-          type: 'meal',
-          nationality: currentMeal?.strArea,
-          category: currentMeal?.strCategory,
-          alcoholicOrNot: '',
-          name: currentMeal?.strMeal,
-          image: currentMeal?.strMealThumb,
-        },
-      ]);
-    } else {
-      const favoriteList = getFavorites
-        .filter((favorite: FavoriteRecipes) => favorite.id !== currentMeal?.idMeal);
-      setFavorites(favoriteList);
+    if (currentMeal?.idMeal && path === 'meals') {
+      if (!checkFavorite(currentMeal?.idMeal)) {
+        setFavorites([
+          ...getFavorites,
+          {
+            id: currentMeal?.idMeal,
+            type: 'meal',
+            nationality: currentMeal?.strArea || '',
+            category: currentMeal?.strCategory || '',
+            alcoholicOrNot: '',
+            name: currentMeal?.strMeal,
+            image: currentMeal?.strMealThumb,
+          },
+        ]);
+      } else {
+        const favoriteList = getFavorites
+          .filter((favorite: FavoriteRecipes) => favorite.id !== currentMeal?.idMeal);
+        setFavorites(favoriteList);
+      }
     }
 
-    if (!getFavorites.includes(currentDrink?.idDrink) && path === 'drinks') {
-      setFavorites([
-        ...getFavorites,
-        {
-          id: currentDrink?.idDrink,
-          type: 'drink',
-          nationality: currentDrink?.strArea,
-          category: '',
-          alcoholicOrNot: currentDrink?.strAlcoholic,
-          name: currentDrink?.strDrink,
-          image: currentDrink?.strDrinkThumb,
-        },
-      ]);
-    } else {
-      const favoriteList = getFavorites
-        .filter((favorite: FavoriteRecipes) => favorite.id !== currentDrink?.idDrink);
-      setFavorites(favoriteList);
+    if (currentDrink?.idDrink && path === 'drinks') {
+      if (!checkFavorite(currentDrink?.idDrink)) {
+        setFavorites([
+          ...getFavorites,
+          {
+            id: currentDrink?.idDrink,
+            type: 'drink',
+            nationality: currentDrink?.strArea || '',
+            category: currentDrink?.strCategory || '',
+            alcoholicOrNot: currentDrink?.strAlcoholic || '',
+            name: currentDrink?.strDrink,
+            image: currentDrink?.strDrinkThumb,
+          },
+        ]);
+      } else {
+        const favoriteList = getFavorites
+          .filter((favorite: FavoriteRecipes) => favorite.id !== currentDrink?.idDrink);
+        setFavorites(favoriteList);
+      }
     }
   };
 
   const handleShareBtn = () => {
     try {
       navigator.clipboard.writeText(currentUrl);
-      window.alert('Link copied!');
+      setIsCopied(true);
     } catch (error) {
-      window.alert('Failed to copy!');
+      console.error('Failed to copy:', error);
+      window.alert('Failed to copy the link!');
+      setIsCopied(false);
     }
   };
 
@@ -196,7 +227,9 @@ function RecipeInProgress() {
           isFavorite={ isFavorite }
           IngredientsList={ IngredientsList }
           mesureList={ mesureList }
+          instructionsList={ instructionsList }
           ingredientCheckedList={ ingredientCheckedList }
+          isCopied={ isCopied }
         />
       ) : (
         <DrinkInProgress
@@ -208,7 +241,9 @@ function RecipeInProgress() {
           isFavorite={ isFavorite }
           IngredientsList={ IngredientsList }
           mesureList={ mesureList }
+          instructionsList={ instructionsList }
           ingredientCheckedList={ ingredientCheckedList }
+          isCopied={ isCopied }
         />
       )}
     </div>

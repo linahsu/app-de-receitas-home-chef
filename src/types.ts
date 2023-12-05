@@ -24,16 +24,26 @@ export type CategoryType = {
   strCategory: string,
 };
 
+// Adicionadas a chaves strCategory, strArea, strInstructions e strTags
 export type MealType = {
   idMeal: string,
   strMeal: string,
   strMealThumb?: string,
+  strCategory: string,
+  strArea: string,
+  strInstructions: string,
+  strTags: string
 };
 
+// Adicionadas as chaves strAlcoholic, strArea e strTags
 export type DrinkType = {
-  idDrink:string,
-  strDrink:string,
+  idDrink: string,
+  strDrink: string,
   strDrinkThumb?: string,
+  strAlcoholic: string,
+  strArea: string,
+  strInstructions: string,
+  strTags: string,
 };
 
 export type RecipeType = {
@@ -164,4 +174,35 @@ export type MealDetailsType = {
   strMeasure20: string | null;
   strSource: string | null;
   dateModified: string | null;
+};
+
+export type DoneRecipes = {
+  id: string,
+  type: string,
+  nationality: string | null,
+  category: string | null,
+  alcoholicOrNot: string | null,
+  name: string,
+  image: string,
+  doneDate: string,
+  tags: string[] | null,
+};
+
+export type FavoriteRecipes = {
+  id: string,
+  type: string,
+  nationality: string | null,
+  category: string | null,
+  alcoholicOrNot: string | null,
+  name: string,
+  image: string,
+};
+
+export type InProgressRecipes = {
+  drinks: {
+    [id: string]: string[],
+  },
+  meals: {
+    [id: string]: string[],
+  }
 };

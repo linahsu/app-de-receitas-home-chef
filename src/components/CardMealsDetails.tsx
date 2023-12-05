@@ -1,16 +1,18 @@
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DoneRecipes, RootState } from '../types';
+import { RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
-import useLocalStorage from '../hooks/useLocalStorage';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 type CardMealsDetailsProps = {
   handleFavoriteBtn: () => void,
   handleshareBtn: () => void,
   isFavorite: boolean,
   isCopied: boolean,
+  hideButton: boolean,
+  buttonText: string,
 };
 
 export default function CardMealsDetails({
@@ -18,39 +20,11 @@ export default function CardMealsDetails({
   handleshareBtn,
   isFavorite,
   isCopied,
+  hideButton,
+  buttonText,
 }: CardMealsDetailsProps) {
   const { detailsMeal, allDrinks } = useSelector((state: RootState) => state.mainReducer);
   const navigate = useNavigate();
-
-  const [hideButton, setHideButton] = useState(false);
-  const [buttonText, setButtonText] = useState('Start Recipe');
-
-  const doneRecipes = useLocalStorage('doneRecipes')[0];
-  const inProgressRecipes = useLocalStorage('inProgressRecipes')[0];
-
-  const isMealDone = () => {
-    setHideButton(
-      doneRecipes.some((recipe: DoneRecipes) => recipe.id === detailsMeal.idMeal),
-    );
-  };
-
-  const isMealInProgress = () => {
-    // if (Object.keys(inProgressRecipes.drinks).includes(detailsDrink.idDrink))
-    if (Object.keys(inProgressRecipes.meals).includes(detailsMeal.idMeal)) {
-      setButtonText('Continue Recipe');
-    } else {
-      setButtonText('Start Recipe');
-    }
-  };
-
-  useEffect(() => {
-    if (doneRecipes) {
-      isMealDone();
-    }
-    if (inProgressRecipes) {
-      isMealInProgress();
-    }
-  }, [detailsMeal]);
 
   return (
     <div>
@@ -60,6 +34,7 @@ export default function CardMealsDetails({
             src={ detailsMeal.strMealThumb }
             alt="Foto da comida"
             data-testid="recipe-photo"
+            style={ { width: '300px' } }
           />
           <h2 data-testid="recipe-title">{detailsMeal.strMeal}</h2>
           <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
@@ -109,14 +84,14 @@ export default function CardMealsDetails({
           </section>
 
           <button
-            data-testid="favorite-btn"
+            // data-testid="favorite-btn"
             onClick={ handleFavoriteBtn }
           >
-            {isFavorite ? (
-              <img src="/src/images/blackHeartIcon.svg" alt="Black heart" />
-            ) : (
-              <img src="/src/images/whiteHeartIcon.svg" alt="White heart" />
-            )}
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
+            />
           </button>
 
           <button

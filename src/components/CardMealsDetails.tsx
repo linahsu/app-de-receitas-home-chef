@@ -5,6 +5,8 @@ import { DoneRecipes, RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
 import useLocalStorage from '../hooks/useLocalStorage';
+import ShareBtn from './ShareBtn';
+import FavoriteBtn from './FavoriteBtn';
 
 export default function CardMealsDetails() {
   const { detailsMeal, allDrinks } = useSelector((state: RootState) => state.mainReducer);
@@ -109,6 +111,8 @@ export default function CardMealsDetails() {
               )
               : <p />
           }
+          <ShareBtn />
+          <FavoriteBtn recipe={detailsMeal} type="meal"/>
           <RecommendedRecipes />
           <Footer />
         </>

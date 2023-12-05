@@ -5,6 +5,7 @@ import { DoneRecipes, RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
 import useLocalStorage from '../hooks/useLocalStorage';
+import ShareBtn from './ShareBtn';
 
 export default function CardDrinkDetails() {
   const { detailsDrink, allMeals } = useSelector((state: RootState) => state.mainReducer);
@@ -93,6 +94,11 @@ export default function CardDrinkDetails() {
               )
               : <p />
           }
+          <ShareBtn />
+
+          <button data-testid="favorite-btn">
+            Favorite
+          </button>
           <RecommendedRecipes />
           <Footer />
         </>

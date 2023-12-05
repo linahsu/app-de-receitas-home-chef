@@ -16,38 +16,51 @@ function RecipeDetails() {
   const [, category, id] = pathname.split('/');
   const currentUrl = window.location.href;
 
-  const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
+  const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes', []);
   // const [getProgress, setProgress] = useLocalStorage('inProgressRecipes');
   // const [getDoneRecipes, setDoneRecipes] = useLocalStorage('doneRecipes');
 
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const {
     detailsDrink,
     detailsMeal,
   } = useSelector((state: RootState) => state.mainReducer);
 
-  // Faz o fetch de acordo com a categoria do pathname
-  useEffect(() => {
-    if (category === 'meals') {
-      fetchMealById(id).then((data) => dispatch(ActionDetailsMeal(data)));
-      fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
-    }
-    if (category === 'drinks') {
-      fetchDrinkById(id).then((data) => dispatch(ActionDetailsDrink(data)));
-      fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
-    }
-  }, [category, id, dispatch]);
-
   const checkFavorite = (recepeId: string) => {
     return getFavorites
       .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
   };
 
+  // Faz o fetch de acordo com a categoria do pathname
+  useEffect(() => {
+    setIsCopied(false);
+    if (category === 'meals') {
+      fetchMealById(id).then((data) => dispatch(ActionDetailsMeal(data)));
+      fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
+      return checkFavorite(detailsMeal.idMeal) ? (
+        setIsFavorite(true)
+      ) : (
+        setIsFavorite(false)
+      );
+    }
+    if (category === 'drinks') {
+      fetchDrinkById(id).then((data) => dispatch(ActionDetailsDrink(data)));
+      fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
+      return checkFavorite(detailsDrink.idDrink) ? (
+        setIsFavorite(true)
+      ) : (
+        setIsFavorite(false)
+      );
+    }
+  }, [category, id, dispatch, detailsDrink.idDrink, detailsMeal.idMeal]);
+
   const handleFavoriteBtn = () => {
     setIsFavorite(!isFavorite);
-    if (detailsMeal) {
-      if (!checkFavorite(detailsMeal?.idMeal) && category === 'meals') {
+    if (detailsMeal.idMeal && category === 'meals') {
+      if (!checkFavorite(detailsMeal?.idMeal)) {
+        console.log('meals');
         setFavorites([
           ...getFavorites,
           {
@@ -67,8 +80,8 @@ function RecipeDetails() {
       }
     }
 
-    if (detailsDrink) {
-      if (!checkFavorite(detailsDrink?.idDrink) && category === 'drinks') {
+    if (detailsDrink.idDrink && category === 'drinks') {
+      if (!checkFavorite(detailsDrink?.idDrink)) {
         setFavorites([
           ...getFavorites,
           {
@@ -92,9 +105,11 @@ function RecipeDetails() {
   const handleShareBtn = () => {
     try {
       navigator.clipboard.writeText(currentUrl);
-      window.alert('Link copied!');
+      setIsCopied(true);
     } catch (error) {
-      window.alert('Failed to copy!');
+      console.error('Failed to copy:', error);
+      window.alert('Failed to copy the link!');
+      setIsCopied(false);
     }
   };
 
@@ -107,6 +122,7 @@ function RecipeDetails() {
             handleFavoriteBtn={ handleFavoriteBtn }
             handleshareBtn={ handleShareBtn }
             isFavorite={ isFavorite }
+            isCopied={ isCopied }
           />
         </div>
       ) : (
@@ -116,6 +132,7 @@ function RecipeDetails() {
             handleFavoriteBtn={ handleFavoriteBtn }
             handleshareBtn={ handleShareBtn }
             isFavorite={ isFavorite }
+            isCopied={ isCopied }
           />
         </div>
       )}

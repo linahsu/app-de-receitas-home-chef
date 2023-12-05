@@ -8,12 +8,14 @@ type CardDrinksDetailsProps = {
   handleFavoriteBtn: () => void,
   handleshareBtn: () => void,
   isFavorite: boolean,
+  isCopied: boolean,
 };
 
 export default function CardDrinkDetails({
   handleFavoriteBtn,
   handleshareBtn,
   isFavorite,
+  isCopied,
 }: CardDrinksDetailsProps) {
   const { detailsDrink, allMeals } = useSelector((state: RootState) => state.mainReducer);
   return (
@@ -56,13 +58,6 @@ export default function CardDrinkDetails({
           </section>
 
           <button
-            data-testid="share-btn"
-            onClick={ handleshareBtn }
-          >
-            <img src="/src/images/shareIcon.svg" alt="Share icon" />
-          </button>
-
-          <button
             data-testid="favorite-btn"
             onClick={ handleFavoriteBtn }
           >
@@ -72,6 +67,15 @@ export default function CardDrinkDetails({
               <img src="/src/images/whiteHeartIcon.svg" alt="White heart" />
             )}
           </button>
+
+          <button
+            data-testid="share-btn"
+            onClick={ handleshareBtn }
+          >
+            <img src="/src/images/shareIcon.svg" alt="Share icon" />
+          </button>
+
+          {isCopied && <p>Link copied!</p>}
 
           <RecommendedRecipes />
 

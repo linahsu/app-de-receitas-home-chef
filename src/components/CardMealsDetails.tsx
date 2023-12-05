@@ -5,10 +5,20 @@ import { DoneRecipes, RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
 import useLocalStorage from '../hooks/useLocalStorage';
-import ShareBtn from './ShareBtn';
-import FavoriteBtn from './FavoriteBtn';
 
-export default function CardMealsDetails() {
+type CardMealsDetailsProps = {
+  handleFavoriteBtn: () => void,
+  handleshareBtn: () => void,
+  isFavorite: boolean,
+  isCopied: boolean,
+};
+
+export default function CardMealsDetails({
+  handleFavoriteBtn,
+  handleshareBtn,
+  isFavorite,
+  isCopied,
+}: CardMealsDetailsProps) {
   const { detailsMeal, allDrinks } = useSelector((state: RootState) => state.mainReducer);
   const navigate = useNavigate();
 
@@ -45,7 +55,7 @@ export default function CardMealsDetails() {
   return (
     <div>
       {allDrinks.length > 0 && Object.keys(detailsMeal).length > 0 && (
-        <>
+        <div>
           <img
             src={ detailsMeal.strMealThumb }
             alt="Foto da comida"
@@ -97,25 +107,43 @@ export default function CardMealsDetails() {
                 data-testid="video"
               />}
           </section>
-          {
-            !hideButton
-              ? (
-                <button
-                  className="start-recipe-btn"
-                  data-testid="start-recipe-btn"
-                  onClick={ () => navigate(`/meals/${detailsMeal.idMeal}/in-progress`) }
-                >
-                  { buttonText }
-                </button>
 
-              )
-              : <p />
-          }
-          <ShareBtn />
-          <FavoriteBtn recipe={detailsMeal} type="meal"/>
+          <button
+            data-testid="favorite-btn"
+            onClick={ handleFavoriteBtn }
+          >
+            {isFavorite ? (
+              <img src="/src/images/blackHeartIcon.svg" alt="Black heart" />
+            ) : (
+              <img src="/src/images/whiteHeartIcon.svg" alt="White heart" />
+            )}
+          </button>
+
+          <button
+            data-testid="share-btn"
+            onClick={ handleshareBtn }
+          >
+            <img src="/src/images/shareIcon.svg" alt="Share icon" />
+          </button>
+
+          {isCopied && <p>Link copied!</p>}
+
+          {!hideButton
+            ? (
+              <button
+                className="start-recipe-btn"
+                data-testid="start-recipe-btn"
+                onClick={ () => navigate(`/meals/${detailsMeal.idMeal}/in-progress`) }
+              >
+                { buttonText }
+              </button>
+
+            )
+            : <p />}
+
           <RecommendedRecipes />
           <Footer />
-        </>
+        </div>
       )}
     </div>
   );

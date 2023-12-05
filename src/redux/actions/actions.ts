@@ -1,10 +1,43 @@
-import { Dispatch, DrinkType, LoginType, MealType, SearchType } from '../../types';
+import { Dispatch, DrinkType, LoginType,
+  MealDetailsType, MealType, SearchType } from '../../types';
 
 export const LOGIN = 'LOGIN';
 export const CHANGE_PLACE = 'CHANGE_PLACE';
 export const CHANGE_DRINKS = 'CHANGE_DRINKS';
 export const CHANGE_MEALS = 'CHANGE_MEALS';
 export const DINAMIC_RECIPE = 'DINAMIC_RECIPE';
+export const DETAILS_DRINK = 'DETAILS_DRINK';
+export const DETAILS_MEAL = 'DETAILS_MEAL';
+export const ALL_MEALS = 'ALL_MEALS';
+export const ALL_DRINKS = 'ALL_DRINKS';
+
+export const AllMealsAction = (meals: MealType[]) => {
+  return {
+    type: ALL_MEALS,
+    payload: meals,
+  };
+};
+
+export const AllDrinksAction = (drinks: DrinkType[]) => {
+  return {
+    type: ALL_DRINKS,
+    payload: drinks,
+  };
+};
+
+export const ActionDetailsDrink = (drink: DrinkType) => {
+  return {
+    type: DETAILS_DRINK,
+    payload: drink,
+  };
+};
+
+export const ActionDetailsMeal = (meal: MealDetailsType) => {
+  return {
+    type: DETAILS_MEAL,
+    payload: meal,
+  };
+};
 
 export const ActionLogin = (user: LoginType) => {
   return {

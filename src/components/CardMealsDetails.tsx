@@ -4,9 +4,11 @@ import { DoneRecipes, RootState } from '../types';
 import RecommendedRecipes from './RecommendedRecipes/RecommendedRecipes';
 import Footer from './Footer';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
 
 export default function CardMealsDetails() {
   const { detailsMeal, allDrinks } = useSelector((state: RootState) => state.mainReducer);
+  const navigate = useNavigate();
 
   const [hideButton, setHideButton] = useState(false);
   const [buttonText, setButtonText] = useState('Start Recipe');
@@ -99,6 +101,7 @@ export default function CardMealsDetails() {
                 <button
                   className="start-recipe-btn"
                   data-testid="start-recipe-btn"
+                  onClick={() => navigate(`/meals/${detailsMeal.idMeal}/in-progress`)}
                 >
                   { buttonText }
                 </button>

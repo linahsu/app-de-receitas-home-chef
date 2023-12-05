@@ -13,15 +13,23 @@
 .footer {
   bottom: 0;
   position: fixed;
+  left: 50%;
+  bottom: 20px;
 }
 
+
+/* ESSE CSS (.footer e .start-recipe-btn) INFLUENCIAM OS TESTES
+  O Cypress dá erro se Footer se sobrepõe ao Start Recipe e vice-versa;
+  Ambos precisam obrigatoriamente ter 'position: fixed' e 'bottom: 0';
+  Não esquecer disso na hora de estilizar! --felipe
+*/
 .start-recipe-btn {
   bottom: 0;
+  right: 0;
   position: fixed;
   margin: auto;
-  width: 30%;
+  width: 20%;
   padding: 10px;
-  
 }
 
 .rocksGlass {

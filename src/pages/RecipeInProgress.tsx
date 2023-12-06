@@ -91,13 +91,8 @@ function RecipeInProgress() {
     }
   }, []);
 
-  const ingredientCheck = (
-    place: string,
-    currentRecipe: any,
-    idRecepe: string,
-    index: number,
-  ) => {
-    setIngredientCheckedList(getProgress[place][currentRecipe?.[idRecepe]]);
+  const ingredientCheck = (place: string, index: number) => {
+    setIngredientCheckedList(getProgress[place][id]);
 
     if (!ingredientCheckedList?.includes(index.toString())) {
       setIngredientCheckedList([
@@ -113,21 +108,21 @@ function RecipeInProgress() {
 
     setProgress({
       ...getProgress,
-      meals: {
-        ...getProgress.meals,
-        [currentRecipe?.[idRecepe]]: [...ingredientCheckedList, index.toString()],
+      [place]: {
+        ...getProgress[place],
+        [id]: [...ingredientCheckedList, index.toString()],
       },
     });
   };
 
   const handleIngredientCheck = (index: number) => {
-    if (currentMeal) {
-      ingredientCheck('meals', currentMeal, 'idMeal', index);
-      setSavedIngredientsMeals(getProgress.meals[currentMeal?.idMeal]);
+    if (path === 'meals') {
+      ingredientCheck('meals', index);
+      // setSavedIngredientsMeals(getProgress.meals[currentMeal?.idMeal]);
     }
-    if (currentDrink) {
-      ingredientCheck('drinks', currentDrink, 'idDrink', index);
-      setSavedIngredientsDrinks(getProgress.drinks[currentDrink?.idDrink]);
+    if (path === 'drinks') {
+      ingredientCheck('drinks', index);
+      // setSavedIngredientsDrinks(getProgress.drinks[currentDrink?.idDrink]);
     }
   };
 

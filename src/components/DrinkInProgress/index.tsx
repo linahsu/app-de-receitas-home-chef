@@ -5,6 +5,7 @@ import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 import './DrinkInProcess.css';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 function DrinkInProgress({
   currentDrink,
@@ -19,9 +20,12 @@ function DrinkInProgress({
   savedIngredientsDrinks,
 }: InProgressProps) {
   const { detailsDrink } = useSelector((state: RootState) => state.mainReducer);
+  const [getProgress] = useLocalStorage('inProgressRecipes');
   const [isCopied, setIsCopied] = useState(false);
   const currentUrl = window.location.href;
   const recipeUrl = currentUrl.split('/in-progress')[0];
+
+  console.log(getProgress);
 
   const handleShareBtn = () => {
     try {

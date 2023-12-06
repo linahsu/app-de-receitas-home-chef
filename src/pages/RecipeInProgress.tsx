@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router';
-import { FavoriteRecipes, MealType, DrinkType, RootState } from '../types';
+import { FavoriteRecipes, MealType, DrinkType, RootState, MealDetailsType, DrinkDetailsType } from '../types';
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
 import DrinkInProgress from '../components/DrinkInProgress';
-import { fetchAllCocktails } from '../utils/apiDrinks';
-import { fetchAllMeals } from '../utils/apiMeals';
-import { AllDrinksAction, AllMealsAction } from '../redux/actions/actions';
+import { fetchAllCocktails, fetchDrinkById } from '../utils/apiDrinks';
+import { fetchAllMeals, fetchMealById } from '../utils/apiMeals';
+import { AllDrinksAction, AllMealsAction, ActionDetailsDrink, ActionDetailsMeal } from '../redux/actions/actions';
 
 function RecipeInProgress() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const [, path, id] = pathname.split('/');
   const navigate = useNavigate();
-  const { allMeals, allDrinks } = useSelector(
+  const { detailsMeal, detailsDrink } = useSelector(
     (globalState: RootState) => globalState.mainReducer,
   );
-  const currentMeal = allMeals.find((meal) => meal.idMeal === id);
-  const currentDrink = allDrinks.find((drink) => drink.idDrink === id);
+  const currentMeal = detailsMeal;
+  const currentDrink = detailsDrink;
 
   const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes', []);
   const [
@@ -37,7 +37,7 @@ function RecipeInProgress() {
       .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
   };
 
-  const createRecipeLists = (currentRecipe: MealType | DrinkType | undefined) => {
+  const createRecipeLists = (currentRecipe: MealDetailsType | DrinkDetailsType | undefined) => {
     const details = Object.entries(currentRecipe || {});
     const ingredients = details
       .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== '');
@@ -62,7 +62,7 @@ function RecipeInProgress() {
 
   useEffect(() => {
     if (path === 'meals') {
-      fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
+      fetchMealById(id).then((data) => dispatch(ActionDetailsMeal(data)));
       return checkFavorite(id) ? (
         setIsFavorite(true)
       ) : (
@@ -70,7 +70,7 @@ function RecipeInProgress() {
       );
     }
     if (path === 'drinks') {
-      fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
+      fetchDrinkById(id).then((data) => dispatch(ActionDetailsDrink(data)));
       return checkFavorite(id) ? (
         setIsFavorite(true)
       ) : (

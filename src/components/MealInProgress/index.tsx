@@ -1,10 +1,9 @@
 import './MealInProgress.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, InProgressProps } from '../../types';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
-import useLocalStorage from '../../hooks/useLocalStorage';
 
 function MealInProgress({
   currentMeal,
@@ -45,7 +44,11 @@ function MealInProgress({
             { `Category: ${currentMeal.strCategory}` }
           </h4>
 
-          <img src={ currentMeal.strMealThumb } alt="Imagem da receita" />
+          <img
+            data-testid="recipe-photo"
+            src={ currentMeal.strMealThumb }
+            alt="Imagem da receita"
+          />
 
           <div>
             <button

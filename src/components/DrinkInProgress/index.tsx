@@ -43,7 +43,11 @@ function DrinkInProgress({
             { `Category: ${currentDrink.strAlcoholic}` }
           </h4>
 
-          <img src={ currentDrink.strDrinkThumb } alt="Imagem da receita" />
+          <img
+            data-testid="recipe-photo"
+            src={ currentDrink.strDrinkThumb }
+            alt="Imagem da receita"
+          />
 
           <div>
             <button

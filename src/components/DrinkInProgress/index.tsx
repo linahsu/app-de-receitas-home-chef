@@ -1,11 +1,10 @@
+import './DrinkInProcess.css';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { RootState, InProgressProps } from '../../types';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
-
-import './DrinkInProcess.css';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 function DrinkInProgress({
@@ -94,8 +93,8 @@ function DrinkInProgress({
                 <input
                   type="checkbox"
                   id={ `${index}` }
-                  onClick={ () => handleIngredientCheck(index) }
-                  checked={ isCheckedList.includes(index.toString()) }
+                  onChange={ () => handleIngredientCheck(index) }
+                  // checked={ isCheckedList.includes(index.toString()) }
                 />
                 <label
                   htmlFor={ `${index}` }

@@ -20,11 +20,11 @@ function RecipeInProgress() {
   const currentMeal = allMeals.find((meal) => meal.idMeal === id);
   const currentDrink = allDrinks.find((drink) => drink.idDrink === id);
 
-  const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
+  const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes', []);
   const [
     getProgress, setProgress,
   ] = useLocalStorage('inProgressRecipes', { drinks: {}, meals: {} });
-  const [getDoneRecipes, setDoneRecipes] = useLocalStorage('doneRecipes');
+  const [getDoneRecipes, setDoneRecipes] = useLocalStorage('doneRecipes', []);
 
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -166,14 +166,14 @@ function RecipeInProgress() {
   };
 
   const handleFinishBtn = () => {
-    if (!getDoneRecipes.includes(currentMeal?.idMeal)) {
+    if (path === 'meals') {
       setDoneRecipes([
         ...getDoneRecipes,
         {
           id: currentMeal?.idMeal,
           type: 'meal',
-          area: currentMeal?.strArea,
-          category: currentMeal?.strCategory,
+          nationality: currentMeal?.strArea || '',
+          category: currentMeal?.strCategory || '',
           alcoholicOrNot: '',
           name: currentMeal?.strMeal,
           image: currentMeal?.strMealThumb,
@@ -182,15 +182,15 @@ function RecipeInProgress() {
         },
       ]);
     }
-    if (!getDoneRecipes.includes(currentDrink?.idDrink)) {
+    if (path === 'drinks') {
       setDoneRecipes([
         ...getDoneRecipes,
         {
           id: currentDrink?.idDrink,
           type: 'drink',
-          area: currentDrink?.strArea,
-          category: '',
-          alcoholicOrNot: currentDrink?.strAlcoholic,
+          nationality: currentDrink?.strArea || '',
+          category: currentDrink?.strCategory || '',
+          alcoholicOrNot: currentDrink?.strAlcoholic || '',
           name: currentDrink?.strDrink,
           image: currentDrink?.strDrinkThumb,
           doneDate: new Date().toLocaleDateString(),

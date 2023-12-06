@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router';
-import { FavoriteRecipes, MealType, DrinkType, RootState, InProgressRecipes } from '../types';
+import { FavoriteRecipes, MealType, DrinkType, RootState } from '../types';
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
 import DrinkInProgress from '../components/DrinkInProgress';
@@ -28,10 +28,16 @@ function RecipeInProgress() {
   const [getDoneRecipes, setDoneRecipes] = useLocalStorage('doneRecipes');
 
   const [isFavorite, setIsFavorite] = useState(false);
+
   const [IngredientsList, setIngredientsList] = useState<[string, string][]>([]);
   const [mesureList, setMesureList] = useState<[string, string][]>([]);
   const [instructionsList, setInstructionsList] = useState<[string, string][]>([]);
+
   const [ingredientCheckedList, setIngredientCheckedList] = useState<string[]>([]);
+  const [savedIngredientsMeals, setSavedIngredientsMeals] = useState<string[]>([]);
+  const [savedIngredientsDrinks, setSavedIngredientsDrinks] = useState<string[]>([]);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const checkFavorite = (recepeId: string) => {
     return getFavorites
@@ -53,6 +59,7 @@ function RecipeInProgress() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
     fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
     if (currentMeal) {
@@ -61,18 +68,8 @@ function RecipeInProgress() {
     if (currentDrink) {
       createRecipeLists(currentDrink);
     }
+    setIsLoading(false);
   }, []);
-
-  // const checkRecipesInProgress = (recepeId: string, place: string) => {
-  //   if (place === 'meals') {
-  //     return Object.keys(getProgress.meals)
-  //       .some((recipe: string) => recipe === recepeId);
-  //   }
-  //   if (place === 'drinks') {
-  //     return Object.keys(getProgress.drinks)
-  //       .some((recipe: string) => recipe === recepeId);
-  //   }
-  // };
 
   const ingredientCheck = (
     place: string,
@@ -94,7 +91,6 @@ function RecipeInProgress() {
     }
     console.log(ingredientCheckedList);
 
-    // if (!checkRecipesInProgress(currentRecipe?.[idRecepe], place)) {
     setProgress({
       ...getProgress,
       meals: {
@@ -102,19 +98,17 @@ function RecipeInProgress() {
         [currentRecipe?.[idRecepe]]: [...ingredientCheckedList, index.toString()],
       },
     });
-    // }
-    // else {
-    //   const newCheckedList = ingredientCheckedList
-    //     .filter((ingredient: number) => ingredient !== index);
-    //   setIngredientCheckedList(newCheckedList);
-    // }
-
-    // const savedIngredients: string[] = getProgress[place][currentRecipe?.[idRecepe]];
   };
 
   const handleIngredientCheck = (index: number) => {
-    if (currentMeal) ingredientCheck('meals', currentMeal, 'idMeal', index);
-    if (currentDrink) ingredientCheck('drinks', currentDrink, 'idDrink', index);
+    if (currentMeal) {
+      ingredientCheck('meals', currentMeal, 'idMeal', index);
+      setSavedIngredientsMeals(getProgress.meals[currentMeal?.idMeal]);
+    }
+    if (currentDrink) {
+      ingredientCheck('drinks', currentDrink, 'idDrink', index);
+      setSavedIngredientsDrinks(getProgress.drinks[currentDrink?.idDrink]);
+    }
   };
 
   const handleFavoriteBtn = () => {
@@ -198,6 +192,9 @@ function RecipeInProgress() {
     }
     navigate('/done-recipes');
   };
+  console.log(isLoading);
+  
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div>
@@ -212,6 +209,7 @@ function RecipeInProgress() {
           mesureList={ mesureList }
           instructionsList={ instructionsList }
           ingredientCheckedList={ ingredientCheckedList }
+          savedIngredientsMeals={ savedIngredientsMeals }
         />
       ) : (
         <DrinkInProgress
@@ -224,6 +222,7 @@ function RecipeInProgress() {
           mesureList={ mesureList }
           instructionsList={ instructionsList }
           ingredientCheckedList={ ingredientCheckedList }
+          savedIngredientsDrinks={ savedIngredientsDrinks }
         />
       )}
     </div>

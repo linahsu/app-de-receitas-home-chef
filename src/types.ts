@@ -218,5 +218,7 @@ export type InProgressProps = {
   IngredientsList: string[][];
   mesureList: string[][];
   instructionsList: [string, string][];
-  ingredientCheckedList: number[];
+  ingredientCheckedList: string[];
+  savedIngredientsMeals?: string[];
+  savedIngredientsDrinks?: string[];
 };

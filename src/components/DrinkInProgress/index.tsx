@@ -14,6 +14,7 @@ function DrinkInProgress({
   mesureList,
   instructionsList,
   ingredientCheckedList,
+  savedIngredientsDrinks,
 }: InProgressProps) {
   const { allDrinks } = useSelector((state: RootState) => state.mainReducer);
   const [isCopied, setIsCopied] = useState(false);
@@ -79,7 +80,7 @@ function DrinkInProgress({
                   data-testid={ `${index}-ingredient-step` }
                   htmlFor={ `${index}` }
                   className={
-                ingredientCheckedList.includes(index) ? 'checked' : undefined
+                ingredientCheckedList.includes(index.toString()) ? 'checked' : undefined
               }
                 >
                   {`${ingredient[1]}: ${mesureList[index][1]}`}

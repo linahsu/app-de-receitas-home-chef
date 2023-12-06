@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState, InProgressProps } from '../../types';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 function MealInProgress({
   currentMeal,
@@ -15,10 +16,22 @@ function MealInProgress({
   mesureList,
   instructionsList,
   ingredientCheckedList,
+  savedIngredientsMeals,
 }: InProgressProps) {
   const { allMeals } = useSelector((state: RootState) => state.mainReducer);
   const [isCopied, setIsCopied] = useState(false);
   const currentUrl = window.location.href;
+
+  // const [getProgress] = useLocalStorage('inProgressRecipes');
+  // const isChecked = (index: number) => {
+  //   return Object
+  //     .values(getProgress.meals)[0]
+  //     .includes(index.toString());
+  // };
+  // // const ingredientsLocalStorage = Object
+  // //   .values(getProgress.meals)[0] as string[] | undefined;
+
+  // console.log(ingredientsLocalStorage);
 
   const handleShareBtn = () => {
     try {
@@ -75,12 +88,15 @@ function MealInProgress({
                   type="checkbox"
                   id={ `${index}` }
                   onChange={ () => handleIngredientCheck(index) }
+                  checked={
+                    ingredientCheckedList.includes(index.toString())
+                  }
                 />
                 <label
                   data-testid={ `${index}-ingredient-step` }
                   htmlFor={ `${index}` }
                   className={
-                    ingredientCheckedList.includes(index) ? 'checked' : undefined
+                ingredientCheckedList.includes(index.toString()) ? 'checked' : undefined
                   }
                 >
                   {`${ingredient[1]}: ${mesureList[index][1]}`}

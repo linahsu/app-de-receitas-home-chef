@@ -29,46 +29,48 @@ function RecipeInProgress() {
 
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const [IngredientsList, setIngredientsList] = useState<[string, string][]>([]);
-  const [mesureList, setMesureList] = useState<[string, string][]>([]);
-  const [instructionsList, setInstructionsList] = useState<[string, string][]>([]);
+  // const [IngredientsList, setIngredientsList] = useState<[string, string][]>([]);
+  // const [mesureList, setMesureList] = useState<[string, string][]>([]);
+  // const [instructionsList, setInstructionsList] = useState<[string, string][]>([]);
 
   const [ingredientCheckedList, setIngredientCheckedList] = useState<string[]>([]);
   const [savedIngredientsMeals, setSavedIngredientsMeals] = useState<string[]>([]);
   const [savedIngredientsDrinks, setSavedIngredientsDrinks] = useState<string[]>([]);
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const checkFavorite = (recepeId: string) => {
     return getFavorites
       .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
   };
 
-  const createRecipeLists = (currentRecipe: MealType | DrinkType) => {
-    const details = Object.entries(currentRecipe);
-    const Ingredients = details
+  const createRecipeLists = (currentRecipe: MealType | DrinkType | undefined) => {
+    const details = Object.entries(currentRecipe || {});
+    const ingredients = details
       .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== '');
-    setIngredientsList(Ingredients);
+    // setIngredientsList(Ingredients);
 
     const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
-    setMesureList(mesure);
+    // setMesureList(mesure);
 
     const instructions = details
       .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== '');
-    setInstructionsList(instructions);
+    // setInstructionsList(instructions);
+
+    return {
+      ingredients,
+      mesure,
+      instructions,
+    };
   };
 
+  const {
+    ingredients,
+    mesure,
+    instructions,
+  } = createRecipeLists(currentMeal || currentDrink);
+
   useEffect(() => {
-    setIsLoading(true);
     fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
     fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
-    if (currentMeal) {
-      createRecipeLists(currentMeal);
-    }
-    if (currentDrink) {
-      createRecipeLists(currentDrink);
-    }
-    setIsLoading(false);
   }, []);
 
   const ingredientCheck = (
@@ -192,9 +194,6 @@ function RecipeInProgress() {
     }
     navigate('/done-recipes');
   };
-  console.log(isLoading);
-  
-  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div>
@@ -205,9 +204,9 @@ function RecipeInProgress() {
           handleIngredientCheck={ handleIngredientCheck }
           handleFinishBtn={ handleFinishBtn }
           isFavorite={ isFavorite }
-          IngredientsList={ IngredientsList }
-          mesureList={ mesureList }
-          instructionsList={ instructionsList }
+          IngredientsList={ ingredients }
+          mesureList={ mesure }
+          instructionsList={ instructions }
           ingredientCheckedList={ ingredientCheckedList }
           savedIngredientsMeals={ savedIngredientsMeals }
         />
@@ -218,9 +217,9 @@ function RecipeInProgress() {
           handleIngredientCheck={ handleIngredientCheck }
           handleFinishBtn={ handleFinishBtn }
           isFavorite={ isFavorite }
-          IngredientsList={ IngredientsList }
-          mesureList={ mesureList }
-          instructionsList={ instructionsList }
+          IngredientsList={ ingredients }
+          mesureList={ mesure }
+          instructionsList={ instructions }
           ingredientCheckedList={ ingredientCheckedList }
           savedIngredientsDrinks={ savedIngredientsDrinks }
         />

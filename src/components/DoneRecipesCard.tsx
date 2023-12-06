@@ -70,7 +70,7 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipes, index: number
               src="src/images/shareIcon.svg"
               alt="Share"
             />
-            { copiedMessage && <p>Link copied!</p> }
+            { copiedMessage && <p data-testid="horizontal-copied-msg">Link copied!</p> }
           </button>
         </>
       )
@@ -93,7 +93,7 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipes, index: number
               alt="Share"
             />
           </button>
-          { copiedMessage && <p>Link copied!</p>}
+          { copiedMessage && <p data-testid="horizontal-copied-msg">Link copied!</p>}
         </>
       )
   );

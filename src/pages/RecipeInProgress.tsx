@@ -104,7 +104,6 @@ function RecipeInProgress() {
         .filter((ingredient: string) => ingredient !== index.toString());
       setIngredientCheckedList(list);
     }
-    console.log(ingredientCheckedList);
 
     setProgress({
       ...getProgress,
@@ -150,7 +149,6 @@ function RecipeInProgress() {
     }
 
     if (currentDrink?.idDrink && path === 'drinks') {
-      console.log('teste');
       if (!checkFavorite(currentDrink?.idDrink)) {
         setFavorites([
           ...getFavorites,

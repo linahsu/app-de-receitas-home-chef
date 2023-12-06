@@ -33,8 +33,6 @@ function MealInProgress({
     }
   };
 
-  console.log(IngredientsList);
-
   return (
     <div>
       {detailsMeal.idMeal && currentMeal && IngredientsList.length > 0 && (

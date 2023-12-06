@@ -74,7 +74,7 @@ function MealInProgress({
                 <input
                   type="checkbox"
                   id={ `${index}` }
-                  onClick={ () => handleIngredientCheck(index) }
+                  onChange={ () => handleIngredientCheck(index) }
                 />
                 <label
                   data-testid={ `${index}-ingredient-step` }

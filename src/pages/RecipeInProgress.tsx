@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router';
-import { FavoriteRecipes, MealType, DrinkType, RootState } from '../types';
+import { FavoriteRecipes, MealType, DrinkType, RootState, InProgressRecipes } from '../types';
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
 import DrinkInProgress from '../components/DrinkInProgress';
@@ -22,14 +22,16 @@ function RecipeInProgress() {
   const currentDrink = allDrinks.find((drink) => drink.idDrink === idDaReceita);
 
   const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
-  const [getProgress, setProgress] = useLocalStorage('inProgressRecipes');
+  const [
+    getProgress, setProgress,
+  ] = useLocalStorage('inProgressRecipes', { drinks: {}, meals: {} });
   const [getDoneRecipes, setDoneRecipes] = useLocalStorage('doneRecipes');
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [IngredientsList, setIngredientsList] = useState<[string, string][]>([]);
   const [mesureList, setMesureList] = useState<[string, string][]>([]);
   const [instructionsList, setInstructionsList] = useState<[string, string][]>([]);
-  const [ingredientCheckedList, setIngredientCheckedList] = useState<number[]>([]);
+  const [ingredientCheckedList, setIngredientCheckedList] = useState<string[]>([]);
 
   const checkFavorite = (recepeId: string) => {
     return getFavorites
@@ -61,57 +63,58 @@ function RecipeInProgress() {
     }
   }, []);
 
+  // const checkRecipesInProgress = (recepeId: string, place: string) => {
+  //   if (place === 'meals') {
+  //     return Object.keys(getProgress.meals)
+  //       .some((recipe: string) => recipe === recepeId);
+  //   }
+  //   if (place === 'drinks') {
+  //     return Object.keys(getProgress.drinks)
+  //       .some((recipe: string) => recipe === recepeId);
+  //   }
+  // };
+
+  const ingredientCheck = (
+    place: string,
+    currentRecipe: any,
+    idRecepe: string,
+    index: number,
+  ) => {
+    setIngredientCheckedList(getProgress[place][currentRecipe?.[idRecepe]]);
+
+    if (!ingredientCheckedList?.includes(index.toString())) {
+      setIngredientCheckedList([
+        ...ingredientCheckedList,
+        index.toString(),
+      ]);
+    } else {
+      const list = ingredientCheckedList
+        .filter((ingredient: string) => ingredient !== index.toString());
+      setIngredientCheckedList(list);
+    }
+    console.log(ingredientCheckedList);
+
+    // if (!checkRecipesInProgress(currentRecipe?.[idRecepe], place)) {
+    setProgress({
+      ...getProgress,
+      meals: {
+        ...getProgress.meals,
+        [currentRecipe?.[idRecepe]]: [...ingredientCheckedList, index.toString()],
+      },
+    });
+    // }
+    // else {
+    //   const newCheckedList = ingredientCheckedList
+    //     .filter((ingredient: number) => ingredient !== index);
+    //   setIngredientCheckedList(newCheckedList);
+    // }
+
+    // const savedIngredients: string[] = getProgress[place][currentRecipe?.[idRecepe]];
+  };
+
   const handleIngredientCheck = (index: number) => {
-    if (currentMeal) {
-      const savedIngredients = getProgress.meals[currentMeal?.idMeal];
-
-      if (!savedIngredients.includes(index)) {
-        setIngredientCheckedList([
-          ...savedIngredients,
-          index,
-        ]);
-      } else {
-        const list = savedIngredients
-          .filter((ingredient: number) => ingredient !== index);
-        setIngredientCheckedList(list);
-      }
-
-      setProgress({
-        meals: {
-          ...getProgress,
-          [currentMeal?.idMeal]: savedIngredients.includes(index) ? (
-            savedIngredients.filter((ingredient: number) => ingredient !== index)
-          ) : (
-            [...ingredientCheckedList, index]
-          ),
-        },
-      });
-    }
-    if (currentDrink) {
-      const savedIngredients = getProgress.meals[currentDrink?.idDrink];
-
-      if (!savedIngredients.includes(index)) {
-        setIngredientCheckedList([
-          ...savedIngredients,
-          index,
-        ]);
-      } else {
-        const list = savedIngredients
-          .filter((ingredient: number) => ingredient !== index);
-        setIngredientCheckedList(list);
-      }
-
-      setProgress({
-        meals: {
-          ...getProgress,
-          [currentDrink?.idDrink]: savedIngredients.includes(index) ? (
-            savedIngredients.filter((ingredient: number) => ingredient !== index)
-          ) : (
-            [...ingredientCheckedList, index]
-          ),
-        },
-      });
-    }
+    if (currentMeal) ingredientCheck('meals', currentMeal, 'idMeal', index);
+    if (currentDrink) ingredientCheck('drinks', currentDrink, 'idDrink', index);
   };
 
   const handleFavoriteBtn = () => {

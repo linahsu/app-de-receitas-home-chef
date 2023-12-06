@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { DoneRecipes } from '../types';
+import { DoneRecipeType } from '../types';
 import DoneRecipesCard from '../components/DoneRecipesCard';
 import Footer from '../components/Footer';
 
 function DoneRecipes() {
   const storedRecipes = useLocalStorage('doneRecipes', [])[0];
 
-  const [shownRecipes, setShownRecipes] = useState<Array<DoneRecipes>>(storedRecipes);
+  const [shownRecipes, setShownRecipes] = useState<Array<DoneRecipeType>>(storedRecipes);
 
   const filterRecipes = (filter: string) => {
     // Limpando todos filtros anteriores antes de filtrar de novo,
@@ -16,7 +16,7 @@ function DoneRecipes() {
 
     if (filter !== 'all') {
       setShownRecipes(
-        storedRecipes.filter((recipe: DoneRecipes) => recipe.type === filter),
+        storedRecipes.filter((recipe: DoneRecipeType) => recipe.type === filter),
       );
     }
   };

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { DoneRecipes } from '../types';
+import { DoneRecipeType } from '../types';
 
-function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipes, index: number }) {
+function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: number }) {
   const [copiedMessage, setCopiedMessage] = useState(false);
 
   const copyURLToClipboard = (type: string, id: string) => {

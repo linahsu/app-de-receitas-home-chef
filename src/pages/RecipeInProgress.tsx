@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router';
-import { FavoriteRecipes, RootState, MealDetailsType, DrinkDetailsType } from '../types';
+import { FavoriteRecipeType,
+  RootState, MealDetailsType,
+  DrinkDetailsType } from '../types';
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
 import DrinkInProgress from '../components/DrinkInProgress';
@@ -34,7 +36,7 @@ function RecipeInProgress() {
 
   const checkFavorite = (recepeId: string) => {
     return getFavorites
-      .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
+      .some((favorite: FavoriteRecipeType) => favorite.id === recepeId);
   };
 
   const createRecipeLists = (
@@ -147,7 +149,7 @@ function RecipeInProgress() {
         ]);
       } else {
         const favoriteList = getFavorites
-          .filter((favorite: FavoriteRecipes) => favorite.id !== currentMeal?.idMeal);
+          .filter((favorite: FavoriteRecipeType) => favorite.id !== currentMeal?.idMeal);
         setFavorites(favoriteList);
       }
     }
@@ -169,7 +171,8 @@ function RecipeInProgress() {
         ]);
       } else {
         const favoriteList = getFavorites
-          .filter((favorite: FavoriteRecipes) => favorite.id !== currentDrink?.idDrink);
+          .filter((favorite: FavoriteRecipeType) => (
+            favorite.id !== currentDrink?.idDrink));
         setFavorites(favoriteList);
       }
     }

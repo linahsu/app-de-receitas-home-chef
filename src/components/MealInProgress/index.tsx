@@ -1,5 +1,5 @@
 import './MealInProgress.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, InProgressProps } from '../../types';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
@@ -21,17 +21,6 @@ function MealInProgress({
   const { allMeals } = useSelector((state: RootState) => state.mainReducer);
   const [isCopied, setIsCopied] = useState(false);
   const currentUrl = window.location.href;
-
-  // const [getProgress] = useLocalStorage('inProgressRecipes');
-  // const isChecked = (index: number) => {
-  //   return Object
-  //     .values(getProgress.meals)[0]
-  //     .includes(index.toString());
-  // };
-  // // const ingredientsLocalStorage = Object
-  // //   .values(getProgress.meals)[0] as string[] | undefined;
-
-  // console.log(ingredientsLocalStorage);
 
   const handleShareBtn = () => {
     try {

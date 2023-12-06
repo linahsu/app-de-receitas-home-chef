@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useNavigate, useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { FavoriteRecipes, MealType, DrinkType, RootState } from '../types';
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
@@ -12,14 +12,13 @@ import { AllDrinksAction, AllMealsAction } from '../redux/actions/actions';
 function RecipeInProgress() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const path = pathname.includes('meals') ? 'meals' : 'drinks';
+  const [, path, id] = pathname.split('/');
   const navigate = useNavigate();
-  const { idDaReceita } = useParams();
   const { allMeals, allDrinks } = useSelector(
     (globalState: RootState) => globalState.mainReducer,
   );
-  const currentMeal = allMeals.find((meal) => meal.idMeal === idDaReceita);
-  const currentDrink = allDrinks.find((drink) => drink.idDrink === idDaReceita);
+  const currentMeal = allMeals.find((meal) => meal.idMeal === id);
+  const currentDrink = allDrinks.find((drink) => drink.idDrink === id);
 
   const [getFavorites, setFavorites] = useLocalStorage('favoriteRecipes');
   const [
@@ -28,10 +27,6 @@ function RecipeInProgress() {
   const [getDoneRecipes, setDoneRecipes] = useLocalStorage('doneRecipes');
 
   const [isFavorite, setIsFavorite] = useState(false);
-
-  // const [IngredientsList, setIngredientsList] = useState<[string, string][]>([]);
-  // const [mesureList, setMesureList] = useState<[string, string][]>([]);
-  // const [instructionsList, setInstructionsList] = useState<[string, string][]>([]);
 
   const [ingredientCheckedList, setIngredientCheckedList] = useState<string[]>([]);
   const [savedIngredientsMeals, setSavedIngredientsMeals] = useState<string[]>([]);
@@ -46,14 +41,11 @@ function RecipeInProgress() {
     const details = Object.entries(currentRecipe || {});
     const ingredients = details
       .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== '');
-    // setIngredientsList(Ingredients);
 
     const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
-    // setMesureList(mesure);
 
     const instructions = details
       .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== '');
-    // setInstructionsList(instructions);
 
     return {
       ingredients,
@@ -69,8 +61,22 @@ function RecipeInProgress() {
   } = createRecipeLists(currentMeal || currentDrink);
 
   useEffect(() => {
-    fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
-    fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
+    if (path === 'meals') {
+      fetchAllMeals().then((data) => dispatch(AllMealsAction(data)));
+      return checkFavorite(id) ? (
+        setIsFavorite(true)
+      ) : (
+        setIsFavorite(false)
+      );
+    }
+    if (path === 'drinks') {
+      fetchAllCocktails().then((data) => dispatch(AllDrinksAction(data)));
+      return checkFavorite(id) ? (
+        setIsFavorite(true)
+      ) : (
+        setIsFavorite(false)
+      );
+    }
   }, []);
 
   const ingredientCheck = (

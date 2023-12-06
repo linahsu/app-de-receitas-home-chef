@@ -18,13 +18,14 @@ function DrinkInProgress({
   ingredientCheckedList,
   savedIngredientsDrinks,
 }: InProgressProps) {
-  const { allDrinks } = useSelector((state: RootState) => state.mainReducer);
+  const { detailsDrink } = useSelector((state: RootState) => state.mainReducer);
   const [isCopied, setIsCopied] = useState(false);
   const currentUrl = window.location.href;
+  const recipeUrl = currentUrl.split('/in-progress')[0];
 
   const handleShareBtn = () => {
     try {
-      navigator.clipboard.writeText(currentUrl);
+      navigator.clipboard.writeText(recipeUrl);
       setIsCopied(true);
     } catch (error) {
       console.error('Failed to copy:', error);
@@ -33,9 +34,11 @@ function DrinkInProgress({
     }
   };
 
+  console.log(currentDrink);
+
   return (
     <div>
-      {allDrinks.length > 0 && currentDrink && IngredientsList.length > 0 && (
+      {detailsDrink.idDrink && currentDrink && IngredientsList.length > 0 && (
         <div>
           <h2 data-testid="recipe-title">
             { currentDrink.strDrink }
@@ -76,18 +79,20 @@ function DrinkInProgress({
             <h4>Ingredients List</h4>
 
             {IngredientsList.map((ingredient, index) => (
-              <div key={ index }>
+              <div
+                data-testid={ `${index}-ingredient-step` }
+                key={ index }
+                className={
+                  ingredientCheckedList.includes(index.toString()) ? 'checked' : undefined
+                    }
+              >
                 <input
                   type="checkbox"
                   id={ `${index}` }
                   onClick={ () => handleIngredientCheck(index) }
                 />
                 <label
-                  data-testid={ `${index}-ingredient-step` }
                   htmlFor={ `${index}` }
-                  className={
-                ingredientCheckedList.includes(index.toString()) ? 'checked' : undefined
-              }
                 >
                   {`${ingredient[1]}: ${mesureList[index][1]}`}
                 </label>
@@ -113,7 +118,6 @@ function DrinkInProgress({
           </button>
         </div>
       )}
-      ;
     </div>
   );
 }

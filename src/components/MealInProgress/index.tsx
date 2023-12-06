@@ -17,13 +17,14 @@ function MealInProgress({
   ingredientCheckedList,
   savedIngredientsMeals,
 }: InProgressProps) {
-  const { allMeals } = useSelector((state: RootState) => state.mainReducer);
+  const { detailsMeal } = useSelector((state: RootState) => state.mainReducer);
   const [isCopied, setIsCopied] = useState(false);
   const currentUrl = window.location.href;
+  const recipeUrl = currentUrl.split('/in-progress')[0];
 
   const handleShareBtn = () => {
     try {
-      navigator.clipboard.writeText(currentUrl);
+      navigator.clipboard.writeText(recipeUrl);
       setIsCopied(true);
     } catch (error) {
       console.error('Failed to copy:', error);
@@ -32,9 +33,11 @@ function MealInProgress({
     }
   };
 
+  console.log(IngredientsList);
+
   return (
     <div>
-      {allMeals.length > 0 && currentMeal && IngredientsList.length > 0 && (
+      {detailsMeal.idMeal && currentMeal && IngredientsList.length > 0 && (
         <div>
           <h2 data-testid="recipe-title">
             { currentMeal.strMeal }
@@ -75,7 +78,13 @@ function MealInProgress({
             <h4>Ingredients List</h4>
 
             {IngredientsList.map((ingredient, index) => (
-              <div key={ index }>
+              <div
+                data-testid={ `${index}-ingredient-step` }
+                key={ index }
+                className={
+                  ingredientCheckedList.includes(index.toString()) ? 'checked' : undefined
+                    }
+              >
                 <input
                   type="checkbox"
                   id={ `${index}` }
@@ -85,11 +94,7 @@ function MealInProgress({
                   }
                 />
                 <label
-                  data-testid={ `${index}-ingredient-step` }
                   htmlFor={ `${index}` }
-                  className={
-                ingredientCheckedList.includes(index.toString()) ? 'checked' : undefined
-                  }
                 >
                   {`${ingredient[1]}: ${mesureList[index][1]}`}
                 </label>

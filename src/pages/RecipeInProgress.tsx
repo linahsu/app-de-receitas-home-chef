@@ -176,19 +176,20 @@ function RecipeInProgress() {
   };
 
   const handleFinishBtn = () => {
+    const dateNow = new Date().toISOString();
     if (path === 'meals') {
       setDoneRecipes([
         ...getDoneRecipes,
         {
           id: currentMeal?.idMeal,
-          type: 'meal',
           nationality: currentMeal?.strArea || '',
-          category: currentMeal?.strCategory || '',
-          alcoholicOrNot: '',
           name: currentMeal?.strMeal,
+          category: currentMeal?.strCategory || '',
           image: currentMeal?.strMealThumb,
-          doneDate: new Date().toLocaleDateString(),
           tags: currentMeal?.strTags ? currentMeal?.strTags.split(',') : [],
+          alcoholicOrNot: '',
+          type: 'meal',
+          doneDate: dateNow,
         },
       ]);
     }
@@ -197,14 +198,14 @@ function RecipeInProgress() {
         ...getDoneRecipes,
         {
           id: currentDrink?.idDrink,
-          type: 'drink',
           nationality: currentDrink?.strArea || '',
-          category: currentDrink?.strCategory || '',
-          alcoholicOrNot: currentDrink?.strAlcoholic || '',
           name: currentDrink?.strDrink,
+          category: currentDrink?.strCategory || '',
           image: currentDrink?.strDrinkThumb,
-          doneDate: new Date().toLocaleDateString(),
           tags: currentDrink?.strTags ? currentDrink?.strTags.split(',') : [],
+          alcoholicOrNot: currentDrink?.strAlcoholic || '',
+          type: 'drink',
+          doneDate: dateNow,
         },
       ]);
     }

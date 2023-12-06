@@ -20,10 +20,11 @@ function MealInProgress({
   const { detailsMeal } = useSelector((state: RootState) => state.mainReducer);
   const [isCopied, setIsCopied] = useState(false);
   const currentUrl = window.location.href;
+  const recipeUrl = currentUrl.split('/in-progress')[0];
 
   const handleShareBtn = () => {
     try {
-      navigator.clipboard.writeText(currentUrl);
+      navigator.clipboard.writeText(recipeUrl);
       setIsCopied(true);
     } catch (error) {
       console.error('Failed to copy:', error);
@@ -77,9 +78,14 @@ function MealInProgress({
             <h4>Ingredients List</h4>
 
             {IngredientsList.map((ingredient, index) => (
-              <div key={ index }>
+              <div
+                data-testid={ `${index}-ingredient-step` }
+                key={ index }
+                className={
+                  ingredientCheckedList.includes(index.toString()) ? 'checked' : undefined
+                    }
+              >
                 <input
-                  data-testid={ `${index}-ingredient-step` }
                   type="checkbox"
                   id={ `${index}` }
                   onChange={ () => handleIngredientCheck(index) }
@@ -88,11 +94,7 @@ function MealInProgress({
                   }
                 />
                 <label
-                  data-testid={ `${index}-ingredient-step` }
                   htmlFor={ `${index}` }
-                  className={
-                ingredientCheckedList.includes(index.toString()) ? 'checked' : undefined
-                  }
                 >
                   {`${ingredient[1]}: ${mesureList[index][1]}`}
                 </label>

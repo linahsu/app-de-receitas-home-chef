@@ -40,6 +40,7 @@ export type DrinkType = {
   idDrink: string,
   strDrink: string,
   strDrinkThumb?: string,
+  strCategory: string,
   strAlcoholic: string,
   strArea: string,
   strInstructions: string,
@@ -50,8 +51,8 @@ export type RecipeType = {
   idMeal?: string,
   strMeal?: string,
   strMealThumb?: string,
-  idDrink?:string,
-  strDrink?:string,
+  idDrink?: string,
+  strDrink?: string,
   strDrinkThumb?: string,
 };
 
@@ -205,4 +206,19 @@ export type InProgressRecipes = {
   meals: {
     [id: string]: string[],
   }
+};
+
+export type InProgressProps = {
+  currentMeal?: MealDetailsType | undefined;
+  currentDrink?: DrinkDetailsType | undefined;
+  handleFavoriteBtn: () => void;
+  handleIngredientCheck: (index: number) => void;
+  handleFinishBtn: () => void;
+  isFavorite: boolean;
+  IngredientsList: string[][];
+  mesureList: string[][];
+  instructionsList: [string, string][];
+  ingredientCheckedList: string[];
+  savedIngredientsMeals?: string[];
+  savedIngredientsDrinks?: string[];
 };

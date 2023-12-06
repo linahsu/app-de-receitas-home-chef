@@ -14,8 +14,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={ <Login /> } />
-      <Route path="/meals/:id-da-receita/in-progress" element={ <RecipeInProgress /> } />
-      <Route path="/drinks/:id-da-receita/in-progress" element={ <RecipeInProgress /> } />
+      <Route path="/meals/:idDaReceita/in-progress" element={ <RecipeInProgress /> } />
+      <Route path="/drinks/:idDaReceita/in-progress" element={ <RecipeInProgress /> } />
       <Route path="/" element={ <Header /> }>
         <Route path="/meals" element={ <Meals /> } />
         <Route path="/drinks" element={ <Drinks /> } />

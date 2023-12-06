@@ -31,8 +31,6 @@ export const fetchDrinkById = async (drinkId: string) => {
 export const fetchAllCocktails = async () => {
   const endpointDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   const response = await fetch(endpointDrinks);
-  console.log(endpointDrinks);
   const data = await response.json();
-  console.log(data);
   return data.drinks;
 };

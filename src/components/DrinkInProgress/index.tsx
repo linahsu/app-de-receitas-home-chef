@@ -4,6 +4,8 @@ import { RootState, InProgressProps } from '../../types';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
+import './DrinkInProcess.css';
+
 function DrinkInProgress({
   currentDrink,
   handleFavoriteBtn,

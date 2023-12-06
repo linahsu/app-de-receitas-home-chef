@@ -39,14 +39,14 @@ function RecipeInProgress() {
   const createRecipeLists = (currentRecipe: MealType | DrinkType) => {
     const details = Object.entries(currentRecipe);
     const Ingredients = details
-      .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== null);
+      .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== '');
     setIngredientsList(Ingredients);
 
     const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
     setMesureList(mesure);
 
     const instructions = details
-      .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== null);
+      .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== '');
     setInstructionsList(instructions);
   };
 
@@ -59,7 +59,7 @@ function RecipeInProgress() {
     if (currentDrink) {
       createRecipeLists(currentDrink);
     }
-  }, [currentMeal, currentDrink]);
+  }, []);
 
   const handleIngredientCheck = (index: number) => {
     if (currentMeal) {

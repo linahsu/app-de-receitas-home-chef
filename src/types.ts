@@ -209,8 +209,8 @@ export type InProgressRecipes = {
 };
 
 export type InProgressProps = {
-  currentMeal?: MealType | undefined;
-  currentDrink?: DrinkType | undefined;
+  currentMeal?: MealDetailsType | undefined;
+  currentDrink?: DrinkDetailsType | undefined;
   handleFavoriteBtn: () => void;
   handleIngredientCheck: (index: number) => void;
   handleFinishBtn: () => void;

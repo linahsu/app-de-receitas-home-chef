@@ -18,7 +18,7 @@ function DrinkInProgress({
   ingredientCheckedList,
   savedIngredientsDrinks,
 }: InProgressProps) {
-  const { allDrinks } = useSelector((state: RootState) => state.mainReducer);
+  const { detailsDrink } = useSelector((state: RootState) => state.mainReducer);
   const [isCopied, setIsCopied] = useState(false);
   const currentUrl = window.location.href;
 
@@ -33,9 +33,11 @@ function DrinkInProgress({
     }
   };
 
+  console.log(currentDrink);
+
   return (
     <div>
-      {allDrinks.length > 0 && currentDrink && IngredientsList.length > 0 && (
+      {detailsDrink.idDrink && currentDrink && IngredientsList.length > 0 && (
         <div>
           <h2 data-testid="recipe-title">
             { currentDrink.strDrink }
@@ -78,6 +80,7 @@ function DrinkInProgress({
             {IngredientsList.map((ingredient, index) => (
               <div key={ index }>
                 <input
+                  data-testid={ `${index}-ingredient-step` }
                   type="checkbox"
                   id={ `${index}` }
                   onClick={ () => handleIngredientCheck(index) }
@@ -113,7 +116,6 @@ function DrinkInProgress({
           </button>
         </div>
       )}
-      ;
     </div>
   );
 }

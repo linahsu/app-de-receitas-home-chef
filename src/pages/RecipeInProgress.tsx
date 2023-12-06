@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router';
-import { FavoriteRecipes, MealType, DrinkType, RootState, MealDetailsType, DrinkDetailsType } from '../types';
+import { FavoriteRecipes, RootState, MealDetailsType, DrinkDetailsType } from '../types';
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
 import DrinkInProgress from '../components/DrinkInProgress';
-import { fetchAllCocktails, fetchDrinkById } from '../utils/apiDrinks';
-import { fetchAllMeals, fetchMealById } from '../utils/apiMeals';
-import { AllDrinksAction, AllMealsAction, ActionDetailsDrink, ActionDetailsMeal } from '../redux/actions/actions';
+import { fetchDrinkById } from '../utils/apiDrinks';
+import { fetchMealById } from '../utils/apiMeals';
+import { ActionDetailsDrink, ActionDetailsMeal } from '../redux/actions/actions';
 
 function RecipeInProgress() {
   const dispatch = useDispatch();
@@ -37,15 +37,19 @@ function RecipeInProgress() {
       .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
   };
 
-  const createRecipeLists = (currentRecipe: MealDetailsType | DrinkDetailsType | undefined) => {
+  const createRecipeLists = (
+    currentRecipe: MealDetailsType | DrinkDetailsType | undefined,
+  ) => {
     const details = Object.entries(currentRecipe || {});
     const ingredients = details
-      .filter((detail) => detail[0].includes('strIngredient') && detail[1] !== '');
+      .filter((detail) => detail[0]
+        .includes('strIngredient') && detail[1] !== '' && detail[1] !== null);
 
     const mesure = details.filter((detail) => detail[0].includes('strMeasure'));
 
     const instructions = details
-      .filter((detail) => detail[0].includes('strInstructions') && detail[1] !== '');
+      .filter((detail) => detail[0]
+        .includes('strInstructions') && detail[1] !== '' && detail[1] !== null);
 
     return {
       ingredients,
@@ -55,10 +59,16 @@ function RecipeInProgress() {
   };
 
   const {
-    ingredients,
-    mesure,
-    instructions,
-  } = createRecipeLists(currentMeal || currentDrink);
+    ingredients: ingredientsMeal,
+    mesure: mesureMeal,
+    instructions: instructionsMeal,
+  } = createRecipeLists(currentMeal);
+
+  const {
+    ingredients: ingredientsDrink,
+    mesure: mesureDrink,
+    instructions: instructionsDrink,
+  } = createRecipeLists(currentDrink);
 
   useEffect(() => {
     if (path === 'meals') {
@@ -210,9 +220,9 @@ function RecipeInProgress() {
           handleIngredientCheck={ handleIngredientCheck }
           handleFinishBtn={ handleFinishBtn }
           isFavorite={ isFavorite }
-          IngredientsList={ ingredients }
-          mesureList={ mesure }
-          instructionsList={ instructions }
+          IngredientsList={ ingredientsMeal }
+          mesureList={ mesureMeal }
+          instructionsList={ instructionsMeal }
           ingredientCheckedList={ ingredientCheckedList }
           savedIngredientsMeals={ savedIngredientsMeals }
         />
@@ -223,9 +233,9 @@ function RecipeInProgress() {
           handleIngredientCheck={ handleIngredientCheck }
           handleFinishBtn={ handleFinishBtn }
           isFavorite={ isFavorite }
-          IngredientsList={ ingredients }
-          mesureList={ mesure }
-          instructionsList={ instructions }
+          IngredientsList={ ingredientsDrink }
+          mesureList={ mesureDrink }
+          instructionsList={ instructionsDrink }
           ingredientCheckedList={ ingredientCheckedList }
           savedIngredientsDrinks={ savedIngredientsDrinks }
         />

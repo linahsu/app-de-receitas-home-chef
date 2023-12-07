@@ -6,23 +6,25 @@ function Footer() {
   const navigate = useNavigate();
 
   return (
-    <footer className="footer" data-testid="footer">
-      <button onClick={ () => navigate('/drinks') }>
-        <img
-          src={ drinkicon }
-          alt="Bebidas"
-          data-testid="drinks-bottom-btn"
-        />
-      </button>
-      <button onClick={ () => navigate('/meals') }>
-        <img
-          src={ mealicon }
-          alt="Comidas"
-          data-testid="meals-bottom-btn"
-        />
+    <div className="footer-div">
+      <footer className="footer" data-testid="footer">
+        <button onClick={ () => navigate('/drinks') }>
+          <img
+            src={ drinkicon }
+            alt="Bebidas"
+            data-testid="drinks-bottom-btn"
+          />
+        </button>
+        <button onClick={ () => navigate('/meals') }>
+          <img
+            src={ mealicon }
+            alt="Comidas"
+            data-testid="meals-bottom-btn"
+          />
+        </button>
+      </footer>
 
-      </button>
-    </footer>
+    </div>
   );
 }
 

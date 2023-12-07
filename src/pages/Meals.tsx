@@ -34,35 +34,35 @@ function Meals() {
   return (
     <>
       <Recipes>
-        <div className="filters">
-          {mealsCategories.map((category) => (
-            <button
-              key={ category.strCategory }
-              type="button"
-              data-testid={ `${category.strCategory}-category-filter` }
-              onClick={ () => switchCategory(category.strCategory) }
-              className={ category.strCategory === chosenCategory ? 'active' : '' }
-            >
-              {category.strCategory}
-            </button>
-          ))}
+      <div className="filters">
+        {mealsCategories.map((category) => (
           <button
-            data-testid="All-category-filter"
+            key={ category.strCategory }
             type="button"
-            onClick={ setMeals }
+            data-testid={ `${category.strCategory}-category-filter` }
+            onClick={ () => switchCategory(category.strCategory) }
+            className={ category.strCategory === chosenCategory ? "active" : ""}
           >
-            All
+            {category.strCategory}
           </button>
-        </div>
-        <div className="recipes">
-          {meals.map((meal, index) => (
-            <MealsCard
-              key={ meal.idMeal }
-              meal={ meal as MealType }
-              index={ index }
-            />
-          ))}
-        </div>
+        ))}
+        <button
+          data-testid="All-category-filter"
+          type="button"
+          onClick={ setMeals }
+        >
+          All
+        </button>
+      </div>
+      <div className="recipes">
+        {meals.map((meal, index) => (
+          <MealsCard
+            key={ meal.idMeal }
+            meal={ meal as MealType }
+            index={ index }
+          />
+        ))}
+      </div>
 
       </Recipes>
       <Footer />

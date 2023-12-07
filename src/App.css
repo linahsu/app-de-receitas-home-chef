@@ -1,19 +1,19 @@
 html, body {
-  margin: 0;
-  padding: 0;
+  margin: 0 0 20px 0;
+  font-family: 'DM Sans', sans-serif;
 }
 
 #root {
   width: 360px;
-  height: 640px;
-  padding: 30px 0;
-  background-color:white;
+  height: 100%;
+  padding: 0 0 30px;
+  background-color: aliceblue;
 }
 
 /* h1, profile-button, search button */
 .header {
+  margin-top: 0;
   display: flex;
-  margin: auto;
   padding: 15px;
   align-items: center;
   background-color:blue;
@@ -24,7 +24,6 @@ html, body {
 .header h1 {
   font-size: 25px;
   color: pink;
-  margin: 5px;
 }
 
 .profile-button {
@@ -66,15 +65,24 @@ html, body {
 
 .page-title {
   display: flex;
-  margin: 0 2px 0 2px;
   justify-content: center;
   background-color: lavenderblush;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  margin: 0 3px;
 }
 
 .page-title h1 {
   color: blue;
+}
+
+.page-title-bottom-shape {
+  position: absolute;
+  height: 10px;
+  width: 360px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0 -9px 0 0 aliceblue;
 }
 
 .search-bar {
@@ -82,8 +90,8 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 5px 0 5px;
-  margin: 0 10px 0 10px;
+  margin: 0 15px 10px;
+  padding: 5px;
   font-size: 15px;
   background-color: pink;
   border-bottom-left-radius: 10px;
@@ -91,18 +99,16 @@ html, body {
   height: 80px;
 }
 
-.search-bar form {
-  padding: 10px;
-}
 
 .search-input {
   display: flex;
   margin: 5px;
-  width: 300px;
   background-color: white;
   outline-color:powderblue;
   border-radius: 10px;
   border: 0;
+  width: 300px;
+  height: 30px;
 }
 
 .filters {
@@ -111,11 +117,13 @@ html, body {
   margin: 10px 5px;
   white-space: nowrap;
   overflow: auto;
+  overflow-x: hidden;
 }
 
 .filters button {
   display: flex;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
   border-radius: 15px;
   border: 1px solid navy;
 	padding: 5px 10px;
@@ -128,16 +136,16 @@ html, body {
 }
 
 .filters button:last-child {
-  margin-right: 0;
+  margin-right: 10px;
 }
 
 .filters button:hover {
-  background-color: pink;
+  background-color: lavenderblush;
   color: mediumblue;
 }
 
 .filters button.active {
-  background-color: pink;
+  background-color: whitesmoke;
   color: mediumblue;
   font-weight: 600;
   cursor: default;
@@ -155,11 +163,79 @@ html, body {
   width: 100%;
 }
 
-.footer {
-  bottom: 0;
-  left: 50%;
+.footer-div {
   position: fixed;
+  display: flex;
+  width: 360px;
+  height: 40px;
+  bottom: 0;
+  justify-content: space-around;
+  background-color: blue;
+  padding: 5px 0 5px 0;
+  
 }
+
+.footer {
+  display: flex;
+  width: 360px;
+  justify-content: space-around;
+}
+
+.footer button {
+  bottom: 0;
+  background: none;
+	color: inherit;
+	border: none;
+	font: inherit;
+  padding: 0;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.recipes {
+  width: 360px;
+  margin: 10px 0 0 10px;
+  display: block;
+}
+
+.recipe-card {
+  display: inline-flex;
+  width: 160px;
+  margin: 5px;
+  justify-content: center;
+  align-self: center;
+  background-color: white;
+  border-radius: 5%;
+  overflow: hidden;
+}
+
+.recipe-card h3 {
+  margin-top: 5px;
+  padding: 0 15px 0 15px;
+  font-size: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: navy;
+}
+
+
+/*
+.footer-div {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  bottom: 0;
+  background-color: blue;
+  width: 360px;
+};
+*/
+
+
+
+
+
 
 
 /* ESSE CSS (.footer e .start-recipe-btn) INFLUENCIAM OS TESTES

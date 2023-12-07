@@ -83,7 +83,6 @@ function Header() {
           </Link>
         </div>
       </div>
-
       <div className="page-title">
         <h1 data-testid="page-title">{titleObj[pathname]}</h1>
       </div>

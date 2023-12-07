@@ -218,4 +218,5 @@ export type InProgressProps = {
   IngredientsList: string[][];
   mesureList: string[][];
   instructionsList: [string, string][];
+  getProgress: any;
 };

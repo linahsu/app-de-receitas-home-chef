@@ -215,6 +215,7 @@ function RecipeInProgress() {
           IngredientsList={ ingredientsMeal }
           mesureList={ mesureMeal }
           instructionsList={ instructionsMeal }
+          getProgress={ getProgress }
         />
       ) : (
         <DrinkInProgress
@@ -226,6 +227,7 @@ function RecipeInProgress() {
           IngredientsList={ ingredientsDrink }
           mesureList={ mesureDrink }
           instructionsList={ instructionsDrink }
+          getProgress={ getProgress }
         />
       )}
     </div>

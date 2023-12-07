@@ -4,7 +4,7 @@ import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';
 import { fetchDetailMock } from './mocks/fetchMock';
 
-describe.only('Testa a renderização dos elemento e chamadas das APIs da página RecipeInProgress', () => {
+describe('Testa a renderização dos elemento e chamadas das APIs da página RecipeInProgress', () => {
   beforeEach(() => {
     vi.spyOn(global, 'fetch').mockImplementation(fetchDetailMock as any);
   });
@@ -57,5 +57,35 @@ describe.only('Testa a renderização dos elemento e chamadas das APIs da págin
     expect(drinkInstructions).toBeInTheDocument();
     expect(drinkIngredients).toBeInTheDocument();
     expect(drinkFinishBtn).toBeInTheDocument();
+  });
+});
+
+describe('Testa o botão de compartilhamento', () => {
+  beforeEach(() => {
+    vi.spyOn(global, 'fetch').mockImplementation(fetchDetailMock as any);
+  });
+
+  it('Testa o componente MealInProgress', async () => {
+    const { user } = renderWithRouterAndRedux(<App />, '/meals/52771/in-progress');
+
+    const mealShareBtn = await screen.findByTestId(/share-btn/i);
+
+    expect(mealShareBtn).toBeInTheDocument();
+
+    await user.click(mealShareBtn);
+    expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
+    expect(await navigator.clipboard.readText()).toBe('http://localhost:3000/meals/52771');
+  });
+
+  it('Testa o componente DrinkInProgress', async () => {
+    const { user } = renderWithRouterAndRedux(<App />, '/drinks/718319/in-progress');
+
+    const mealShareBtn = await screen.findByTestId(/share-btn/i);
+
+    expect(mealShareBtn).toBeInTheDocument();
+
+    await user.click(mealShareBtn);
+    expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
+    expect(await navigator.clipboard.readText()).toBe('http://localhost:3000/drinks/718319');
   });
 });

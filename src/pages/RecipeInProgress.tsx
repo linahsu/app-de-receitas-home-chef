@@ -30,10 +30,6 @@ function RecipeInProgress() {
 
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const [ingredientCheckedList, setIngredientCheckedList] = useState<string[]>([]);
-  const [savedIngredientsMeals, setSavedIngredientsMeals] = useState<string[]>([]);
-  const [savedIngredientsDrinks, setSavedIngredientsDrinks] = useState<string[]>([]);
-
   const checkFavorite = (recepeId: string) => {
     return getFavorites
       .some((favorite: FavoriteRecipeType) => favorite.id === recepeId);
@@ -92,36 +88,35 @@ function RecipeInProgress() {
   }, []);
 
   const ingredientCheck = (place: string, index: number) => {
-    setIngredientCheckedList(getProgress[place][id]);
+    const isCheckedList = getProgress[place][id] ? getProgress[place][id] : '';
 
-    if (!ingredientCheckedList?.includes(index.toString())) {
-      setIngredientCheckedList([
-        ...ingredientCheckedList,
-        index.toString(),
-      ]);
+    if (!isCheckedList?.includes(index.toString())) {
+      setProgress({
+        ...getProgress,
+        [place]: {
+          ...getProgress[place],
+          [id]: [...isCheckedList, index.toString()],
+        },
+      });
     } else {
-      const list = ingredientCheckedList
+      const list = isCheckedList
         .filter((ingredient: string) => ingredient !== index.toString());
-      setIngredientCheckedList(list);
+      setProgress({
+        ...getProgress,
+        [place]: {
+          ...getProgress[place],
+          [id]: list,
+        },
+      });
     }
-
-    setProgress({
-      ...getProgress,
-      [place]: {
-        ...getProgress[place],
-        [id]: [...ingredientCheckedList, index.toString()],
-      },
-    });
   };
 
   const handleIngredientCheck = (index: number) => {
     if (path === 'meals') {
       ingredientCheck('meals', index);
-      // setSavedIngredientsMeals(getProgress.meals[currentMeal?.idMeal]);
     }
     if (path === 'drinks') {
       ingredientCheck('drinks', index);
-      // setSavedIngredientsDrinks(getProgress.drinks[currentDrink?.idDrink]);
     }
   };
 
@@ -220,8 +215,6 @@ function RecipeInProgress() {
           IngredientsList={ ingredientsMeal }
           mesureList={ mesureMeal }
           instructionsList={ instructionsMeal }
-          ingredientCheckedList={ ingredientCheckedList }
-          savedIngredientsMeals={ savedIngredientsMeals }
         />
       ) : (
         <DrinkInProgress
@@ -233,8 +226,6 @@ function RecipeInProgress() {
           IngredientsList={ ingredientsDrink }
           mesureList={ mesureDrink }
           instructionsList={ instructionsDrink }
-          ingredientCheckedList={ ingredientCheckedList }
-          savedIngredientsDrinks={ savedIngredientsDrinks }
         />
       )}
     </div>

@@ -16,8 +16,6 @@ function MealInProgress({
   IngredientsList,
   mesureList,
   instructionsList,
-  ingredientCheckedList,
-  savedIngredientsMeals,
 }: InProgressProps) {
   const { detailsMeal } = useSelector((state: RootState) => state.mainReducer);
   const { pathname } = useLocation();
@@ -116,7 +114,7 @@ function MealInProgress({
 
           <button
             data-testid="finish-recipe-btn"
-            disabled={ ingredientCheckedList.length !== IngredientsList.length }
+            disabled={ isCheckedList.length !== IngredientsList.length }
             className="finish-recipe-btn"
             onClick={ handleFinishBtn }
           >

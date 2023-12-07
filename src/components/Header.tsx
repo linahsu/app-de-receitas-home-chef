@@ -58,28 +58,39 @@ function Header() {
   // }
 
   return (
-    <div>
-      {/* <button onClick={ mockLocalStorage }>Mock localStorage</button> */}
-      <h1 data-testid="page-title">{titleObj[pathname]}</h1>
-      <Link to="/profile">
-        <img
-          src={ profileicon }
-          alt="ícone do perfil"
-          data-testid="profile-top-btn"
-        />
-      </Link>
-      {(titleObj[pathname] === 'Meals' || titleObj[pathname] === 'Drinks') && (
-        <button onClick={ () => setShowSearch((prev) => !prev) }>
-          <img
-            src="src/images/searchIcon.svg"
-            alt="ícone de pesquisa"
-            data-testid="search-top-btn"
-          />
-        </button>
-      )}
+    <>
+      <div className="header">
+        <h1>Recipes App</h1>
+        <div className="search-button">
+          {(titleObj[pathname] === 'Meals' || titleObj[pathname] === 'Drinks') && (
+            <button onClick={ () => setShowSearch((prev) => !prev) }>
+              <img
+                src="src/images/searchIcon.svg"
+                alt="ícone de pesquisa"
+                data-testid="search-top-btn"
+              />
+            </button>
+          )}
+        </div>
+
+        <div className="profile-button">
+          <Link to="/profile">
+            <img
+              src={ profileicon }
+              alt="ícone do perfil"
+              data-testid="profile-top-btn"
+            />
+          </Link>
+        </div>
+      </div>
+
+      <div className="page-title">
+        <h1 data-testid="page-title">{titleObj[pathname]}</h1>
+      </div>
+
       {showSearch && <SearchBar />}
       <Outlet />
-    </div>
+    </>
   );
 }
 

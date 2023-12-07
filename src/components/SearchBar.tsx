@@ -51,9 +51,10 @@ function SearchBar() {
   };
 
   return (
-    <div>
+    <div className="search-bar">
       <form onSubmit={ handleSubmit }>
         <input
+          className="search-input"
           data-testid="search-input"
           id="inputValue"
           name="inputValue"

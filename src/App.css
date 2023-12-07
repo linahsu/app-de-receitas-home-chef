@@ -1,3 +1,148 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 360px;
+  height: 640px;
+  padding: 30px 0;
+  background-color:white;
+}
+
+/* h1, profile-button, search button */
+.header {
+  display: flex;
+  margin: auto;
+  padding: 15px;
+  align-items: center;
+  background-color:blue;
+  height: 20px;
+}
+
+/* h1 */
+.header h1 {
+  font-size: 25px;
+  color: pink;
+  margin: 5px;
+}
+
+.profile-button {
+  display: flex;
+  margin-left: 5px;
+}
+
+.profile-button img {
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.search-button {
+  display: flex;
+  margin-left: auto;
+  border-radius: 5px;
+  width: 35px;
+  height: 35px;
+  justify-content: center;
+}
+
+.search-button button {
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 2px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.search-button img {
+  width: 25px;
+  height: 25px;
+}
+
+.page-title {
+  display: flex;
+  margin: 0 2px 0 2px;
+  justify-content: center;
+  background-color: lavenderblush;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.page-title h1 {
+  color: blue;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px 0 5px;
+  margin: 0 10px 0 10px;
+  font-size: 15px;
+  background-color: pink;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 80px;
+}
+
+.search-bar form {
+  padding: 10px;
+}
+
+.search-input {
+  display: flex;
+  margin: 5px;
+  width: 300px;
+  background-color: white;
+  outline-color:powderblue;
+  border-radius: 10px;
+  border: 0;
+}
+
+.filters {
+  display: flex;
+  padding: 0;
+  margin: 10px 5px;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.filters button {
+  display: flex;
+  margin-right: 10px;
+  border-radius: 15px;
+  border: 1px solid navy;
+	padding: 5px 10px;
+	font: inherit;
+  background-color: white;
+  box-shadow: 10px solid black;
+  font-size: 15px;
+  color: navy;
+	cursor: pointer;
+}
+
+.filters button:last-child {
+  margin-right: 0;
+}
+
+.filters button:hover {
+  background-color: pink;
+  color: mediumblue;
+}
+
+.filters button.active {
+  background-color: pink;
+  color: mediumblue;
+  font-weight: 600;
+  cursor: default;
+}
+
 .meals {
   align-items: center;
   background: #0fa36b;

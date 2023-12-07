@@ -35,35 +35,42 @@ function Drinks() {
     ));
   };
   return (
-    <Recipes>
-      {drinkCategories.map((category) => (
-        <button
-          key={ category.strCategory }
-          type="button"
-          data-testid={ `${category.strCategory}-category-filter` }
-          onClick={ () => switchCategory(category.strCategory) }
-        >
-          {category.strCategory}
-        </button>
-      ))}
+    <>
+      <Recipes>
+        <div className="filters">
+          {drinkCategories.map((category) => (
+            <button
+              key={ category.strCategory }
+              type="button"
+              data-testid={ `${category.strCategory}-category-filter` }
+              onClick={ () => switchCategory(category.strCategory) }
+              className={ category.strCategory === chosenCategory ? 'active' : '' }
+            >
+              {category.strCategory}
+            </button>
+          ))}
 
-      <button
-        data-testid="All-category-filter"
-        type="button"
-        onClick={ setDrinks }
-      >
-        All
-      </button>
+          <button
+            data-testid="All-category-filter"
+            type="button"
+            onClick={ setDrinks }
+          >
+            All
+          </button>
+        </div>
 
-      {drinks.map((drink, index) => (
-        <DrinksCard
-          key={ drink.idDrink }
-          drink={ drink as DrinkType }
-          index={ index }
-        />
-      ))}
+        <div className="recipes">
+          {drinks.map((drink, index) => (
+            <DrinksCard
+              key={ drink.idDrink }
+              drink={ drink as DrinkType }
+              index={ index }
+            />
+          ))}
+        </div>
+      </Recipes>
       <Footer />
-    </Recipes>
+    </>
   );
 }
 

@@ -177,7 +177,7 @@ export type MealDetailsType = {
   dateModified: string | null;
 };
 
-export type DoneRecipes = {
+export type DoneRecipeType = {
   id: string,
   type: string,
   nationality: string | null,
@@ -189,7 +189,7 @@ export type DoneRecipes = {
   tags: string[] | null,
 };
 
-export type FavoriteRecipes = {
+export type FavoriteRecipeType = {
   id: string,
   type: string,
   nationality: string | null,
@@ -199,7 +199,7 @@ export type FavoriteRecipes = {
   image: string,
 };
 
-export type InProgressRecipes = {
+export type InProgressRecipesType = {
   drinks: {
     [id: string]: string[],
   },
@@ -218,7 +218,5 @@ export type InProgressProps = {
   IngredientsList: string[][];
   mesureList: string[][];
   instructionsList: [string, string][];
-  ingredientCheckedList: string[];
-  savedIngredientsMeals?: string[];
-  savedIngredientsDrinks?: string[];
+  getProgress: any;
 };

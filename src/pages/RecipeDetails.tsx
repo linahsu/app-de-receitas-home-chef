@@ -6,7 +6,7 @@ import { fetchMealById, fetchAllMeals } from '../utils/apiMeals';
 import { ActionDetailsDrink, ActionDetailsMeal,
   AllDrinksAction, AllMealsAction } from '../redux/actions/actions';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { RootState, FavoriteRecipes, DoneRecipes } from '../types';
+import { RootState, FavoriteRecipeType, DoneRecipeType } from '../types';
 import CardDrinkDetails from '../components/CardDrinkDetails';
 import CardMealsDetails from '../components/CardMealsDetails';
 
@@ -35,12 +35,13 @@ function RecipeDetails() {
     if (doneRecipes) {
       if (detailsMeal.idMeal && category === 'meals') {
         setHideButton(
-          doneRecipes.some((recipe: DoneRecipes) => recipe.id === detailsMeal.idMeal),
+          doneRecipes.some((recipe: DoneRecipeType) => recipe.id === detailsMeal.idMeal),
         );
       }
       if (detailsDrink.idDrink && category === 'drinks') {
         setHideButton(
-          doneRecipes.some((recipe: DoneRecipes) => recipe.id === detailsDrink.idDrink),
+          doneRecipes
+            .some((recipe: DoneRecipeType) => recipe.id === detailsDrink.idDrink),
         );
       }
     }
@@ -67,7 +68,7 @@ function RecipeDetails() {
 
   const checkFavorite = (recepeId: string) => {
     return getFavorites
-      .some((favorite: FavoriteRecipes) => favorite.id === recepeId);
+      .some((favorite: FavoriteRecipeType) => favorite.id === recepeId);
   };
 
   // Faz o fetch de acordo com a categoria do pathname
@@ -114,7 +115,7 @@ function RecipeDetails() {
         ]);
       } else {
         const favoriteList = getFavorites
-          .filter((favorite: FavoriteRecipes) => favorite.id !== detailsMeal?.idMeal);
+          .filter((favorite: FavoriteRecipeType) => favorite.id !== detailsMeal?.idMeal);
         setFavorites(favoriteList);
       }
     }
@@ -135,7 +136,8 @@ function RecipeDetails() {
         ]);
       } else {
         const favoriteList = getFavorites
-          .filter((favorite: FavoriteRecipes) => favorite.id !== detailsDrink?.idDrink);
+          .filter((favorite: FavoriteRecipeType) => (
+            favorite.id !== detailsDrink?.idDrink));
         setFavorites(favoriteList);
       }
     }

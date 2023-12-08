@@ -20,7 +20,7 @@ const mockFavoriteRecipes = [
 ];
 
 const mockInProgressRecipes = {
-  cocktails: {
+  drinks: {
     718319: ['0', '1'],
   },
   meals: {

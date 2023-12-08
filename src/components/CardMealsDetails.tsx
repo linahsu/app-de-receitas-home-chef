@@ -27,16 +27,45 @@ export default function CardMealsDetails({
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="meal-page-body">
       {allDrinks.length > 0 && Object.keys(detailsMeal).length > 0 && (
         <div>
+          <div className="details-title-and-btns">
+
+            <div className="details-recipe-name">
+              <h2 data-testid="recipe-title">{detailsMeal.strMeal}</h2>
+            </div>
+
+            <div className="favorite-and-share-btn">
+              <hr />
+              <button
+                // data-testid="favorite-btn"
+                onClick={handleFavoriteBtn}
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={isFavorite ? blackHeartIcon : whiteHeartIcon}
+                  alt={isFavorite ? 'Black heart icon' : 'White heart icon'}
+                />
+              </button>
+
+              <button
+                data-testid="share-btn"
+                onClick={handleshareBtn}
+                >
+                <img src="/src/images/shareIcon.svg" alt="Share icon" />
+              </button>
+
+                {isCopied && <p className={isCopied && 'copied'}>Link copied!</p>}
+            </div>
+          </div>
+
           <img
             src={ detailsMeal.strMealThumb }
             alt="Foto da comida"
             data-testid="recipe-photo"
-            style={ { width: '300px' } }
+            style={ { width: '360px' } }
           />
-          <h2 data-testid="recipe-title">{detailsMeal.strMeal}</h2>
           <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
 
           <h3>Ingredients</h3>
@@ -83,25 +112,7 @@ export default function CardMealsDetails({
               />}
           </section>
 
-          <button
-            // data-testid="favorite-btn"
-            onClick={ handleFavoriteBtn }
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
-            />
-          </button>
 
-          <button
-            data-testid="share-btn"
-            onClick={ handleshareBtn }
-          >
-            <img src="/src/images/shareIcon.svg" alt="Share icon" />
-          </button>
-
-          {isCopied && <p>Link copied!</p>}
 
           {!hideButton
             ? (

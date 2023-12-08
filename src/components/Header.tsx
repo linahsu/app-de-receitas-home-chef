@@ -60,7 +60,9 @@ function Header() {
   return (
     <>
       <div className="header">
-        <h1>/Recipes-App</h1>
+        <Link to="/meals">
+          <h1>/Recipes-App</h1>
+        </Link>
 
         <div className="profile-button">
           <Link to="/profile">
@@ -74,8 +76,11 @@ function Header() {
       </div>
       <div className="page-title">
         <h1 data-testid="page-title">{titleObj[pathname]}</h1>
-      <hr />
+
+
+
         <div className="search-button">
+          <hr />
           {(titleObj[pathname] === 'Meals' || titleObj[pathname] === 'Drinks') && (
             <button onClick={ () => setShowSearch((prev) => !prev) }>
               <img

@@ -158,7 +158,9 @@ function RecipeDetails() {
     <div>
       {category === 'meals' ? (
         <div>
-          <h1>Detalhes da Comida</h1>
+          <h1 className="details-type-header">{ category.replace('m', 'M') }</h1>
+          <div className="details-name-header">
+          </div>
           <CardMealsDetails
             handleFavoriteBtn={ handleFavoriteBtn }
             handleshareBtn={ handleShareBtn }
@@ -170,7 +172,7 @@ function RecipeDetails() {
         </div>
       ) : (
         <div>
-          <h1>Detalhes da Bebida</h1>
+          <h1 className="details-type-header">{ category.replace('d', 'D') }</h1>
           <CardDrinkDetails
             handleFavoriteBtn={ handleFavoriteBtn }
             handleshareBtn={ handleShareBtn }

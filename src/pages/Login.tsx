@@ -44,7 +44,7 @@ export default function Login() {
           <img 
             src="src/images/loginArrowBS.svg" 
             alt="Arrow down"
-            width="40" 
+            width="30" 
           />
         </div>
       </div>

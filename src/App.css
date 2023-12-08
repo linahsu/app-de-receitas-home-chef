@@ -31,7 +31,6 @@ html, body {
 
 @keyframes loginBarContent {
   from {opacity: 0;}
-
   to {opacity: 100;}
 }
 
@@ -43,14 +42,15 @@ html, body {
 
 .login-bar img {
   filter: invert(100%) sepia(90%) saturate(606%) hue-rotate(175deg) brightness(100%) contrast(103%);
-  margin-left: calc(50% - 20px);
-  animation: loginArrow .8s;
+  margin-left: calc(50% - 15px);
+  animation: loginArrow .9s;
   animation-iteration-count: infinite;
 }
 
 @keyframes loginArrow {
-  from {margin-top: 60px}
-  to {margin-top: 70px}
+  from {margin-top: 73px}
+  25% {margin-top: 76px}
+  to {margin-top: 73px}
 }
 
 .login-form {
@@ -125,16 +125,22 @@ html, body {
   background-color: lavenderblush;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  justify-content: space-between;
 }
 
 .page-title h1 {
-  color: blue;
+  color: #0000ff;
   padding-left: 10px;
-  margin-right: 45%;
 }
 
-.page-title hr {
-  background-color: navy;
+.search-button button {
+  margin-left: 20px;
+  margin-right: 5px;
+}
+
+.serach-button hr {
+  border: none;
+  height: 1px;
 }
 
 .search-bar {
@@ -174,8 +180,8 @@ html, body {
 
 .filters {
   display: flex;
-  padding: 10px 0 10px 0;
-  margin: 0px 5px;
+  padding: 10px 0;
+  margin: 1px 5px;
   white-space: nowrap;
   overflow: auto;
   overflow-x: auto;
@@ -186,23 +192,21 @@ html, body {
   margin: 0 6px;
   border-radius: 15px;
   border: 1px solid navy;
-	padding: 5px 10px;
+	padding: 4px 10px;
 	font: inherit;
-  background-color: white;
-  box-shadow: 10px solid black;
+  background-color: aliceblue;
   font-size: 15px;
   color: navy;
 	cursor: pointer;
+  transition: 750ms;
 }
 
 .filters button:last-child {
   margin-right: 10px;
 }
 
-
 .filters button.active {
   background-color: pink;
-  color: navy;
   font-weight: 600;
   border: 1px solid pink;
   cursor: default;
@@ -231,7 +235,6 @@ html, body {
   padding: 5px 0 5px 0;
   
 }
-
 
 footer.footer {
   display: flex;
@@ -262,14 +265,14 @@ footer.footer {
 .recipe-card {
   display: inline-flex;
   width: 160px;
-  margin: 5px;
+  margin: 0 5px 5px;
   justify-content: center;
   align-content: center;
   align-self: center;
   background-color: white;
   border-radius: 5%;
   overflow: hidden;
-  border: solid navy .7px;
+  border: solid navy .5px;
 }
 
 .recipe-card h3 {
@@ -282,6 +285,79 @@ footer.footer {
   padding: 6px;
   border-top-right-radius: 8%;
   border-top-left-radius: 8%;
+}
+
+.details-type-header {
+  position: absolute;
+  top: 0;
+  font-size: 26px;
+  margin-top: 51px;
+  padding-left: 10px;
+  color: blue;
+}
+
+.details-title-and-btns {
+  background-color: pink;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.details-recipe-name {
+  display: flex;
+  color: navy;
+  text-align: start;
+  padding-left: 10px;
+  width: 240px;
+}
+
+.favorite-and-share-btn {
+  display: flex;
+  width: 80px;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.favorite-and-share-btn hr {
+  border-right: 1px navy solid;
+  border-left: none;
+  height: 15px;
+  margin-right: 25px;
+}
+
+.favorite-and-share-btn p {
+  position: absolute;
+  top: 0;
+  margin-top: 60px;
+  margin-right: 22px;
+  font-size: 12px;
+  opacity: 0;
+}
+
+.copied {
+  color: navy;
+  animation: linkCopied 5s;
+}
+
+@keyframes linkCopied {
+  from {opacity: 0}
+  50% {opacity: 1}
+  to {opacity: 0}
+}
+
+.favorite-and-share-btn button {
+  scale: 80%;
+  filter: invert(14%) sepia(43%) saturate(5599%) hue-rotate(236deg) brightness(77%) contrast(137%);
+  margin-right: 20px;
+  border: none;
+  background: none;
+  font: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+
+.meal-page-body {
+  text-align: center;
 }
 
 a {

@@ -23,16 +23,16 @@ html, body {
 /* h1 */
 .header h1 {
   font-size: 20px;
-  color: pink;
+  color: #ffc0cb;
 }
 
 .profile-button {
   display: flex;
-  margin-top: 7px;
+  margin: 7px 5px 0;
+  filter: invert(80%) sepia(7%) saturate(1270%) hue-rotate(302deg) brightness(99%) contrast(104%);
 }
 
 .profile-button img {
-  border: 2px solid black;
   border-radius: 50%;
   width: 22px;
   height: 22px;
@@ -40,12 +40,11 @@ html, body {
 }
 
 .search-button {
-  margin-right: 23px;
+  margin-right: 20px;
+  margin-left: 5px;
   align-self: center;
   display: flex;
   border-radius: 5px;
-  width: 35px;
-  height: 35px;
   justify-content: center;
 }
 
@@ -53,10 +52,14 @@ html, body {
   background: none;
 	color: inherit;
 	border: none;
-	padding: 2px;
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+
+.search-button img {
+  width: 25px;
+  filter: invert(14%) sepia(67%) saturate(4057%) hue-rotate(238deg) brightness(67%) contrast(139%);
 }
 
 .page-title {
@@ -147,9 +150,10 @@ html, body {
 
 
 .filters button.active {
-  background-color: whitesmoke;
-  color: mediumblue;
+  background-color: pink;
+  color: navy;
   font-weight: 600;
+  border: 1px solid pink;
   cursor: default;
 }
 
@@ -172,7 +176,7 @@ html, body {
   height: 40px;
   bottom: 0;
   justify-content: space-around;
-  background-color: blue;
+  background-color: navy;
   padding: 5px 0 5px 0;
   
 }
@@ -180,18 +184,20 @@ html, body {
 .footer {
   display: flex;
   width: 360px;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin: 0 20%;
+  padding-top: 3px;
 }
 
 .footer button {
   bottom: 0;
   background: none;
-	color: inherit;
 	border: none;
 	font: inherit;
   padding: 0;
 	cursor: pointer;
 	outline: inherit;
+  filter: invert(80%) sepia(7%) saturate(1270%) hue-rotate(302deg) brightness(99%) contrast(104%);
 }
 
 .recipes {
@@ -221,8 +227,8 @@ html, body {
 
 .recipe-card img {
   padding: 6px;
-  border-top-right-radius: 5%;
-  border-top-left-radius: 5%;
+  border-top-right-radius: 8%;
+  border-top-left-radius: 8%;
 }
 
 a {

@@ -65,7 +65,7 @@ function Header() {
         <div className="profile-button">
           <Link to="/profile">
             <img
-              src={ profileicon }
+              src="src/images/profileIconBS.svg"
               alt="ícone do perfil"
               data-testid="profile-top-btn"
             />
@@ -79,7 +79,7 @@ function Header() {
           {(titleObj[pathname] === 'Meals' || titleObj[pathname] === 'Drinks') && (
             <button onClick={ () => setShowSearch((prev) => !prev) }>
               <img
-                src="src/images/searchIcon.svg"
+                src="src/images/searchIconBS.svg"
                 alt="ícone de pesquisa"
                 data-testid="search-top-btn"
               />

@@ -1,4 +1,5 @@
 html, body {
+  background-color: aliceblue;
   margin: 0 0 20px 0;
   font-family: 'DM Sans', sans-serif;
 }
@@ -8,6 +9,41 @@ html, body {
   height: 100%;
   padding: 0 0 30px;
   background-color: aliceblue;
+}
+
+.login-bar {
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+  text-align: start;
+  font-size: 28px;
+  color: pink;
+  width: 360px;
+  height: 550px;
+}
+
+.login-bar h1 {
+  display: flex;
+  margin-top: 100px;
+  padding: 0 50px 0 10px;
+}
+
+.login-bar hr {
+  width: 50px;
+}
+
+.login-form {
+  background-color: aliceblue;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+}
+
+.login-form input {
+  width: 60%;
 }
 
 /* h1, profile-button, search button */
@@ -77,13 +113,8 @@ html, body {
   margin-right: 45%;
 }
 
-.page-title-bottom-shape {
-  position: absolute;
-  height: 10px;
-  width: 360px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  box-shadow: 0 -9px 0 0 aliceblue;
+.page-title hr {
+  background-color: navy;
 }
 
 .search-bar {

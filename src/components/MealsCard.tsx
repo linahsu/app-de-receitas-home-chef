@@ -11,7 +11,6 @@ function MealsCard({ meal, index }: MealsCardProps) {
   return (
     <div className="recipe-card">
       <NavLink to={ `/meals/${meal.idMeal}` } data-testid={ `${index}-recipe-card` }>
-        <div className="recipe-card-img-frame"></div>
           <img
             data-testid={ `${index}-card-img` }
             src={ meal.strMealThumb }
@@ -19,7 +18,7 @@ function MealsCard({ meal, index }: MealsCardProps) {
             width="150"
             height="150"
           />
-          
+
         <h3 data-testid={ `${index}-card-name` }>{meal.strMeal}</h3>
       </NavLink>
     </div>

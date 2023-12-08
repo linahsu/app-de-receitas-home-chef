@@ -10,7 +10,7 @@ function Footer() {
       <footer className="footer" data-testid="footer">
         <button onClick={ () => navigate('/meals') }>
           <img
-            src={ mealicon }
+            src="src/images/mealIconBS.svg"
             alt="Comidas"
             data-testid="meals-bottom-btn"
             width="30"
@@ -19,7 +19,7 @@ function Footer() {
         <hr />
         <button onClick={ () => navigate('/drinks') }>
           <img
-            src={ drinkicon }
+            src="src/images/drinkIconBS.svg"
             alt="Bebidas"
             data-testid="drinks-bottom-btn"
             width="30"

@@ -8,7 +8,7 @@ html, body {
   width: 360px;
   height: 100%;
   padding: 0 0 30px;
-  background-color: aliceblue;
+  background-color: #f0f8ff;
 }
 
 .login-bar {
@@ -17,7 +17,7 @@ html, body {
   background-color: blue;
   text-align: start;
   font-size: 28px;
-  color: pink;
+  color: #ffc0cb;
   width: 360px;
   height: 550px;
 }
@@ -26,10 +26,31 @@ html, body {
   display: flex;
   margin-top: 100px;
   padding: 0 50px 0 10px;
+  animation: loginBarContent 5s;
+}
+
+@keyframes loginBarContent {
+  from {opacity: 0;}
+
+  to {opacity: 100;}
 }
 
 .login-bar hr {
-  width: 50px;
+  width: 25px;
+  margin-top: 80px;
+  margin-bottom: 0;
+}
+
+.login-bar img {
+  filter: invert(100%) sepia(90%) saturate(606%) hue-rotate(175deg) brightness(100%) contrast(103%);
+  margin-left: calc(50% - 20px);
+  animation: loginArrow .8s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes loginArrow {
+  from {margin-top: 60px}
+  to {margin-top: 70px}
 }
 
 .login-form {

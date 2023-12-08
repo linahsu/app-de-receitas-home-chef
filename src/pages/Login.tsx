@@ -40,7 +40,13 @@ export default function Login() {
     <>
       <div className="login-bar">
         <h1>O que vamos preparar hoje?</h1>
-        <hr />
+        <div className="login-arrow">
+          <img 
+            src="src/images/loginArrowBS.svg" 
+            alt="Arrow down"
+            width="40" 
+          />
+        </div>
       </div>
 
         <form className="login-form">

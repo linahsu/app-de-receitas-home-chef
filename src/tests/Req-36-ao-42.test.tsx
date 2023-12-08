@@ -1,12 +1,20 @@
-import { screen } from '@testing-library/dom';
+import { screen, waitFor } from '@testing-library/dom';
 import { vi } from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';
 import { fetchDetailMock } from './mocks/fetchMock';
 import mockLocalStorage from './mocks/mockLocalStorage';
+import { SHAKSHUKA_MEAL } from './mocks/mockMealDetail';
+import { A1_DRINK } from './mocks/mockDrinkDetail';
 
 const mealInProgressPath = '/meals/52771/in-progress';
 const drinkInProgressPath = '/drinks/718319/in-progress';
+
+const mealEndpoint = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771';
+const drinkEndpoint = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=718319';
+
+const whiteHeartIcon = '/src/images/whiteHeartIcon.svg';
+const blackHeartIcon = '/src/images/blackHeartIcon.svg';
 
 describe('Testa a renderização dos elemento e chamadas das APIs da página RecipeInProgress', () => {
   beforeEach(() => {
@@ -17,7 +25,7 @@ describe('Testa a renderização dos elemento e chamadas das APIs da página Rec
     renderWithRouterAndRedux(<App />, mealInProgressPath);
 
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771');
+    expect(global.fetch).toHaveBeenCalledWith(mealEndpoint);
 
     const mealName = await screen.findByText(/Spicy Arrabiata Penne/i);
     const mealCategory = await screen.findByTestId(/recipe-category/i);
@@ -30,7 +38,9 @@ describe('Testa a renderização dos elemento e chamadas das APIs da página Rec
 
     expect(mealName).toBeInTheDocument();
     expect(mealCategory).toBeInTheDocument();
+    expect(mealCategory).toHaveTextContent(/Vegetarian/i);
     expect(mealImage).toBeInTheDocument();
+    expect(mealImage).toHaveAttribute('src', 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg');
     expect(mealFavoriteBtn).toBeInTheDocument();
     expect(mealShareBtn).toBeInTheDocument();
     expect(mealInstructions).toBeInTheDocument();
@@ -42,7 +52,7 @@ describe('Testa a renderização dos elemento e chamadas das APIs da página Rec
     renderWithRouterAndRedux(<App />, drinkInProgressPath);
 
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=718319');
+    expect(global.fetch).toHaveBeenCalledWith(drinkEndpoint);
 
     const drinkName = await screen.findByText(/Aquamarine/i);
     const drinkCategory = await screen.findByTestId(/recipe-category/i);
@@ -55,12 +65,59 @@ describe('Testa a renderização dos elemento e chamadas das APIs da página Rec
 
     expect(drinkName).toBeInTheDocument();
     expect(drinkCategory).toBeInTheDocument();
+    expect(drinkCategory).toHaveTextContent(/Alcoholic/i);
     expect(drinkImage).toBeInTheDocument();
+    expect(drinkImage).toHaveAttribute('src', 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg');
     expect(drinkFavoriteBtn).toBeInTheDocument();
     expect(drinkShareBtn).toBeInTheDocument();
     expect(drinkInstructions).toBeInTheDocument();
     expect(drinkIngredients).toBeInTheDocument();
     expect(drinkFinishBtn).toBeInTheDocument();
+  });
+});
+
+const MockEmptyRecipe = {
+  meals: { undefined },
+  drinks: { undefined },
+};
+
+describe('Testa se não renderiza nada se o retorno da API for undefined', () => {
+  beforeEach(() => {
+    vi.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => MockEmptyRecipe,
+    } as any);
+  });
+
+  it('Testa se a página de meals não contém os elementos esperados', () => {
+    renderWithRouterAndRedux(<App />, mealInProgressPath);
+
+    expect(global.fetch).toHaveBeenCalled();
+    expect(global.fetch).toHaveBeenCalledWith(mealEndpoint);
+
+    expect(screen.queryByText(/Spicy Arrabiata Penne/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/recipe-category/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/recipe-photo/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/favorite-btn/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/share-btn/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/instructions/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/0-ingredient-step/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/finish-recipe-btn/i)).not.toBeInTheDocument();
+  });
+
+  it('Testa se a página de drinks não contém os elementos esperados', () => {
+    renderWithRouterAndRedux(<App />, drinkInProgressPath);
+
+    expect(global.fetch).toHaveBeenCalled();
+    expect(global.fetch).toHaveBeenCalledWith(drinkEndpoint);
+
+    expect(screen.queryByText(/Spicy Arrabiata Penne/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/recipe-category/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/recipe-photo/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/favorite-btn/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/share-btn/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/instructions/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/0-ingredient-step/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(/finish-recipe-btn/i)).not.toBeInTheDocument();
   });
 });
 
@@ -216,13 +273,48 @@ describe('Testa o botão de compartilhamento', () => {
   });
 });
 
+describe('Testa o LocalStorage quando recebe uma receita com chaves vazias', () => {
+  it('Testa a chave favoriteRecipes no LocalStorage no componente MealInProgress', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => SHAKSHUKA_MEAL,
+    } as Response);
+
+    const { user } = renderWithRouterAndRedux(<App />, '/meals/52963/in-progress');
+
+    const mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+    expect(mealFavoriteBtn).toBeInTheDocument();
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', blackHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+  });
+
+  it('Testa a chave favoriteRecipes no LocalStorage no componente DrinkInProgress', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => A1_DRINK,
+    } as Response);
+
+    const { user } = renderWithRouterAndRedux(<App />, '/drinks/17222/in-progress');
+
+    const mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+    expect(mealFavoriteBtn).toBeInTheDocument();
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', blackHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+  });
+});
+
 describe('Testa o botão de favoritar', () => {
   beforeEach(() => {
     vi.spyOn(global, 'fetch').mockImplementation(fetchDetailMock as any);
   });
-
-  const whiteHeartIcon = '/src/images/whiteHeartIcon.svg';
-  const blackHeartIcon = '/src/images/blackHeartIcon.svg';
 
   it('Testa se ao clicar no favoriteBtn, o ícone muda no componente MealInProgress', async () => {
     const { user } = renderWithRouterAndRedux(<App />, mealInProgressPath);

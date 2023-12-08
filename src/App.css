@@ -12,36 +12,37 @@ html, body {
 
 /* h1, profile-button, search button */
 .header {
-  margin-top: 0;
   display: flex;
-  padding: 15px;
+  padding: 15px 15px 15px 10px;
+  justify-content: space-between;
   align-items: center;
   background-color:blue;
-  height: 20px;
+  height: 15px;
 }
 
 /* h1 */
 .header h1 {
-  font-size: 25px;
+  font-size: 20px;
   color: pink;
 }
 
 .profile-button {
   display: flex;
-  margin-left: 5px;
+  margin-top: 7px;
 }
 
 .profile-button img {
   border: 2px solid black;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
 }
 
 .search-button {
+  margin-right: 23px;
+  align-self: center;
   display: flex;
-  margin-left: auto;
   border-radius: 5px;
   width: 35px;
   height: 35px;
@@ -58,22 +59,19 @@ html, body {
 	outline: inherit;
 }
 
-.search-button img {
-  width: 25px;
-  height: 25px;
-}
-
 .page-title {
   display: flex;
-  justify-content: center;
+  align-content: center;
   background-color: lavenderblush;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  margin: 0 3px;
+  margin: 0 1px;
 }
 
 .page-title h1 {
   color: blue;
+  padding-left: 10px;
+  margin-right: 45%;
 }
 
 .page-title-bottom-shape {
@@ -89,41 +87,49 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin: 0 15px 10px;
-  padding: 5px;
+  justify-content: space-around;
+  margin: 0 10px 3px;
+  padding: 5px 10px;
   font-size: 15px;
   background-color: pink;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  width: auto;
   height: 80px;
 }
-
 
 .search-input {
   display: flex;
   margin: 5px;
+  padding: 0 10px;
   background-color: white;
   outline-color:powderblue;
   border-radius: 10px;
   border: 0;
-  width: 300px;
+  width: 285px;
   height: 30px;
 }
 
+.search-bar-options-and-btn {
+  display: flex;
+  flex-direction: row;
+  font-size: 13px;
+  margin-left: 10px;
+}
+
+
 .filters {
   display: flex;
-  padding: 0;
-  margin: 10px 5px;
+  padding: 10px 0 10px 0;
+  margin: 0px 5px;
   white-space: nowrap;
   overflow: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .filters button {
   display: flex;
-  margin-right: 5px;
-  margin-left: 5px;
+  margin: 0 6px;
   border-radius: 15px;
   border: 1px solid navy;
 	padding: 5px 10px;
@@ -139,10 +145,6 @@ html, body {
   margin-right: 10px;
 }
 
-.filters button:hover {
-  background-color: lavenderblush;
-  color: mediumblue;
-}
 
 .filters button.active {
   background-color: whitesmoke;
@@ -203,16 +205,24 @@ html, body {
   width: 160px;
   margin: 5px;
   justify-content: center;
+  align-content: center;
   align-self: center;
   background-color: white;
   border-radius: 5%;
   overflow: hidden;
+  border: solid navy .7px;
 }
 
 .recipe-card h3 {
   margin-top: 5px;
   padding: 0 15px 0 15px;
   font-size: 15px;
+}
+
+.recipe-card img {
+  padding: 6px;
+  border-top-right-radius: 5%;
+  border-top-left-radius: 5%;
 }
 
 a {

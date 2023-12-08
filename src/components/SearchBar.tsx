@@ -52,7 +52,6 @@ function SearchBar() {
 
   return (
     <>
-    <div className="search-bar-shape" />
     <div className="search-bar">
       <form onSubmit={ handleSubmit }>
         <input
@@ -65,45 +64,47 @@ function SearchBar() {
           onChange={ handleChange }
           placeholder="Search"
         />
-        <label htmlFor="ingredient">
-          <input
-            data-testid="ingredient-search-radio"
-            type="radio"
-            name="type"
-            id="ingredient"
-            value="ingredient"
-            onChange={ handleChange2 }
-          />
-          Ingredient
-        </label>
-        <label htmlFor="name">
-          <input
-            data-testid="name-search-radio"
-            type="radio"
-            name="type"
-            id="name"
-            value="name"
-            onChange={ handleChange2 }
-          />
-          Name
-        </label>
-        <label htmlFor="first-letter">
-          <input
-            data-testid="first-letter-search-radio"
-            type="radio"
-            name="type"
-            id="first-letter"
-            value="first-letter"
-            onChange={ handleChange2 }
-          />
-          First letter
-        </label>
-        <button
-          data-testid="exec-search-btn"
-          type="submit"
-        >
-          Search
-        </button>
+        <div className="search-bar-options-and-btn">
+          <label htmlFor="ingredient">
+            <input
+              data-testid="ingredient-search-radio"
+              type="radio"
+              name="type"
+              id="ingredient"
+              value="ingredient"
+              onChange={ handleChange2 }
+            />
+            Ingredient
+          </label>
+          <label htmlFor="name">
+            <input
+              data-testid="name-search-radio"
+              type="radio"
+              name="type"
+              id="name"
+              value="name"
+              onChange={ handleChange2 }
+            />
+            Name
+          </label>
+          <label htmlFor="first-letter">
+            <input
+              data-testid="first-letter-search-radio"
+              type="radio"
+              name="type"
+              id="first-letter"
+              value="first-letter"
+              onChange={ handleChange2 }
+            />
+            First letter
+          </label>
+          <button
+            data-testid="exec-search-btn"
+            type="submit"
+          >
+            Search
+          </button>
+        </div>
       </form>
     </div>
     </>

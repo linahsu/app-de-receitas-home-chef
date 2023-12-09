@@ -8,11 +8,6 @@ function FavoriteRecipes() {
   const [showFavorites,
     setShowFavorites] = useState<Array<FavoriteRecipeType>>(favoriteRecipes);
 
-  const checkFavorite = (recepeId: string) => {
-    return favoriteRecipes
-      .some((favorite: FavoriteRecipeType) => favorite.id === recepeId);
-  };
-
   const handleClickFilter = (filter: string) => {
     setShowFavorites(favoriteRecipes);
 
@@ -24,30 +19,11 @@ function FavoriteRecipes() {
     }
   };
 
-  const handleFavoriteBtn = () => {
-    { showFavorites.map((recipes) => {
-      if (recipes.id && recipes.type) {
-        if (!checkFavorite(recipes.id)) {
-          setFavoriteRecipes([
-            ...favoriteRecipes,
-            {
-              id: recipes.id,
-              type: recipes.type,
-              nationality: recipes.nationality || '',
-              category: recipes.category || '',
-              alcoholicOrNot: recipes?.alcoholicOrNot || '',
-              name: recipes.name,
-              image: recipes.image,
-            },
-          ]);
-        } else {
-          const favoriteList = favoriteRecipes
-            .filter((favorite: FavoriteRecipeType) => favorite.id !== recipes.id);
-          setFavoriteRecipes(favoriteList);
-          setShowFavorites(favoriteList);
-        }
-      }
-    }); }
+  const handleFavoriteBtn = (recipesId: string) => {
+    const favoriteList = favoriteRecipes
+      .filter((favorite: FavoriteRecipeType) => favorite.id !== recipesId);
+    setFavoriteRecipes(favoriteList);
+    setShowFavorites(favoriteList);
   };
 
   return (

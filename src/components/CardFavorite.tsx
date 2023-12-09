@@ -8,7 +8,7 @@ function CardFavorite({ recipe,
   handleFavoriteBtn }:
 { recipe: FavoriteRecipeType,
   index: number,
-  handleFavoriteBtn: () => void }) {
+  handleFavoriteBtn: (recipesId: string) => void }) {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleShareBtn = (type: string, id: string) => {
@@ -44,7 +44,7 @@ function CardFavorite({ recipe,
             {`${recipe.alcoholicOrNot}`}
           </p>
         )}
-        <button onClick={ handleFavoriteBtn }>
+        <button onClick={ () => handleFavoriteBtn(recipe.id) }>
           <img
             data-testid={ `${index}-horizontal-favorite-btn` }
             src={ blackHeartIcon }

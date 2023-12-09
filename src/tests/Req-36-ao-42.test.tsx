@@ -9,12 +9,21 @@ import { A1_DRINK } from './mocks/mockDrinkDetail';
 
 const mealInProgressPath = '/meals/52771/in-progress';
 const drinkInProgressPath = '/drinks/718319/in-progress';
+const mealInProgressPath2 = '/meals/52963/in-progress';
+const drinkInProgressPath2 = '/drinks/17222/in-progress';
 
 const mealEndpoint = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771';
 const drinkEndpoint = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=718319';
 
 const whiteHeartIcon = '/src/images/whiteHeartIcon.svg';
 const blackHeartIcon = '/src/images/blackHeartIcon.svg';
+
+const doneRecipes = '/done-recipes';
+
+const MockEmptyRecipe = {
+  meals: { undefined },
+  drinks: { undefined },
+};
 
 describe('Testa a renderização dos elemento e chamadas das APIs da página RecipeInProgress', () => {
   beforeEach(() => {
@@ -75,11 +84,6 @@ describe('Testa a renderização dos elemento e chamadas das APIs da página Rec
     expect(drinkFinishBtn).toBeInTheDocument();
   });
 });
-
-const MockEmptyRecipe = {
-  meals: { undefined },
-  drinks: { undefined },
-};
 
 describe('Testa se não renderiza nada se o retorno da API for undefined', () => {
   beforeEach(() => {
@@ -161,6 +165,104 @@ describe('Testa as funções ingredientCheck e handleIngredientCheck', () => {
   });
 });
 
+describe('Testa a função handleFvoriteBtn quando recebe uma receita com chaves vazias', () => {
+  it('Testa se o finishRecipeBtn fica habilitado após todos os ingredientes são checados, ao clicar no botão a página é redirecionada para a página DoneRecipes a receita é salva no LocalStorage no componente MealInProgress', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => SHAKSHUKA_MEAL,
+    } as Response);
+
+    const { user } = renderWithRouterAndRedux(<App />, mealInProgressPath2);
+
+    const allIngredients = (await screen.findAllByRole('checkbox'));
+    let mealFinishBtn = await screen.findByTestId(/finish-recipe-btn/i);
+
+    expect(allIngredients.length).toBe(9);
+    expect(mealFinishBtn).toBeInTheDocument();
+    expect(mealFinishBtn).toBeDisabled();
+
+    await user.click(allIngredients[0]);
+    await user.click(allIngredients[1]);
+    await user.click(allIngredients[2]);
+    await user.click(allIngredients[3]);
+    await user.click(allIngredients[4]);
+    await user.click(allIngredients[5]);
+    await user.click(allIngredients[6]);
+    await user.click(allIngredients[7]);
+    await user.click(allIngredients[8]);
+
+    mealFinishBtn = await screen.findByTestId(/finish-recipe-btn/i);
+    expect(mealFinishBtn).not.toBeDisabled();
+
+    await user.click(mealFinishBtn);
+    expect(window.location.pathname).toBe(doneRecipes);
+    expect(screen.getByText(/Shakshuka/i)).toBeInTheDocument();
+  });
+
+  it(('Testa se ao entrar novamente na página RecipeInProgress, os checkboxs estão checados no componente MealsInProgress'), async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => SHAKSHUKA_MEAL,
+    } as Response);
+
+    renderWithRouterAndRedux(<App />, mealInProgressPath2);
+
+    const allIngredients = (await screen.findAllByRole('checkbox'));
+    expect(allIngredients.length).toBe(9);
+
+    expect(allIngredients[0]).toBeChecked();
+    expect(allIngredients[1]).toBeChecked();
+    expect(allIngredients[2]).toBeChecked();
+    expect(allIngredients[3]).toBeChecked();
+    expect(allIngredients[4]).toBeChecked();
+    expect(allIngredients[5]).toBeChecked();
+    expect(allIngredients[6]).toBeChecked();
+    expect(allIngredients[7]).toBeChecked();
+    expect(allIngredients[8]).toBeChecked();
+  });
+
+  it('Testa se o finishRecipeBtn fica habilitado após todos os ingredientes são checados, ao clicar no botão a página é redirecionada para a página DoneRecipes a receita é salva no LocalStorage no componente DrinkInProgress', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => A1_DRINK,
+    } as Response);
+
+    const { user } = renderWithRouterAndRedux(<App />, drinkInProgressPath2);
+
+    const allIngredients = (await screen.findAllByRole('checkbox'));
+    let drinkFinishBtn = await screen.findByTestId(/finish-recipe-btn/i);
+
+    expect(allIngredients.length).toBe(4);
+    expect(drinkFinishBtn).toBeInTheDocument();
+    expect(drinkFinishBtn).toBeDisabled();
+
+    await user.click(allIngredients[0]);
+    await user.click(allIngredients[1]);
+    await user.click(allIngredients[2]);
+    await user.click(allIngredients[3]);
+
+    drinkFinishBtn = await screen.findByTestId(/finish-recipe-btn/i);
+    expect(drinkFinishBtn).not.toBeDisabled();
+
+    await user.click(drinkFinishBtn);
+    expect(window.location.pathname).toBe(doneRecipes);
+    expect(screen.getByText(/A1/i)).toBeInTheDocument();
+  });
+
+  it(('Testa se ao entrar novamente na página RecipeInProgress, os checkboxs estão checados no conponente DrinkInProgress'), async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => A1_DRINK,
+    } as Response);
+
+    renderWithRouterAndRedux(<App />, drinkInProgressPath2);
+
+    const allIngredients = (await screen.findAllByRole('checkbox'));
+    expect(allIngredients.length).toBe(4);
+
+    expect(allIngredients[0]).toBeChecked();
+    expect(allIngredients[1]).toBeChecked();
+    expect(allIngredients[2]).toBeChecked();
+    expect(allIngredients[3]).toBeChecked();
+  });
+});
+
 describe('Testa a função handleFinishRecipeBtn e a chave inProgress do LocalStorage', () => {
   beforeEach(() => {
     vi.spyOn(global, 'fetch').mockImplementation(fetchDetailMock as any);
@@ -189,7 +291,7 @@ describe('Testa a função handleFinishRecipeBtn e a chave inProgress do LocalSt
     expect(mealFinishBtn).not.toBeDisabled();
 
     await user.click(mealFinishBtn);
-    expect(window.location.pathname).toBe('/done-recipes');
+    expect(window.location.pathname).toBe(doneRecipes);
     expect(screen.getByText(/Spicy Arrabiata Penne/i)).toBeInTheDocument();
   });
 
@@ -227,8 +329,8 @@ describe('Testa a função handleFinishRecipeBtn e a chave inProgress do LocalSt
     expect(drinkFinishBtn).not.toBeDisabled();
 
     await user.click(drinkFinishBtn);
-    expect(window.location.pathname).toBe('/done-recipes');
-    expect(screen.getByText(/Spicy Arrabiata Penne/i)).toBeInTheDocument();
+    expect(window.location.pathname).toBe(doneRecipes);
+    expect(screen.getByText(/Aquamarine/i)).toBeInTheDocument();
   });
 
   it(('Testa se ao entrar novamente na página RecipeInProgress, os checkboxs estão checados no conponente DrinkInProgress'), async () => {
@@ -273,13 +375,13 @@ describe('Testa o botão de compartilhamento', () => {
   });
 });
 
-describe('Testa o LocalStorage quando recebe uma receita com chaves vazias', () => {
-  it('Testa a chave favoriteRecipes no LocalStorage no componente MealInProgress', async () => {
+describe('Testa a função handleFvoriteBtn quando recebe uma receita com chaves vazias', () => {
+  it('Testa a função handleFavoriteBtn no componente MealInProgress', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       json: async () => SHAKSHUKA_MEAL,
     } as Response);
 
-    const { user } = renderWithRouterAndRedux(<App />, '/meals/52963/in-progress');
+    const { user } = renderWithRouterAndRedux(<App />, mealInProgressPath2);
 
     const mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
     expect(mealFavoriteBtn).toBeInTheDocument();
@@ -292,12 +394,12 @@ describe('Testa o LocalStorage quando recebe uma receita com chaves vazias', () 
     expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
   });
 
-  it('Testa a chave favoriteRecipes no LocalStorage no componente DrinkInProgress', async () => {
+  it('Testa a função handleFavoriteBtn no componente DrinkInProgress', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       json: async () => A1_DRINK,
     } as Response);
 
-    const { user } = renderWithRouterAndRedux(<App />, '/drinks/17222/in-progress');
+    const { user } = renderWithRouterAndRedux(<App />, drinkInProgressPath2);
 
     const mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
     expect(mealFavoriteBtn).toBeInTheDocument();

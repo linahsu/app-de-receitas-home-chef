@@ -70,6 +70,17 @@ const mockDoneRecipes = [
     tags: ['Halloween', 'Pie', 'Desert'],
   },
   {
+    id: '718319',
+    type: 'drink',
+    area: '',
+    category: 'Cocktail',
+    alcoholicOrNot: 'Alcoholic',
+    name: 'Aquamarine',
+    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+    doneDate: '27-03-2023',
+    tags: [],
+  },
+  {
     id: '11157',
     type: 'drink',
     area: '',
@@ -89,7 +100,7 @@ const mockDoneRecipes = [
     name: 'Shakshuka',
     image: 'https://www.themealdb.com/images/media/meals/g373701551450225.jpg',
     doneDate: '30-03-2023',
-    tags: [],
+    tags: ['Egg', 'Brunch', 'Breakfast'],
   },
   {
     id: '17222',
@@ -100,7 +111,7 @@ const mockDoneRecipes = [
     name: 'A1',
     image: 'https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg"',
     doneDate: '29-03-2023',
-    tags: [],
+    tags: ['Party'],
   },
 ];
 

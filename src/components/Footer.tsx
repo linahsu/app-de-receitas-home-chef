@@ -11,7 +11,7 @@ function Footer() {
             src="src/images/mealIconBS2.svg"
             alt="Comidas"
             data-testid="meals-bottom-btn"
-            width="30"
+            width="25"
           />
         </button>
         <hr />
@@ -20,7 +20,7 @@ function Footer() {
             src="src/images/drinkIconBS2.svg"
             alt="Bebidas"
             data-testid="drinks-bottom-btn"
-            width="30"
+            width="25"
           />
         </button>
       </footer>

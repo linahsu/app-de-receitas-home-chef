@@ -20,7 +20,13 @@ function Recipes({ children }: { children: React.ReactNode }) {
     }
   }, [dispatch, pathname, meals, drinks]);
 
-  return <div>{children}</div>;
+  return (
+    <>
+      <div>{children}</div>
+      <div className="search-page-bottom" />
+    </>
+
+  );
 }
 
 export default Recipes;

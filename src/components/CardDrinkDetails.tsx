@@ -116,21 +116,22 @@ export default function CardDrinkDetails({
               <hr />
             </section>
           </div>
+          <div className="details-start-recipe">
+            {!hideButton
+              ? (
+                <button
+                  className="start-recipe-btn"
+                  data-testid="start-recipe-btn"
+                  onClick={
+                    () => navigate(`/drinks/${detailsDrink.idDrink}/in-progress`)
+                  }
+                >
+                  {buttonText}
+                </button>
 
-          {!hideButton
-            ? (
-              <button
-                className="start-recipe-btn"
-                data-testid="start-recipe-btn"
-                onClick={
-                  () => navigate(`/drinks/${detailsDrink.idDrink}/in-progress`)
-                }
-              >
-                {buttonText}
-              </button>
-
-            )
-            : <p />}
+              )
+              : <p />}
+          </div>
 
           <RecommendedRecipes />
           <Footer />

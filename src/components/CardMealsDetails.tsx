@@ -61,15 +61,30 @@ export default function CardMealsDetails({
             </div>
           </div>
           <div className="details-img-and-category">
+            <div className="details-start-recipe">
+              {!hideButton
+                ? (
+                  <button
+                    data-testid="start-recipe-btn"
+                    onClick={ () => navigate(`/meals/${detailsMeal.idMeal}/in-progress`) }
+                  >
+                    { buttonText }
+                    <img src="/src/images/startRecipeArrowBS.svg" width="14" />
+                  </button>
+    
+                )
+                : <p />}
+            </div>
             <img
               src={ detailsMeal.strMealThumb }
               alt="Foto da comida"
               data-testid="recipe-photo"
               style={ { width: '360px' } }
-            />
+              />
             <div className="details-category-container">
               <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
             </div>
+
           </div>
 
           <div className="details-ingredients">
@@ -116,7 +131,7 @@ export default function CardMealsDetails({
           </div>
 
           <section className="details-video">
-            <h3>Watch this Video</h3>
+            <h3>Watch this video:</h3>
 
             { detailsMeal.strYoutube
               && <iframe
@@ -135,20 +150,6 @@ export default function CardMealsDetails({
 
           </section>
 
-
-
-          {!hideButton
-            ? (
-              <button
-                className="start-recipe-btn"
-                data-testid="start-recipe-btn"
-                onClick={ () => navigate(`/meals/${detailsMeal.idMeal}/in-progress`) }
-              >
-                { buttonText }
-              </button>
-
-            )
-            : <p />}
 
           <RecommendedRecipes />
           <Footer />

@@ -369,6 +369,26 @@ footer.footer {
   justify-content: flex-end;
 }
 
+.details-start-recipe {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.details-start-recipe button {
+  display: flex;
+  position: absolute;
+  border: none;
+  padding: 10px 5px 10px 10px;
+  border-bottom-left-radius: 15px;
+  color: navy;
+  font-weight: 600;
+}
+
+.details-start-recipe button img {
+  filter: invert(15%) sepia(34%) saturate(6597%) hue-rotate(235deg) brightness(75%) contrast(139%);
+  margin: 1px 0 0 1px;
+}
+
 .details-category-container {
   display: flex;
   justify-content: flex-end;
@@ -386,6 +406,7 @@ footer.footer {
   font-size: 12px;
   font-weight: 600;
 }
+
 
 .details-ingredients {
   text-align: start;
@@ -412,8 +433,8 @@ footer.footer {
   border: 1px solid pink;
   font-size: 14px;
   font-weight: 550;
-  border-radius: 20px;
-  padding: 5px 20px;
+  border-radius: 25px;
+  padding: 10px 20px;
 }
 
 .details-instructions {
@@ -460,7 +481,7 @@ footer.footer {
 
 .details-video {
   background-color: blue;
-  padding: 20px 0 55px;
+  padding: 30px 0 65px;
 }
 
 .details-video h3 {
@@ -472,6 +493,42 @@ footer.footer {
   border: none;
 }
 
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-icon-and-email {
+  display: flex;
+  color: navy;
+}
+
+.profile-icon-and-email img {
+  filter: invert(15%) sepia(34%) saturate(6597%) hue-rotate(235deg) brightness(75%) contrast(139%);
+  margin-right: 2px;
+}
+
+.profile-buttons {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.profile-buttons button {
+  color: navy;
+  border: 2px solid pink;
+  background: none;
+  font: inherit;
+  padding: 5px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+.profile-buttons button:last-child {
+  background-color: lavenderblush;
+}
 
 .meal-page-body {
   text-align: center;

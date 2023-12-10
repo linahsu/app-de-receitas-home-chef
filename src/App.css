@@ -41,6 +41,7 @@ html, body {
 }
 
 .login-bar img {
+  scale: 90%;
   filter: invert(100%) sepia(90%) saturate(606%) hue-rotate(175deg) brightness(100%) contrast(103%);
   margin-left: calc(50% - 15px);
   animation: loginArrow .9s;
@@ -123,8 +124,6 @@ html, body {
   display: flex;
   align-content: center;
   background-color: lavenderblush;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
   justify-content: space-between;
 }
 
@@ -334,9 +333,15 @@ footer.footer {
   opacity: 0;
 }
 
+.favorited {
+  animation: clink .2s;
+  animation-iteration-count: 3;
+  transition: ease-in-out;
+}
+
 .copied {
   color: navy;
-  animation: linkCopied 5s;
+  animation: linkCopied 3s;
 }
 
 @keyframes linkCopied {
@@ -355,6 +360,110 @@ footer.footer {
   padding: 0;
   cursor: pointer;
 }
+
+.details-img-and-category {
+  display: flex;
+  width: 360px;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.details-category-container {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  margin-right: 10px;
+  scale: 110%;
+}
+
+.details-category-container p {
+  color: navy;
+  background-color: pink;
+  opacity: 0.7;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.details-ingredients {
+  text-align: start;
+  color: navy;
+  background-color:lavenderblush;
+  padding: 5px 20px 30px;
+  margin-bottom: 0;
+}
+
+.details-ingredients h3 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.details-ingredients h3 img {
+  filter: invert(15%) sepia(34%) saturate(6597%) hue-rotate(235deg) brightness(75%) contrast(139%);
+  margin-left: 5px;
+  padding-bottom: 5px;
+}
+
+.details-ingredient-list {
+  list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' fill='currentColor' class='bi bi-arrow-return-right' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5'/%3E%3C/svg%3E");
+  border: 1px solid pink;
+  font-size: 14px;
+  font-weight: 550;
+  border-radius: 10%;
+  padding: 5px 20px;
+}
+
+.details-instructions {
+  background-color: pink;
+  color: navy;
+  padding: 20px 20px 30px;
+  margin-bottom: 0;
+}
+
+.details-instructions h3 {
+  display: flex;
+  align-items: center;
+  background-color: pink;
+  margin: 0;
+}
+
+.details-instructions h3 img {
+  display: flex;
+  filter: invert(15%) sepia(34%) saturate(6597%) hue-rotate(235deg) brightness(75%) contrast(139%);
+  margin-left: 7px;
+  align-self: center;
+  padding-bottom: 10px;
+}
+
+.details-instructions section {
+  text-align: start;
+  font-size: 15px;
+  padding: 0 15px;
+}
+
+.details-instructions hr {
+  margin-top: 30px;
+  width: 15px;
+  border: 1px solid navy;
+}
+
+.details-video {
+  background-color: blue;
+  padding: 20px 0 55px;
+}
+
+.details-video h3 {
+  color: pink;
+  margin-top: 0;
+}
+
+.details-video iframe {
+  border: none;
+}
+
 
 .meal-page-body {
   text-align: center;
@@ -428,15 +537,16 @@ a {
 @keyframes shake {
 
   0% {
-    transform: rotate(5deg);
+    transform: rotate(3deg);
   }
+ 
 
   50% {
-    transform: rotate(-5deg);
+    transform: rotate(-3deg);
   }
 
-  100% {
-    transform: rotate(5deg);
+  to {
+    transform: rotate(3deg);
   }
 }
 

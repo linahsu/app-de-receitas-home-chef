@@ -46,6 +46,7 @@ export default function CardMealsDetails({
                   data-testid="favorite-btn"
                   src={isFavorite ? blackHeartIcon : whiteHeartIcon}
                   alt={isFavorite ? 'Black heart icon' : 'White heart icon'}
+                  className={isFavorite ? "favorited" : "not-favorited"}
                 />
               </button>
 
@@ -59,48 +60,70 @@ export default function CardMealsDetails({
                 {isCopied && <p className={isCopied && 'copied'}>Link copied!</p>}
             </div>
           </div>
+          <div className="details-img-and-category">
+            <img
+              src={ detailsMeal.strMealThumb }
+              alt="Foto da comida"
+              data-testid="recipe-photo"
+              style={ { width: '360px' } }
+            />
+            <div className="details-category-container">
+              <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
+            </div>
+          </div>
 
-          <img
-            src={ detailsMeal.strMealThumb }
-            alt="Foto da comida"
-            data-testid="recipe-photo"
-            style={ { width: '360px' } }
-          />
-          <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
-
-          <h3>Ingredients</h3>
-          <ol>
-            {Object.entries(detailsMeal)
-              .filter(([key, value]) => key.startsWith('strIngredient') && value)
-              .map(([ingredientKey, ingredientValue], index) => (
-                <li
-                  key={ ingredientKey }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {`${ingredientValue}
-                  (${detailsMeal[`strMeasure${ingredientKey.slice(13)}`]}) `}
-                </li>
-              ))}
-          </ol>
-          <h3>Instructions</h3>
-          <section>
-            <h4 data-testid="instructions">
-              {detailsMeal.strInstructions
-                  && detailsMeal.strInstructions.split('\r\n').map((text, index) => (
-                    <p key={ index }>
-                      {text}
-                      <br />
-                    </p>
+          <div className="details-ingredients">
+            <h3>
+              Ingredients
+              <img src="/src/images/ingredients.svg" alt="" width="23"/>
+            </h3>
+            <div className="details-ingredient-list">
+              <ol>
+                {Object.entries(detailsMeal)
+                  .filter(([key, value]) => key.startsWith('strIngredient') && value)
+                  .map(([ingredientKey, ingredientValue], index) => (
+                    <li
+                      key={ ingredientKey }
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                    >
+                      {`${ingredientValue}
+                      (${detailsMeal[`strMeasure${ingredientKey.slice(13)}`]}) `}
+                    </li>
                   ))}
-            </h4>
-          </section>
-          <h3>Watch this Vídeo</h3>
-          <section>
+              </ol>          
+            </div>
+
+          </div>
+
+          <div className="details-instructions">
+            <h3>
+              Instructions
+              <img src="/src/images/instructions.svg" alt="" width="29"/>
+            </h3>
+
+            <section>
+              <p data-testid="instructions">
+                {detailsMeal.strInstructions
+                    && detailsMeal.strInstructions.split('\r\n').map((text, index) => (
+                      <p key={ index }>
+                        {text}
+                        <br />
+                      </p>
+                    ))}
+              </p>
+
+              <hr />
+            </section>
+          </div>
+
+          <section className="details-video">
+            <h3>Watch this Video</h3>
+
             { detailsMeal.strYoutube
               && <iframe
                 src={ `https://www.youtube.com/embed/${detailsMeal.strYoutube.split('v=')[1]}` }
-                width="auto"
-                height="auto"
+                width="360"
+                height="200"
                 title="YouTube Video"
                 allow="accelerometer;
                 autoplay;
@@ -110,6 +133,7 @@ export default function CardMealsDetails({
                 allowFullScreen
                 data-testid="video"
               />}
+
           </section>
 
 

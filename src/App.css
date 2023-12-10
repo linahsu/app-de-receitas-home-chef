@@ -532,6 +532,7 @@ footer.footer {
   align-items: center;
   font-weight: 600;
 }
+
 .in-progress-finish-btn button:enabled {
   cursor: pointer;
 }

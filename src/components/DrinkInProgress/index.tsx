@@ -41,83 +41,147 @@ function DrinkInProgress({
     <div>
       {detailsDrink.idDrink && currentDrink && IngredientsList.length > 0 && (
         <div>
-          <h2 data-testid="recipe-title">
-            { currentDrink.strDrink }
-          </h2>
+          <div className="details-title-and-btns">
 
-          <h4 data-testid="recipe-category">
-            { `Category: ${currentDrink.strAlcoholic}` }
-          </h4>
+            <div className="details-recipe-name">
+              <h2 data-testid="recipe-title">
+                { currentDrink.strDrink }
+              </h2>
+            </div>
 
-          <img
-            data-testid="recipe-photo"
-            src={ currentDrink.strDrinkThumb }
-            alt="Imagem da receita"
-          />
+            <div className="favorite-and-share-btn">
+              <hr />
+              <button
+                onClick={ handleFavoriteBtn }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                  alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
+                />
+              </button>
 
-          <div>
-            <button
-              onClick={ handleFavoriteBtn }
-            >
-              <img
-                data-testid="favorite-btn"
-                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
-              />
-            </button>
+              <button
+                data-testid="share-btn"
+                onClick={ handleShareBtn }
+              >
+                <img src="/src/images/shareIcon.svg" alt="Share icon" />
+              </button>
 
-            <button
-              data-testid="share-btn"
-              onClick={ handleShareBtn }
-            >
-              <img src="/src/images/shareIcon.svg" alt="Share icon" />
-            </button>
+              {isCopied && <p className={ isCopied && 'copied' }>Link copied!</p>}
+            </div>
+          </div>
 
-            {isCopied && <p>Link copied!</p>}
+          <div className="details-img-and-category">
+            <img
+              src={ currentDrink.strDrinkThumb }
+              alt="Imagem da receita"
+              data-testid="recipe-photo"
+              style={ { width: '360px' } }
+            />
+
+            <div className="details-category-container">
+              <p data-testid="recipe-category">
+                {currentDrink.strAlcoholic}
+              </p>
+            </div>
+
           </div>
 
           <div data-testid="instructions">
-            <h4>Ingredients List</h4>
-
-            {IngredientsList.map((ingredient, index) => (
-              <div
-                data-testid={ `${index}-ingredient-step` }
-                key={ index }
-                className={
-                  isCheckedList.includes(index.toString()) ? 'checked' : undefined
-                    }
-              >
-                <input
-                  type="checkbox"
-                  id={ `${index}` }
-                  onChange={ () => handleIngredientCheck(index) }
-                  checked={ isCheckedList.includes(index.toString()) }
+            <div className="details-ingredients">
+              <h3>
+                Ingredients
+                <img
+                  src="/src/images/drinksIngredients.svg"
+                  alt="Ingredients icon"
+                  width="20"
                 />
-                <label
-                  htmlFor={ `${index}` }
-                >
-                  {`${ingredient[1]}: ${mesureList[index][1]}`}
-                </label>
-              </div>
-            ))}
+              </h3>
 
-            <h4>Instructions</h4>
-            {instructionsList.map((instruction, index) => (
-              <p key={ index }>
-                { instruction[1] }
-                <br />
-              </p>
-            ))}
+              <div className="details-ingredient-list">
+                {IngredientsList.map((ingredient, index) => (
+                  <div
+                    data-testid={ `${index}-ingredient-step` }
+                    key={ index }
+                    className={
+                      isCheckedList.includes(index.toString()) ? 'checked' : undefined
+                        }
+                  >
+                    <input
+                      type="checkbox"
+                      id={ `${index}` }
+                      onChange={ () => handleIngredientCheck(index) }
+                      checked={ isCheckedList.includes(index.toString()) }
+                    />
+                    <label
+                      htmlFor={ `${index}` }
+                    >
+                      {`${ingredient[1]}: ${mesureList[index][1]}`}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="details-instructions">
+              <h3>
+                Instructions
+                <img
+                  src="/src/images/drinksInstructions.svg"
+                  alt="Cocktail icon"
+                  className="drink-instructions-icon"
+                  width="20"
+                />
+              </h3>
+
+              <section>
+                {instructionsList.map((instruction, index) => (
+                  <p key={ index }>
+                    {instruction[1]}
+                    <br />
+                  </p>
+                ))}
+                <hr />
+              </section>
+            </div>
+
           </div>
 
-          <button
-            data-testid="finish-recipe-btn"
-            disabled={ isCheckedList.length !== IngredientsList.length }
-            className="finish-recipe-btn"
-            onClick={ handleFinishBtn }
+          <div
+            className="in-progress-finish-btn"
           >
-            Finish Recipe
-          </button>
+            <button
+              data-testid="finish-recipe-btn"
+              disabled={ isCheckedList.length !== IngredientsList.length }
+              className="finish-recipe-btn"
+              onClick={ handleFinishBtn }
+            >
+              {
+              isCheckedList.length === IngredientsList.length
+                ? <img
+                    src="/src/images/checkBS.svg"
+                    alt="Check"
+                    width="40"
+                    className="finish-recipe-img"
+                />
+                : <img
+                    src="/src/images/threeDotsBS.svg"
+                    alt="Check"
+                    width="40"
+                    className="not-finished-recipe-img"
+                />
+            }
+              <p
+                className={
+                  (isCheckedList.length === IngredientsList.length)
+                    ? 'finish-recipe-text' : 'not-finished-recipe-text'
+                }
+              >
+                Finish Recipe
+              </p>
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -1,6 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import mealicon from '../images/mealIconBS.svg';
-import drinkicon from '../images/drinkIconBS.svg';
 
 function Footer() {
   const navigate = useNavigate();
@@ -10,7 +8,7 @@ function Footer() {
       <footer className="footer" data-testid="footer">
         <button onClick={ () => navigate('/meals') }>
           <img
-            src="src/images/mealIconBS.svg"
+            src="src/images/mealIconBS2.svg"
             alt="Comidas"
             data-testid="meals-bottom-btn"
             width="30"
@@ -19,7 +17,7 @@ function Footer() {
         <hr />
         <button onClick={ () => navigate('/drinks') }>
           <img
-            src="src/images/drinkIconBS.svg"
+            src="src/images/drinkIconBS2.svg"
             alt="Bebidas"
             data-testid="drinks-bottom-btn"
             width="30"

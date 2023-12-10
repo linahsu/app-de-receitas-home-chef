@@ -51,7 +51,6 @@ function SearchBar() {
   };
 
   return (
-    <>
     <div className="search-bar">
       <form onSubmit={ handleSubmit }>
         <input
@@ -107,7 +106,6 @@ function SearchBar() {
         </div>
       </form>
     </div>
-    </>
   );
 }
 

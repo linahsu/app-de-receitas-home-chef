@@ -161,8 +161,7 @@ function RecipeDetails() {
           <Link to="/meals">
             <h1 className="details-type-header">{ category.replace('m', 'M') }</h1>
           </Link>
-          <div className="details-name-header">
-          </div>
+          <div className="details-name-header" />
           <CardMealsDetails
             handleFavoriteBtn={ handleFavoriteBtn }
             handleshareBtn={ handleShareBtn }

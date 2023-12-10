@@ -19,11 +19,11 @@ function Profile() {
         // Tive que fazer essa condicional para poder acessar '/profile' sem precisar ter feito o Login nos testes --felipe
         user !== undefined
           ? (
-              <div className="profile-icon-and-email">
-                <img src="/src/images/profileIconBS2.svg" alt="" />
-                {JSON.stringify(user.email).replace(/"/g, '')}  
-              </div>
-            )
+            <div className="profile-icon-and-email">
+              <img src="/src/images/profileIconBS2.svg" alt="" />
+              {JSON.stringify(user.email).replace(/"/g, '')}
+            </div>
+          )
           : ''
         }
       </h3>

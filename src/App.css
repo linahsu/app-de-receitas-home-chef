@@ -148,7 +148,7 @@ html, body {
   align-items: center;
   justify-content: space-around;
   margin: 0 10px 3px;
-  padding: 5px 10px;
+  padding: 10px 10px;
   font-size: 15px;
   background-color: pink;
   border-bottom-left-radius: 15px;
@@ -162,7 +162,7 @@ html, body {
   margin: 5px;
   padding: 0 10px;
   background-color: white;
-  outline-color:powderblue;
+  outline-color:dodgerblue;
   border-radius: 10px;
   border: 0;
   width: 285px;
@@ -172,10 +172,21 @@ html, body {
 .search-bar-options-and-btn {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   font-size: 13px;
-  margin-left: 10px;
+  padding: 5px 10px;
+  color: navy;
+  font-weight: 600;
 }
 
+.search-bar-options-and-btn button {
+  border: 1px solid aliceblue;
+  border-radius: 15px;
+  background-color: lavenderblush;
+  color: navy;
+  margin-left: 5px;
+  font-weight: 600;
+}
 
 .filters {
   display: flex;
@@ -230,7 +241,7 @@ html, body {
   height: 40px;
   bottom: 0;
   justify-content: space-around;
-  background-color: navy;
+  background-color: blue;
   padding: 5px 0 5px 0;
   
 }
@@ -376,12 +387,19 @@ footer.footer {
 
 .details-start-recipe button {
   display: flex;
-  position: absolute;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 50px;
   border: none;
+  cursor: pointer;
   padding: 10px 5px 10px 10px;
-  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
   color: navy;
   font-weight: 600;
+}
+
+.details-start-recipe p {
+  position: absolute;
 }
 
 .details-start-recipe button img {
@@ -399,7 +417,7 @@ footer.footer {
 
 .details-category-container p {
   color: navy;
-  background-color: pink;
+  background-color: aliceblue;
   opacity: 0.7;
   border-radius: 15px;
   padding: 5px 10px;

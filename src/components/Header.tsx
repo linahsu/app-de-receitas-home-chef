@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
-import profileicon from '../images/profileIcon.svg';
-// import { DoneRecipes, InProgressRecipes } from '../types';
 
 function Header() {
   const titleObj: { [key: string]: string } = {
@@ -68,7 +66,7 @@ function Header() {
           <Link to="/profile">
             <img
               src="src/images/profileIconBS.svg"
-              alt="ícone do perfil"
+              alt="Perfil"
               data-testid="profile-top-btn"
             />
           </Link>
@@ -76,8 +74,6 @@ function Header() {
       </div>
       <div className="page-title">
         <h1 data-testid="page-title">{titleObj[pathname]}</h1>
-
-
 
         <div className="search-button">
           <hr />

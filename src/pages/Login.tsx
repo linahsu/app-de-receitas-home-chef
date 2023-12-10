@@ -41,45 +41,45 @@ export default function Login() {
       <div className="login-bar">
         <h1>O que vamos preparar hoje?</h1>
         <div className="login-arrow">
-          <img 
-            src="src/images/loginArrowBS.svg" 
+          <img
+            src="src/images/loginArrowBS.svg"
             alt="Arrow down"
-            width="30" 
+            width="30"
           />
         </div>
       </div>
 
-        <form className="login-form">
-          <input
-            type="email"
-            name="email"
-            value={ userLogin.user.email }
-            onChange={ (event) => handleSubmit(event) }
-            data-testid="email-input"
-            placeholder="Email"
-          />
-          <input
-            data-testid="password-input"
-            type="password"
-            name="password"
-            value={ userLogin.user.password }
-            onChange={ (event) => handleSubmit(event) }
-            placeholder="Password"
-          />
-          <button
-            type="submit"
-            onClick={ (event) => {
-              event?.preventDefault();
-              setValue({ email: userLogin.user.email });
-              dispatch(ActionLogin(userLogin.user));
-              navigate('/meals');
-            } }
-            disabled={ disabled }
-            data-testid="login-submit-btn"
-          >
-            Enter
-          </button>
-        </form>
+      <form className="login-form">
+        <input
+          type="email"
+          name="email"
+          value={ userLogin.user.email }
+          onChange={ (event) => handleSubmit(event) }
+          data-testid="email-input"
+          placeholder="Email"
+        />
+        <input
+          data-testid="password-input"
+          type="password"
+          name="password"
+          value={ userLogin.user.password }
+          onChange={ (event) => handleSubmit(event) }
+          placeholder="Password"
+        />
+        <button
+          type="submit"
+          onClick={ (event) => {
+            event?.preventDefault();
+            setValue({ email: userLogin.user.email });
+            dispatch(ActionLogin(userLogin.user));
+            navigate('/meals');
+          } }
+          disabled={ disabled }
+          data-testid="login-submit-btn"
+        >
+          Enter
+        </button>
+      </form>
     </>
   );
 }

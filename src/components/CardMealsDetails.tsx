@@ -40,24 +40,24 @@ export default function CardMealsDetails({
               <hr />
               <button
                 // data-testid="favorite-btn"
-                onClick={handleFavoriteBtn}
+                onClick={ handleFavoriteBtn }
               >
                 <img
                   data-testid="favorite-btn"
-                  src={isFavorite ? blackHeartIcon : whiteHeartIcon}
-                  alt={isFavorite ? 'Black heart icon' : 'White heart icon'}
-                  className={isFavorite ? "favorited" : "not-favorited"}
+                  src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                  alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
+                  className={ isFavorite ? 'favorited' : 'not-favorited' }
                 />
               </button>
 
               <button
                 data-testid="share-btn"
-                onClick={handleshareBtn}
-                >
+                onClick={ handleshareBtn }
+              >
                 <img src="/src/images/shareIcon.svg" alt="Share icon" />
               </button>
 
-                {isCopied && <p className={isCopied && 'copied'}>Link copied!</p>}
+              {isCopied && <p className={ isCopied && 'copied' }>Link copied!</p>}
             </div>
           </div>
           <div className="details-img-and-category">
@@ -69,9 +69,13 @@ export default function CardMealsDetails({
                     onClick={ () => navigate(`/meals/${detailsMeal.idMeal}/in-progress`) }
                   >
                     { buttonText }
-                    <img src="/src/images/startRecipeArrowBS.svg" width="14" />
+                    <img
+                      src="/src/images/startRecipeArrowBS.svg"
+                      alt="Arrow >"
+                      width="14"
+                    />
                   </button>
-    
+
                 )
                 : <p />}
             </div>
@@ -80,7 +84,7 @@ export default function CardMealsDetails({
               alt="Foto da comida"
               data-testid="recipe-photo"
               style={ { width: '360px' } }
-              />
+            />
             <div className="details-category-container">
               <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
             </div>
@@ -90,7 +94,7 @@ export default function CardMealsDetails({
           <div className="details-ingredients">
             <h3>
               Ingredients
-              <img src="/src/images/mealsIngredients.svg" alt="" width="23"/>
+              <img src="/src/images/mealsIngredients.svg" alt="" width="23" />
             </h3>
             <div className="details-ingredient-list">
               <ol>
@@ -105,14 +109,19 @@ export default function CardMealsDetails({
                       (${detailsMeal[`strMeasure${ingredientKey.slice(13)}`]}) `}
                     </li>
                   ))}
-              </ol>          
+              </ol>
             </div>
           </div>
 
           <div className="details-instructions">
             <h3>
               Instructions
-              <img src="/src/images/mealsInstructions.svg" className="meal-instructions-icon" width="29"/>
+              <img
+                src="/src/images/mealsInstructions.svg"
+                alt="Frying pan"
+                className="meal-instructions-icon"
+                width="29"
+              />
             </h3>
 
             <section>
@@ -149,7 +158,6 @@ export default function CardMealsDetails({
               />}
 
           </section>
-
 
           <RecommendedRecipes />
           <Footer />

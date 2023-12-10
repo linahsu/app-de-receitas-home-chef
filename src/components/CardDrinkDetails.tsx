@@ -27,63 +27,95 @@ export default function CardDrinkDetails({
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="drink-page-body">
       {allMeals.length > 0 && Object.keys(detailsDrink).length > 0 && (
         <div>
-          <img
-            src={ detailsDrink.strDrinkThumb }
-            alt="Foto da bebida"
-            data-testid="recipe-photo"
-            style={ { width: '300px' } }
-          />
-          <h2 data-testid="recipe-title">{detailsDrink.strDrink}</h2>
-          <p data-testid="recipe-category">{detailsDrink.strAlcoholic}</p>
+          <div className="details-title-and-btns">
 
-          <h3>Ingredientes</h3>
-          <ol>
-            {Object.entries(detailsDrink)
-              .filter(([key, value]) => key.startsWith('strIngredient') && value)
-              .map(([ingredientKey, ingredientValue], index) => (
-                <li
-                  key={ ingredientKey }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
+            <div className="details-recipe-name">
+              <h2 data-testid="recipe-title">{detailsDrink.strDrink}</h2>
+            </div>
+
+            <div className="favorite-and-share-btn">
+              <hr />
+              <button
+                onClick={handleFavoriteBtn}
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={isFavorite ? blackHeartIcon : whiteHeartIcon}
+                  alt={isFavorite ? 'Black heart icon' : 'White heart icon'}
+                  className={isFavorite ? "favorited" : "not-favorited"}
+                  />
+              </button>
+
+              <button
+                data-testid="share-btn"
+                onClick={handleshareBtn}
                 >
-                  {`${ingredientValue} 
-                  (${detailsDrink[`strMeasure${ingredientKey.slice(13)}`]}) `}
-                </li>
-              ))}
-          </ol>
-          <h3>Instruções</h3>
-          <section>
-            <h4 data-testid="instructions">
-              {detailsDrink.strInstructions
+                <img src="/src/images/shareIcon.svg" alt="Share icon" />
+              </button>
+                
+                {isCopied && <p className={isCopied && 'copied'}>Link copied!</p>}
+            </div>
+          </div>
+
+          <div className="details-img-and-category">
+            <img
+              src={detailsDrink.strDrinkThumb}
+              alt="Foto da bebida"
+              data-testid="recipe-photo"
+              style={{ width: '360px' }}
+            />
+
+            <div className="details-category-container">
+              <p data-testid="recipe-category">{detailsDrink.strAlcoholic}</p>
+            </div>
+
+          </div>
+
+          <div className="details-ingredients">
+            <h3>
+              Ingredients
+              <img src="/src/images/drinksIngredients.svg" width="20"/>
+            </h3>
+
+            <div className="details-ingredient-list">
+              <ol>
+                {Object.entries(detailsDrink)
+                  .filter(([key, value]) => key.startsWith('strIngredient') && value)
+                  .map(([ingredientKey, ingredientValue], index) => (
+                    <li
+                      key={ingredientKey}
+                      data-testid={`${index}-ingredient-name-and-measure`}
+                    >
+                      {`${ingredientValue} 
+                      (${detailsDrink[`strMeasure${ingredientKey.slice(13)}`]}) `}
+                    </li>
+                  ))}
+              </ol>
+            </div>
+          </div>
+
+          <div className="details-instructions">
+            <h3>
+              Instructions
+              <img src="/src/images/drinksInstructions.svg" className="drink-instructions-icon" width="20"/>
+              </h3>
+
+            <section>
+              <p data-testid="instructions">
+                {detailsDrink.strInstructions
                   && detailsDrink.strInstructions.split('\r\n').map((text, index) => (
-                    <p key={ index }>
+                    <p key={index}>
                       {text}
                       <br />
                     </p>
                   ))}
-            </h4>
-          </section>
-
-          <button
-            onClick={ handleFavoriteBtn }
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
-            />
-          </button>
-
-          <button
-            data-testid="share-btn"
-            onClick={ handleshareBtn }
-          >
-            <img src="/src/images/shareIcon.svg" alt="Share icon" />
-          </button>
-
-          {isCopied && <p>Link copied!</p>}
+              </p>
+              <hr />
+            </section>
+          </div>
 
           {!hideButton
             ? (
@@ -94,7 +126,7 @@ export default function CardDrinkDetails({
                   () => navigate(`/drinks/${detailsDrink.idDrink}/in-progress`)
                 }
               >
-                { buttonText }
+                {buttonText}
               </button>
 
             )

@@ -412,7 +412,7 @@ footer.footer {
   border: 1px solid pink;
   font-size: 14px;
   font-weight: 550;
-  border-radius: 10%;
+  border-radius: 20px;
   padding: 5px 20px;
 }
 
@@ -430,12 +430,20 @@ footer.footer {
   margin: 0;
 }
 
-.details-instructions h3 img {
+.meal-instructions-icon {
   display: flex;
   filter: invert(15%) sepia(34%) saturate(6597%) hue-rotate(235deg) brightness(75%) contrast(139%);
   margin-left: 7px;
   align-self: center;
-  padding-bottom: 10px;
+  padding-bottom: 11px;
+}
+
+.drink-instructions-icon {
+  display: flex;
+  filter: invert(15%) sepia(34%) saturate(6597%) hue-rotate(235deg) brightness(75%) contrast(139%);
+  margin-left: 1px;
+  align-self: center;
+  padding-bottom: 5px;
 }
 
 .details-instructions section {

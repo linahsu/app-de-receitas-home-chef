@@ -75,7 +75,7 @@ export default function CardMealsDetails({
           <div className="details-ingredients">
             <h3>
               Ingredients
-              <img src="/src/images/ingredients.svg" alt="" width="23"/>
+              <img src="/src/images/mealsIngredients.svg" alt="" width="23"/>
             </h3>
             <div className="details-ingredient-list">
               <ol>
@@ -92,13 +92,12 @@ export default function CardMealsDetails({
                   ))}
               </ol>          
             </div>
-
           </div>
 
           <div className="details-instructions">
             <h3>
               Instructions
-              <img src="/src/images/instructions.svg" alt="" width="29"/>
+              <img src="/src/images/mealsInstructions.svg" className="meal-instructions-icon" width="29"/>
             </h3>
 
             <section>

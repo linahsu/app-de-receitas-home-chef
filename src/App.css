@@ -455,6 +455,11 @@ footer.footer {
   padding: 10px 20px;
 }
 
+.details-ingredient-list div {
+  display: flex;
+  padding: 5px 20px;
+}
+
 .details-instructions {
   background-color: pink;
   color: navy;
@@ -503,12 +508,59 @@ footer.footer {
 }
 
 .details-video h3 {
-  color: pink;
+  color: #ffc0cb;
   margin-top: 0;
 }
 
 .details-video iframe {
   border: none;
+}
+
+
+.in-progress-finish-btn {
+  display: flex;
+  justify-content: center;
+  padding: 20px 15px;
+  background-color: blue;
+}
+
+.in-progress-finish-btn button {
+  display: flex;
+  border: none;
+  background: none;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+}
+.in-progress-finish-btn button:enabled {
+  cursor: pointer;
+}
+
+.not-finished-recipe-img {
+  filter: invert(54%) sepia(0%) saturate(1%) hue-rotate(71deg) brightness(94%) contrast(85%);
+}
+
+.not-finished-recipe-text {
+  color: grey;
+}
+
+.in-progress-finish-btn button p {
+  margin: 5px;
+}
+
+.finish-recipe-img {
+  filter: invert(80%) sepia(24%) saturate(692%) hue-rotate(305deg) brightness(101%) contrast(108%);
+  animation: checkFinish 5s;
+}
+
+@keyframes checkFinish {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+.finish-recipe-text {
+  color: pink;
+  transition: 4s;
 }
 
 .profile-page {

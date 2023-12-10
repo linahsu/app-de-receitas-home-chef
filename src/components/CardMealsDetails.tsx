@@ -85,6 +85,7 @@ export default function CardMealsDetails({
               data-testid="recipe-photo"
               style={ { width: '360px' } }
             />
+            
             <div className="details-category-container">
               <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
             </div>

@@ -38,86 +38,155 @@ function MealInProgress({
   };
 
   return (
-    <div>
+    <div className="meal-page-body">
       {detailsMeal.idMeal && currentMeal && IngredientsList.length > 0 && (
         <div>
-          <h2 data-testid="recipe-title">
-            { currentMeal.strMeal }
-          </h2>
+          <div className="details-title-and-btns">
 
-          <h4 data-testid="recipe-category">
-            { `Category: ${currentMeal.strCategory}` }
-          </h4>
+            <div className="details-recipe-name">
+              <h2 data-testid="recipe-title">
+                {currentMeal.strMeal}
+              </h2>
+            </div>
 
-          <img
-            data-testid="recipe-photo"
-            src={ currentMeal.strMealThumb }
-            alt="Imagem da receita"
-          />
+            <div className="favorite-and-share-btn">
+              <hr />
+              <button
+                onClick={handleFavoriteBtn}
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={isFavorite ? blackHeartIcon : whiteHeartIcon}
+                  alt={isFavorite ? 'Black heart icon' : 'White heart icon'}
+                  className={isFavorite ? 'favorited' : 'not-favorited'}
+                />
+              </button>
 
-          <div>
-            <button
-              onClick={ handleFavoriteBtn }
-            >
-              <img
-                data-testid="favorite-btn"
-                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
-              />
-            </button>
+              <button
+                data-testid="share-btn"
+                onClick={handleShareBtn}
+              >
+                <img src="/src/images/shareIcon.svg" alt="Share icon" />
+              </button>
 
-            <button
-              data-testid="share-btn"
-              onClick={ handleShareBtn }
-            >
-              <img src="/src/images/shareIcon.svg" alt="Share icon" />
-            </button>
+              {isCopied && <p className={isCopied && 'copied'}>Link copied!</p>}
+            </div>
+          </div>
 
-            {isCopied && <p>Link copied!</p>}
+          <div className="details-img-and-category">
+            <img
+              src={currentMeal.strMealThumb}
+              alt="Foto da comida"
+              data-testid="recipe-photo"
+              style={{ width: '360px' }}
+            />
+
+            <div className="details-category-container">
+              <p data-testid="recipe-category">
+                {`${currentMeal.strCategory}`}
+              </p>
+            </div>
+
           </div>
 
           <div data-testid="instructions">
-            <h4>Ingredients List</h4>
+            <div className="details-ingredients">
+              <h3>
+                Ingredients
+                <img src="/src/images/mealsIngredients.svg" alt="" width="23" />
+              </h3>
 
-            {IngredientsList.map((ingredient, index) => (
-              <div
-                data-testid={ `${index}-ingredient-step` }
-                key={ index }
-                className={
-                  isCheckedList.includes(index.toString()) ? 'checked' : undefined
+              <div className="details-ingredient-list">
+                {IngredientsList.map((ingredient, index) => (
+                  <div
+                    data-testid={`${index}-ingredient-step`}
+                    key={index}
+                    className={
+                      isCheckedList.includes(index.toString()) ? 'checked' : undefined
                     }
-              >
-                <input
-                  type="checkbox"
-                  id={ `${index}` }
-                  onChange={ () => handleIngredientCheck(index) }
-                  checked={ isCheckedList.includes(index.toString()) }
-                />
-                <label
-                  htmlFor={ `${index}` }
-                >
-                  {`${ingredient[1]}: ${mesureList[index][1]}`}
-                </label>
+                  >
+                    <input
+                      type="checkbox"
+                      id={`${index}`}
+                      onChange={() => handleIngredientCheck(index)}
+                      checked={isCheckedList.includes(index.toString())}
+                    />
+                    <label
+                      htmlFor={`${index}`}
+                    >
+                      {`${ingredient[1]}: ${mesureList[index][1]}`}
+                    </label>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
 
-            <h4>Instructions</h4>
-            {instructionsList.map((instruction, index) => (
-              <p key={ index }>
-                { instruction[1] }
-                <br />
-              </p>
-            ))}
+            <div className="details-instructions">
+              <h3>
+                Instructions
+                <img
+                  src="/src/images/mealsInstructions.svg"
+                  alt="Frying pan"
+                  className="meal-instructions-icon"
+                  width="29"
+                />
+              </h3>
+
+              <section>
+                {instructionsList.map((instruction, index) => (
+                  <p key={index}>
+                    {instruction[1]}
+                    <br />
+                  </p>
+                ))}
+
+                <hr />
+              </section>
+            </div>
+
           </div>
 
-          <button
-            data-testid="finish-recipe-btn"
-            disabled={ isCheckedList.length !== IngredientsList.length }
-            className="finish-recipe-btn"
-            onClick={ handleFinishBtn }
+          <div 
+            className="in-progress-finish-btn"
+            onClick={ () => {
+              (isCheckedList.length === IngredientsList.length)
+               && handleFinishBtn
+              }
+            }
           >
-            Finish Recipe
-          </button>
+            <button
+              data-testid="finish-recipe-btn"
+              disabled={isCheckedList.length !== IngredientsList.length}
+              className="finish-recipe-btn"
+              onClick={handleFinishBtn}
+            >
+            {
+              isCheckedList.length === IngredientsList.length
+                ?
+                  <img
+                    src="/src/images/checkBS.svg" 
+                    alt="Check"
+                    width="40"
+                    className="finish-recipe-img"
+                  />
+                :
+                  <img
+                  src="/src/images/threeDotsBS.svg" 
+                  alt="Check"
+                  width="40"
+                  className="not-finished-recipe-img"
+                  />  
+            }
+              <p
+                className={
+                  (isCheckedList.length === IngredientsList.length)
+                    ? "finish-recipe-text" : "not-finished-recipe-text"
+                }
+              >
+                Finish Recipe
+              </p>
+            </button>
+          </div>
         </div>
       )}
     </div>

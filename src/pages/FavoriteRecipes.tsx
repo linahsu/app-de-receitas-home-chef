@@ -19,7 +19,7 @@ function FavoriteRecipes() {
     }
   };
 
-  // função refatorada em monitoria
+  // Função refatorada em monitoria
   const handleFavoriteBtn = (recipesId: string) => {
     const favoriteList = favoriteRecipes
       .filter((favorite: FavoriteRecipeType) => favorite.id !== recipesId);

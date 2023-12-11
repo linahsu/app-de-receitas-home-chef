@@ -49,7 +49,7 @@ function CardFavorite({ recipe,
               {`${recipe.alcoholicOrNot}`}
             </p>
           )}
-
+          {isCopied && <h4>Link copied!</h4>}
         </div>
         <div className="favorite-recipes-share-div">
           <button onClick={ () => handleFavoriteBtn(recipe.id) }>
@@ -71,7 +71,6 @@ function CardFavorite({ recipe,
               width="20"
             />
           </button>
-          {isCopied && <p>Link copied!</p>}
         </div>
       </div>
     </div>

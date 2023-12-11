@@ -394,6 +394,7 @@ html, body {
 }
 
 .filters {
+  margin-bottom: 5px;
   overflow: 360px;
   overflow-x: auto;
   padding: 10px 10px 5px;
@@ -507,6 +508,15 @@ footer {
   padding: 5px 5px 0;
 }
 
+.done-recipes-share-div img {
+  filter: invert(21%)
+    sepia(26%)
+    saturate(6767%)
+    hue-rotate(232deg)
+    brightness(62%)
+    contrast(144%);
+}
+
 .details-start-recipe button img {
   filter: invert(15%)
     sepia(34%)
@@ -518,14 +528,14 @@ footer {
 }
 
 .filters button:last-child {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .filters .active {
   background-color: pink;
   cursor: default;
   font-weight: 600;
-  transition: background-color 2s;
+  transition: background-color 1.2s;
 }
 
 .recipes-body {
@@ -694,7 +704,10 @@ footer {
 }
 
 .details-video {
+  align-items: center;
   background-color: blue;
+  display: flex;
+  flex-direction: column;
   padding: 30px 0 65px;
   width: 360px;
 }
@@ -716,12 +729,13 @@ footer {
 .done-recipes-filters {
   display: flex;
   justify-content: center;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .done-recipes-filters .active {
   background-color: pink;
-  border: 1px solid pink;
+  border: 1px solid navy;
+  color: navy;
   cursor: default;
   font-weight: 600;
 }
@@ -748,7 +762,7 @@ footer {
 }
 
 .done-recipes-meal-card, .done-recipes-drink-card {
-  background-color: whitesmoke;
+  background-color: white;
   border: 1px solid navy;
   border-radius: 15px;
   display: flex;
@@ -782,10 +796,13 @@ footer {
   display: flex;
   flex-direction: column;
   font-size: 10px;
+  height: 50%;
 }
 
 .done-recipes-share-div span {
+  background-color: blue;
   display: flex;
+  height: 50%;
   justify-self: flex-end;
 }
 

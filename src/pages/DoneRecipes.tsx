@@ -24,8 +24,6 @@ function DoneRecipes() {
   };
 
   return (
-    shownRecipes.length > 0
-      ? (
         <div className="done-recipes-body">
           <div className="done-recipes-filters">
             <button
@@ -63,27 +61,27 @@ function DoneRecipes() {
             data-testid="done-recipes-list"
             className="done-recipes-list"
           >
-            {
-              shownRecipes.map((recipe, index) => {
+            {shownRecipes.length > 0
+              ? shownRecipes.map((recipe, index) => {
                 return (
                   <div data-testid="rendered-done-recipe" key={ index }>
                     <DoneRecipesCard recipe={ recipe } index={ index } key={ index } />
                   </div>
                 );
               })
+              
+                    : (
+                      <>
+                        <p>No done recipes yet.</p>
+                        <Footer />
+                      </>
+                    )
             }
           </div>
           <Footer />
         </div>
       )
-
-      : (
-        <>
-          <p>No done recipes yet.</p>
-          <Footer />
-        </>
-      )
-  );
+  ;
 }
 
 export default DoneRecipes;

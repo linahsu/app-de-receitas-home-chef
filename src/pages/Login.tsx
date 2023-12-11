@@ -37,15 +37,26 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <form>
+    <>
+      <div className="login-bar">
+        <h1>O que vamos preparar hoje?</h1>
+        <div className="login-arrow">
+          <img
+            src="src/images/loginArrowBS.svg"
+            alt="Arrow down"
+            width="30"
+          />
+        </div>
+      </div>
+
+      <form className="login-form">
         <input
           type="email"
           name="email"
           value={ userLogin.user.email }
           onChange={ (event) => handleSubmit(event) }
           data-testid="email-input"
-          placeholder="Digite seu Email"
+          placeholder="Email"
         />
         <input
           data-testid="password-input"
@@ -53,7 +64,7 @@ export default function Login() {
           name="password"
           value={ userLogin.user.password }
           onChange={ (event) => handleSubmit(event) }
-          placeholder="Digite sua senha"
+          placeholder="Password"
         />
         <button
           type="submit"
@@ -69,6 +80,6 @@ export default function Login() {
           Enter
         </button>
       </form>
-    </div>
+    </>
   );
 }

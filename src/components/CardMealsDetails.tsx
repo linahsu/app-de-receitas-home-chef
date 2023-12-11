@@ -27,51 +27,127 @@ export default function CardMealsDetails({
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="meal-page-body">
       {allDrinks.length > 0 && Object.keys(detailsMeal).length > 0 && (
         <div>
-          <img
-            src={ detailsMeal.strMealThumb }
-            alt="Foto da comida"
-            data-testid="recipe-photo"
-            style={ { width: '300px' } }
-          />
-          <h2 data-testid="recipe-title">{detailsMeal.strMeal}</h2>
-          <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
+          <div className="details-title-and-btns">
 
-          <h3>Ingredients</h3>
-          <ol>
-            {Object.entries(detailsMeal)
-              .filter(([key, value]) => key.startsWith('strIngredient') && value)
-              .map(([ingredientKey, ingredientValue], index) => (
-                <li
-                  key={ ingredientKey }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {`${ingredientValue}
-                  (${detailsMeal[`strMeasure${ingredientKey.slice(13)}`]}) `}
-                </li>
-              ))}
-          </ol>
-          <h3>Instructions</h3>
-          <section>
-            <h4 data-testid="instructions">
-              {detailsMeal.strInstructions
-                  && detailsMeal.strInstructions.split('\r\n').map((text, index) => (
-                    <p key={ index }>
-                      {text}
-                      <br />
-                    </p>
+            <div className="details-recipe-name">
+              <h2 data-testid="recipe-title">{detailsMeal.strMeal}</h2>
+            </div>
+
+            <div className="favorite-and-share-btn">
+              <hr />
+              <button
+                // data-testid="favorite-btn"
+                onClick={ handleFavoriteBtn }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                  alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
+                  className={ isFavorite ? 'favorited' : 'not-favorited' }
+                />
+              </button>
+
+              <button
+                data-testid="share-btn"
+                onClick={ handleshareBtn }
+              >
+                <img src="/src/images/shareIcon.svg" alt="Share icon" />
+              </button>
+
+              {isCopied && <p className={ isCopied && 'copied' }>Link copied!</p>}
+            </div>
+          </div>
+          <div className="details-img-and-category">
+            <div className="details-start-recipe">
+              {!hideButton
+                ? (
+                  <button
+                    data-testid="start-recipe-btn"
+                    onClick={ () => navigate(`/meals/${detailsMeal.idMeal}/in-progress`) }
+                  >
+                    { buttonText }
+                    <img
+                      src="/src/images/startRecipeArrowBS.svg"
+                      alt="Arrow >"
+                      width="14"
+                    />
+                  </button>
+
+                )
+                : <p />}
+            </div>
+            <img
+              src={ detailsMeal.strMealThumb }
+              alt="Foto da comida"
+              data-testid="recipe-photo"
+              style={ { width: '360px' } }
+            />
+
+            <div className="details-category-container">
+              <p data-testid="recipe-category">{detailsMeal.strCategory}</p>
+            </div>
+
+          </div>
+
+          <div className="details-ingredients">
+            <h3>
+              Ingredients
+              <img src="/src/images/mealsIngredients.svg" alt="" width="23" />
+            </h3>
+            <div className="details-ingredient-list">
+              <ol>
+                {Object.entries(detailsMeal)
+                  .filter(([key, value]) => key.startsWith('strIngredient') && value)
+                  .map(([ingredientKey, ingredientValue], index) => (
+                    <li
+                      key={ ingredientKey }
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                    >
+                      {`${ingredientValue}
+                      (${detailsMeal[`strMeasure${ingredientKey.slice(13)}`]}) `}
+                    </li>
                   ))}
-            </h4>
-          </section>
-          <h3>Watch this Vídeo</h3>
-          <section>
+              </ol>
+            </div>
+          </div>
+
+          <div className="details-instructions">
+            <h3>
+              Instructions
+              <img
+                src="/src/images/mealsInstructions.svg"
+                alt="Frying pan"
+                className="meal-instructions-icon"
+                width="29"
+              />
+            </h3>
+
+            <section>
+              <p data-testid="instructions">
+                {detailsMeal.strInstructions
+                    && detailsMeal.strInstructions.split('\r\n').map((text, index) => (
+                      <p key={ index }>
+                        {text}
+                        <br />
+                      </p>
+                    ))}
+              </p>
+
+              <hr />
+            </section>
+          </div>
+
+          <section className="details-video">
+            <h3>Watch this video:</h3>
+
             { detailsMeal.strYoutube
               && <iframe
                 src={ `https://www.youtube.com/embed/${detailsMeal.strYoutube.split('v=')[1]}` }
-                width="auto"
-                height="auto"
+                width="360"
+                height="200"
                 title="YouTube Video"
                 allow="accelerometer;
                 autoplay;
@@ -81,40 +157,8 @@ export default function CardMealsDetails({
                 allowFullScreen
                 data-testid="video"
               />}
+
           </section>
-
-          <button
-            // data-testid="favorite-btn"
-            onClick={ handleFavoriteBtn }
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt={ isFavorite ? 'Black heart icon' : 'White heart icon' }
-            />
-          </button>
-
-          <button
-            data-testid="share-btn"
-            onClick={ handleshareBtn }
-          >
-            <img src="/src/images/shareIcon.svg" alt="Share icon" />
-          </button>
-
-          {isCopied && <p>Link copied!</p>}
-
-          {!hideButton
-            ? (
-              <button
-                className="start-recipe-btn"
-                data-testid="start-recipe-btn"
-                onClick={ () => navigate(`/meals/${detailsMeal.idMeal}/in-progress`) }
-              >
-                { buttonText }
-              </button>
-
-            )
-            : <p />}
 
           <RecommendedRecipes />
           <Footer />

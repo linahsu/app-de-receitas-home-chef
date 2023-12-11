@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchDrinkById, fetchAllCocktails } from '../utils/apiDrinks';
 import { fetchMealById, fetchAllMeals } from '../utils/apiMeals';
@@ -158,7 +158,10 @@ function RecipeDetails() {
     <div>
       {category === 'meals' ? (
         <div>
-          <h1>Detalhes da Comida</h1>
+          <Link to="/meals">
+            <h1 className="details-type-header">{ category.replace('m', 'M') }</h1>
+          </Link>
+          <div className="details-name-header" />
           <CardMealsDetails
             handleFavoriteBtn={ handleFavoriteBtn }
             handleshareBtn={ handleShareBtn }
@@ -170,7 +173,9 @@ function RecipeDetails() {
         </div>
       ) : (
         <div>
-          <h1>Detalhes da Bebida</h1>
+          <Link to="/drinks">
+            <h1 className="details-type-header">{ category.replace('d', 'D') }</h1>
+          </Link>
           <CardDrinkDetails
             handleFavoriteBtn={ handleFavoriteBtn }
             handleshareBtn={ handleShareBtn }

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
-import profileicon from '../images/profileIcon.svg';
-// import { DoneRecipes, InProgressRecipes } from '../types';
+import profileIconBS from '../images/profileIconBS.svg';
 
 function Header() {
   const titleObj: { [key: string]: string } = {
@@ -58,28 +57,42 @@ function Header() {
   // }
 
   return (
-    <div>
-      {/* <button onClick={ mockLocalStorage }>Mock localStorage</button> */}
-      <h1 data-testid="page-title">{titleObj[pathname]}</h1>
-      <Link to="/profile">
-        <img
-          src={ profileicon }
-          alt="ícone do perfil"
-          data-testid="profile-top-btn"
-        />
-      </Link>
-      {(titleObj[pathname] === 'Meals' || titleObj[pathname] === 'Drinks') && (
-        <button onClick={ () => setShowSearch((prev) => !prev) }>
-          <img
-            src="src/images/searchIcon.svg"
-            alt="ícone de pesquisa"
-            data-testid="search-top-btn"
-          />
-        </button>
-      )}
+    <>
+      <div className="header">
+        <Link to="/meals">
+          <h1>/Recipes-App</h1>
+        </Link>
+
+        <div className="profile-button">
+          <Link to="/profile">
+            <img
+              src={ profileIconBS }
+              alt="Perfil"
+              data-testid="profile-top-btn"
+            />
+          </Link>
+        </div>
+      </div>
+      <div className="page-title">
+        <h1 data-testid="page-title">{titleObj[pathname]}</h1>
+
+        <div className="search-button">
+          <hr />
+          {(titleObj[pathname] === 'Meals' || titleObj[pathname] === 'Drinks') && (
+            <button onClick={ () => setShowSearch((prev) => !prev) }>
+              <img
+                src="src/images/searchIconBS.svg"
+                alt="ícone de pesquisa"
+                data-testid="search-top-btn"
+              />
+            </button>
+          )}
+        </div>
+      </div>
+
       {showSearch && <SearchBar />}
       <Outlet />
-    </div>
+    </>
   );
 }
 

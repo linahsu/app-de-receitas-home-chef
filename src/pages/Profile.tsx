@@ -13,17 +13,22 @@ function Profile() {
   };
 
   return (
-    <div>
+    <div className="profile-page">
       <h3 data-testid="profile-email">
         {
         // Tive que fazer essa condicional para poder acessar '/profile' sem precisar ter feito o Login nos testes --felipe
         user !== undefined
-          ? JSON.stringify(user.email).replace(/"/g, '')
+          ? (
+            <div className="profile-icon-and-email">
+              <img src="/src/images/profileIconBS2.svg" alt="" />
+              {JSON.stringify(user.email).replace(/"/g, '')}
+            </div>
+          )
           : ''
         }
       </h3>
 
-      <div>
+      <div className="profile-buttons">
         <button
           data-testid="profile-done-btn"
           onClick={ () => navigate('/done-recipes') }

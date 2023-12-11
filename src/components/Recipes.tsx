@@ -21,10 +21,7 @@ function Recipes({ children }: { children: React.ReactNode }) {
   }, [dispatch, pathname, meals, drinks]);
 
   return (
-    <>
-      <div>{children}</div>
-      <div className="search-page-bottom" />
-    </>
+    <div className="recipes-body">{children}</div>
 
   );
 }

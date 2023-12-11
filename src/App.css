@@ -1,8 +1,8 @@
 html, body {
   background-color: aliceblue;
   font-family: DM Sans , sans-serif;
-  width: 360px;
   height: 640px;
+  width: 360px;
 }
 
 .login-bar {
@@ -394,7 +394,6 @@ html, body {
 }
 
 .filters {
-  display: flex;
   overflow: 360px;
   overflow-x: auto;
   padding: 10px 10px 5px;
@@ -455,13 +454,6 @@ footer {
   50% { opacity: 1;}
 
   to { opacity: 0;}
-}
-
-.recipes {
-  display: block;
-  position: relative;
-  margin: 10px 0 0 10px;
-  width: 360px;
 }
 
 .recipe-card {
@@ -534,6 +526,17 @@ footer {
   cursor: default;
   font-weight: 600;
   transition: background-color 2s;
+}
+
+.recipes-body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 50px;
+}
+
+.recipes {
+  width: 345px;
 }
 
 .meals {
@@ -703,10 +706,6 @@ footer {
 
 .details-video iframe {
   border: none;
-}
-
-.meal-page-body {
-  text-align: center;
 }
 
 .done-recipes-body {

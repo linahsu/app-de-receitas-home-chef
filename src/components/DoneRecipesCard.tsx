@@ -26,7 +26,7 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
           </h3>
         </NavLink>
       </div>
-      );
+    );
   };
 
   // // Parar formatar data salva no localStorage para modelo "DD-MM-AAAA HH:MM"
@@ -51,12 +51,12 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
             <p data-testid={ `${index}-horizontal-top-text` }>
               {`${recipe.nationality} - ${recipe.category} `}
             </p>
-              {
+            {
               recipe.tags
                 && (recipe.tags.slice(0, 2)).map((tag, key) => {
                   return (
-                    <h3 
-                      data-testid={ `${index}-${tag}-horizontal-tag` } 
+                    <h3
+                      data-testid={ `${index}-${tag}-horizontal-tag` }
                       key={ key }
                       className="done-recipes-tags"
                     >
@@ -90,7 +90,7 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
       : (
         <div className="done-recipes-drink-card">
           {generateImageAndHeader('drinks')}
-          
+
           <div className="done-recipes-card-info">
             <p data-testid={ `${index}-horizontal-top-text` }>
               { `${recipe.alcoholicOrNot} - ${recipe.category}` }

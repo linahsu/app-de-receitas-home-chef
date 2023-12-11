@@ -32,7 +32,7 @@ function DoneRecipes() {
               data-testid="filter-by-all-btn"
               onClick={ () => filterRecipes('all') }
               className={
-                (currentFilter === 'all') ? "active" : ""
+                (currentFilter === 'all') ? 'active' : ''
               }
             >
               All
@@ -42,7 +42,7 @@ function DoneRecipes() {
               data-testid="filter-by-meal-btn"
               onClick={ () => filterRecipes('meal') }
               className={
-                (currentFilter === 'meal') ? "active" : ""
+                (currentFilter === 'meal') ? 'active' : ''
               }
             >
               Meals
@@ -52,14 +52,14 @@ function DoneRecipes() {
               data-testid="filter-by-drink-btn"
               onClick={ () => filterRecipes('drink') }
               className={
-                (currentFilter === 'drink') ? "active" : ""
+                (currentFilter === 'drink') ? 'active' : ''
               }
             >
               Drinks
             </button>
           </div>
 
-          <div 
+          <div
             data-testid="done-recipes-list"
             className="done-recipes-list"
           >

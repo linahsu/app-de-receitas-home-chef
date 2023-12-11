@@ -8,11 +8,13 @@ function DoneRecipes() {
   const storedRecipes = useLocalStorage('doneRecipes', [])[0];
 
   const [shownRecipes, setShownRecipes] = useState<Array<DoneRecipeType>>(storedRecipes);
+  const [currentFilter, setCurrentFilter] = useState(''); // Isso aqui é pra estilização --felipe
 
   const filterRecipes = (filter: string) => {
     // Limpando todos filtros anteriores antes de filtrar de novo,
     // e deixando o estado com a lista inteira caso o filtro seja 'all';
     setShownRecipes(storedRecipes);
+    setCurrentFilter(filter);
 
     if (filter !== 'all') {
       setShownRecipes(
@@ -24,41 +26,55 @@ function DoneRecipes() {
   return (
     shownRecipes.length > 0
       ? (
-        <>
-          <button
-            data-testid="filter-by-all-btn"
-            onClick={ () => filterRecipes('all') }
-          >
-            All
-          </button>
+        <div className="done-recipes-body">
+          <div className="done-recipes-filters">
+            <button
+              data-testid="filter-by-all-btn"
+              onClick={ () => filterRecipes('all') }
+              className={
+                (currentFilter === 'all') ? "active" : ""
+              }
+            >
+              All
+            </button>
 
-          <button
-            data-testid="filter-by-meal-btn"
-            onClick={ () => filterRecipes('meal') }
-          >
-            Meals
-          </button>
+            <button
+              data-testid="filter-by-meal-btn"
+              onClick={ () => filterRecipes('meal') }
+              className={
+                (currentFilter === 'meal') ? "active" : ""
+              }
+            >
+              Meals
+            </button>
 
-          <button
-            data-testid="filter-by-drink-btn"
-            onClick={ () => filterRecipes('drink') }
-          >
-            Drinks
-          </button>
+            <button
+              data-testid="filter-by-drink-btn"
+              onClick={ () => filterRecipes('drink') }
+              className={
+                (currentFilter === 'drink') ? "active" : ""
+              }
+            >
+              Drinks
+            </button>
+          </div>
 
-          <ul data-testid="done-recipes-list">
+          <div 
+            data-testid="done-recipes-list"
+            className="done-recipes-list"
+          >
             {
               shownRecipes.map((recipe, index) => {
                 return (
-                  <li data-testid="rendered-done-recipe" key={ index }>
+                  <div data-testid="rendered-done-recipe" key={ index }>
                     <DoneRecipesCard recipe={ recipe } index={ index } key={ index } />
-                  </li>
+                  </div>
                 );
               })
             }
-          </ul>
+          </div>
           <Footer />
-        </>
+        </div>
       )
 
       : (

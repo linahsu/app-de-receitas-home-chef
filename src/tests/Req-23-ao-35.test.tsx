@@ -8,8 +8,8 @@ import App from '../App';
 // import MOCK_ALL_MEALS from './mocks/mockAllMeals';
 import { fetchDetailMock, fetchMock } from './mocks/fetchMock';
 import mockLocalStorage from './mocks/mockLocalStorage';
-import { SHAKSHUKA_MEAL } from './mocks/mockMealDetail';
-import { A1_DRINK } from './mocks/mockDrinkDetail';
+import { ARABIATA_MEAL, SHAKSHUKA_MEAL } from './mocks/mockMealDetail';
+import { A1_DRINK, AQUAMARINE_DRINK } from './mocks/mockDrinkDetail';
 
 const user = userEvent.setup();
 
@@ -349,12 +349,12 @@ describe('Testa a função handleFvoriteBtn quando recebe uma receita com chaves
   });
 });
 
-describe.only('Testa o botão de favoritar', () => {
-  beforeEach(() => {
-    vi.spyOn(global, 'fetch').mockImplementationOnce(fetchDetailMock as any);
-  });
-
+describe('Testa o botão de favoritar', () => {
   it('Testa se ao clicar no favoriteBtn, o ícone muda no componente MealDetail', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => ARABIATA_MEAL,
+    } as Response);
+
     renderWithRouterAndRedux(<App />, mealDetailPath);
 
     const mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
@@ -369,7 +369,11 @@ describe.only('Testa o botão de favoritar', () => {
   });
 
   it('Testa se ao clicar no favoriteBtn, o ícone muda no componente DrinkDetail', async () => {
-    renderWithRouterAndRedux(<App />, drinkDetailPath);
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => A1_DRINK,
+    } as Response);
+
+    renderWithRouterAndRedux(<App />, drinkDetailPath2);
 
     const drinkFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
 
@@ -383,6 +387,9 @@ describe.only('Testa o botão de favoritar', () => {
   });
 
   it('Testa se o ícone muda se a receita estiver no favoriteRecipes ou não no LocalStorage no componente MealDetail', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => ARABIATA_MEAL,
+    } as Response);
     mockLocalStorage();
     renderWithRouterAndRedux(<App />, mealDetailPath);
 
@@ -398,7 +405,10 @@ describe.only('Testa o botão de favoritar', () => {
 
   it('Testa se o ícone é o blackHeartIcon se a receita estiver no favoriteRecipes no LocalStorage no componente DrinkDetail', async () => {
     mockLocalStorage();
-    renderWithRouterAndRedux(<App />, drinkDetailPath);
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => A1_DRINK,
+    } as Response);
+    renderWithRouterAndRedux(<App />, drinkDetailPath2);
 
     let drinkFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
 

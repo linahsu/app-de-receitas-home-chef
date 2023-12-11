@@ -6,8 +6,18 @@ import App from '../App';
 // import RecipeDetails from '../pages/RecipeDetails';
 // import MOCK_ALL_DRINKS from './mocks/mockAllDrinks';
 // import MOCK_ALL_MEALS from './mocks/mockAllMeals';
+import mockLocalStorage from './mocks/mockLocalStorage';
+import { ARABIATA_MEAL, SHAKSHUKA_MEAL } from './mocks/mockMealDetail';
+import { A1_DRINK } from './mocks/mockDrinkDetail';
 
 const user = userEvent.setup();
+
+const mealDetailPath = '/meals/52771';
+const mealDetailPath2 = '/meals/52963';
+const drinkDetailPath2 = '/drinks/17222';
+
+const whiteHeartIcon = '/src/images/whiteHeartIcon.svg';
+const blackHeartIcon = '/src/images/blackHeartIcon.svg';
 
 describe('Testa a página de detalhes de uma receita', () => {
   it('Testa se a página meals renderiza a receita correta', async () => {
@@ -81,7 +91,7 @@ describe('Testa a página de detalhes de uma receita', () => {
     } as Response;
 
     vi.spyOn(global, 'fetch').mockResolvedValueOnce(DATA_MOCK);
-    renderWithRouterAndRedux(<App />, '/drinks/17222');
+    renderWithRouterAndRedux(<App />, drinkDetailPath2);
     const recipeTitle = await screen.findByTestId('recipe-title');
     expect(recipeTitle).toBeInTheDocument();
     const ingredient = await screen.findByTestId('0-ingredient-name-and-measure');
@@ -107,7 +117,7 @@ describe('Testa a página de detalhes de uma receita', () => {
 //     global.fetch = vi.fn(mockAllDrinks) as any;
 //   });
 //   it('Testa se tem 6 recomendações de comidas na pagina do Drink ', async () => {
-//     renderWithRouterAndRedux(<App />, '/drinks/17222');
+//     renderWithRouterAndRedux(<App />, drinkDetailPath2);
 //     const recomendations = await screen.findAllByTestId(/-recommendation-card/);
 //     expect(recomendations.length).toBe(6);
 //   });
@@ -209,5 +219,202 @@ describe('Testes do botão "Start/Continue Recipe"', () => {
     const startRecipeBtn = await screen.findByTestId(btnTestId);
 
     await user.click(startRecipeBtn);
+  });
+});
+
+describe('Testa o botão de compartilhamento', () => {
+  it('Testa se ao clicar no shareBtn, o texto "Link copied!" aparece na tela no componente MealDetail', async () => {
+    const MOCK_MEAL = {
+      meals: [
+        {
+          idMeal: '53027',
+          strMeal: 'Koshari',
+          strIngredient1: 'Brown Lentils',
+          strIngredient2: 'Rice',
+          strIngredient3: 'Coriander',
+          strIngredient4: 'Macaroni',
+          strIngredient5: 'Chickpeas',
+          strIngredient6: 'Onion',
+          strIngredient7: 'Salt',
+          strIngredient8: 'Vegetable Oil',
+          strIngredient9: '',
+          strIngredient10: '',
+          strIngredient11: '',
+          strIngredient12: '',
+          strIngredient13: '',
+          strIngredient14: '',
+          strIngredient15: '',
+          strIngredient16: '',
+          strIngredient17: '',
+          strIngredient18: '',
+          strIngredient19: '',
+          strIngredient20: '',
+        },
+      ],
+    };
+    const DATA_MOCK = {
+      json: async () => MOCK_MEAL,
+    } as Response;
+
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce(DATA_MOCK);
+    renderWithRouterAndRedux(<App />, '/meals/53027');
+
+    const mealShareBtn = await screen.findByTestId(/share-btn/i);
+
+    expect(mealShareBtn).toBeInTheDocument();
+
+    await user.click(mealShareBtn);
+    expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
+    expect(await navigator.clipboard.readText()).toBe('http://localhost:3000/meals/53027');
+  });
+
+  it('Testa se ao clicar no shareBtn, o texto "Link copied!" aparece na tela no componente DrinkDetail', async () => {
+    const MOCK_DRINK = {
+      drinks: [
+        {
+          idDrink: '17222',
+          strDrink: 'A1',
+          strIngredient1: 'Gin',
+          strIngredient2: 'Grand Marnier',
+          strIngredient3: 'Lemon Juice',
+          strIngredient4: 'Grenadine',
+          strIngredient5: null,
+          strIngredient6: null,
+          strIngredient7: null,
+          strIngredient8: null,
+          strIngredient9: null,
+          strIngredient10: null,
+          strIngredient11: null,
+          strIngredient12: null,
+          strIngredient13: null,
+          strIngredient14: null,
+          strIngredient15: null,
+        },
+      ],
+    };
+    const DATA_MOCK = {
+      json: async () => MOCK_DRINK,
+    } as Response;
+
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce(DATA_MOCK);
+    renderWithRouterAndRedux(<App />, drinkDetailPath2);
+
+    const mealShareBtn = await screen.findByTestId(/share-btn/i);
+
+    expect(mealShareBtn).toBeInTheDocument();
+
+    await user.click(mealShareBtn);
+    expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
+    expect(await navigator.clipboard.readText()).toBe('http://localhost:3000/drinks/17222');
+  });
+});
+
+describe('Testa a função handleFvoriteBtn quando recebe uma receita com chaves vazias', () => {
+  it('Testa a função handleFavoriteBtn no componente MealDetail', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => SHAKSHUKA_MEAL,
+    } as Response);
+
+    renderWithRouterAndRedux(<App />, mealDetailPath2);
+
+    const mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+    expect(mealFavoriteBtn).toBeInTheDocument();
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', blackHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+  });
+
+  it('Testa a função handleFavoriteBtn no componente DrinkDetail', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => A1_DRINK,
+    } as Response);
+
+    renderWithRouterAndRedux(<App />, drinkDetailPath2);
+
+    const mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+    expect(mealFavoriteBtn).toBeInTheDocument();
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', blackHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+  });
+});
+
+describe('Testa o botão de favoritar', () => {
+  it('Testa se ao clicar no favoriteBtn, o ícone muda no componente MealDetail', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => ARABIATA_MEAL,
+    } as Response);
+
+    renderWithRouterAndRedux(<App />, mealDetailPath);
+
+    const mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+
+    expect(mealFavoriteBtn).toBeInTheDocument();
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', blackHeartIcon);
+    await user.click(mealFavoriteBtn);
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+  });
+
+  it('Testa se ao clicar no favoriteBtn, o ícone muda no componente DrinkDetail', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => A1_DRINK,
+    } as Response);
+
+    renderWithRouterAndRedux(<App />, drinkDetailPath2);
+
+    const drinkFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+
+    expect(drinkFavoriteBtn).toBeInTheDocument();
+    expect(drinkFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+
+    await user.click(drinkFavoriteBtn);
+    expect(drinkFavoriteBtn).toHaveAttribute('src', blackHeartIcon);
+    await user.click(drinkFavoriteBtn);
+    expect(drinkFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+  });
+
+  it('Testa se o ícone muda se a receita estiver no favoriteRecipes ou não no LocalStorage no componente MealDetail', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => ARABIATA_MEAL,
+    } as Response);
+    mockLocalStorage();
+    renderWithRouterAndRedux(<App />, mealDetailPath);
+
+    let mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+
+    expect(mealFavoriteBtn).toBeInTheDocument();
+    expect(mealFavoriteBtn).toHaveAttribute('src', blackHeartIcon);
+
+    await user.click(mealFavoriteBtn);
+    mealFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+    expect(mealFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
+  });
+
+  it('Testa se o ícone é o blackHeartIcon se a receita estiver no favoriteRecipes no LocalStorage no componente DrinkDetail', async () => {
+    mockLocalStorage();
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      json: async () => A1_DRINK,
+    } as Response);
+    renderWithRouterAndRedux(<App />, drinkDetailPath2);
+
+    let drinkFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+
+    expect(drinkFavoriteBtn).toBeInTheDocument();
+    expect(drinkFavoriteBtn).toHaveAttribute('src', blackHeartIcon);
+
+    await user.click(drinkFavoriteBtn);
+    drinkFavoriteBtn = await screen.findByTestId(/favorite-btn/i);
+    expect(drinkFavoriteBtn).toHaveAttribute('src', whiteHeartIcon);
   });
 });

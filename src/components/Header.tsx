@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import profileIconBS from '../images/profileIconBS.svg';
 
 function Header() {
   const titleObj: { [key: string]: string } = {
@@ -65,7 +66,7 @@ function Header() {
         <div className="profile-button">
           <Link to="/profile">
             <img
-              src="src/images/profileIconBS.svg"
+              src={ profileIconBS }
               alt="Perfil"
               data-testid="profile-top-btn"
             />

@@ -1,7 +1,8 @@
 html, body {
   background-color: aliceblue;
   font-family: DM Sans , sans-serif;
-  margin: 0 0 20px;
+  width: 360px;
+  height: 640px;
 }
 
 .login-bar {
@@ -219,10 +220,9 @@ html, body {
   border-radius: 15px;
   color: navy;
   cursor: pointer;
-  display: flex;
   font: inherit;
   font-size: 15px;
-  margin: 0 6px;
+  margin: 0 5px;
   padding: 4px 10px;
   transition: 750ms;
 }
@@ -397,9 +397,9 @@ html, body {
   display: flex;
   overflow: 360px;
   overflow-x: auto;
-  padding: 10px 0 5px;
+  padding: 10px 10px 5px;
   white-space: nowrap;
-  width: 360px;
+  width: 340px;
 }
 
 footer {
@@ -459,6 +459,7 @@ footer {
 
 .recipes {
   display: block;
+  position: relative;
   margin: 10px 0 0 10px;
   width: 360px;
 }
@@ -530,9 +531,9 @@ footer {
 
 .filters .active {
   background-color: pink;
-  border: 1px solid pink;
   cursor: default;
   font-weight: 600;
+  transition: background-color 2s;
 }
 
 .meals {

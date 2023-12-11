@@ -29,12 +29,6 @@ html, body {
   to { opacity: 100;}
 }
 
-.login-bar hr {
-  margin-bottom: 0;
-  margin-top: 80px;
-  width: 25px;
-}
-
 .login-bar img {
   animation: loginArrow 0.9s;
   animation-iteration-count: infinite;
@@ -62,6 +56,7 @@ html, body {
   background-color: aliceblue;
   display: flex;
   flex-direction: column;
+  width: 360px;
   height: 90px;
   justify-content: center;
   padding-top: 10px;

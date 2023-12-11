@@ -6,15 +6,13 @@ import App from '../App';
 // import RecipeDetails from '../pages/RecipeDetails';
 // import MOCK_ALL_DRINKS from './mocks/mockAllDrinks';
 // import MOCK_ALL_MEALS from './mocks/mockAllMeals';
-import { fetchDetailMock, fetchMock } from './mocks/fetchMock';
 import mockLocalStorage from './mocks/mockLocalStorage';
 import { ARABIATA_MEAL, SHAKSHUKA_MEAL } from './mocks/mockMealDetail';
-import { A1_DRINK, AQUAMARINE_DRINK } from './mocks/mockDrinkDetail';
+import { A1_DRINK } from './mocks/mockDrinkDetail';
 
 const user = userEvent.setup();
 
 const mealDetailPath = '/meals/52771';
-const drinkDetailPath = '/drinks/718319';
 const mealDetailPath2 = '/meals/52963';
 const drinkDetailPath2 = '/drinks/17222';
 

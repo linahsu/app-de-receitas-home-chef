@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/dom';
+import { screen } from '@testing-library/dom';
 import { vi } from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import App from '../App';

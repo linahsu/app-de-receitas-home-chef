@@ -56,10 +56,10 @@ html, body {
   background-color: aliceblue;
   display: flex;
   flex-direction: column;
-  width: 360px;
   height: 90px;
   justify-content: center;
   padding-top: 10px;
+  width: 360px;
 }
 
 .login-form input {

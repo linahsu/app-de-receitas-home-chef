@@ -24,64 +24,62 @@ function DoneRecipes() {
   };
 
   return (
-        <div className="done-recipes-body">
-          <div className="done-recipes-filters">
-            <button
-              data-testid="filter-by-all-btn"
-              onClick={ () => filterRecipes('all') }
-              className={
+    <div className="done-recipes-body">
+      <div className="done-recipes-filters">
+        <button
+          data-testid="filter-by-all-btn"
+          onClick={ () => filterRecipes('all') }
+          className={
                 (currentFilter === 'all') ? 'active' : ''
               }
-            >
-              All
-            </button>
+        >
+          All
+        </button>
 
-            <button
-              data-testid="filter-by-meal-btn"
-              onClick={ () => filterRecipes('meal') }
-              className={
+        <button
+          data-testid="filter-by-meal-btn"
+          onClick={ () => filterRecipes('meal') }
+          className={
                 (currentFilter === 'meal') ? 'active' : ''
               }
-            >
-              Meals
-            </button>
+        >
+          Meals
+        </button>
 
-            <button
-              data-testid="filter-by-drink-btn"
-              onClick={ () => filterRecipes('drink') }
-              className={
+        <button
+          data-testid="filter-by-drink-btn"
+          onClick={ () => filterRecipes('drink') }
+          className={
                 (currentFilter === 'drink') ? 'active' : ''
               }
-            >
-              Drinks
-            </button>
-          </div>
+        >
+          Drinks
+        </button>
+      </div>
 
-          <div
-            data-testid="done-recipes-list"
-            className="done-recipes-list"
-          >
-            {shownRecipes.length > 0
-              ? shownRecipes.map((recipe, index) => {
-                return (
-                  <div data-testid="rendered-done-recipe" key={ index }>
-                    <DoneRecipesCard recipe={ recipe } index={ index } key={ index } />
-                  </div>
-                );
-              })
-              
-                    : (
-                      <>
-                        <p>No done recipes yet.</p>
-                        <Footer />
-                      </>
-                    )
-            }
-          </div>
-          <Footer />
-        </div>
-      )
-  ;
+      <div
+        data-testid="done-recipes-list"
+        className="done-recipes-list"
+      >
+        {shownRecipes.length > 0
+          ? shownRecipes.map((recipe, index) => {
+            return (
+              <div data-testid="rendered-done-recipe" key={ index }>
+                <DoneRecipesCard recipe={ recipe } index={ index } key={ index } />
+              </div>
+            );
+          })
+
+          : (
+            <>
+              <p>No done recipes yet.</p>
+              <Footer />
+            </>
+          )}
+      </div>
+      <Footer />
+    </div>
+  );
 }
 
 export default DoneRecipes;

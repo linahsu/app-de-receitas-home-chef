@@ -70,6 +70,17 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
               {' '}
               { recipe.doneDate }
             </p>
+            {
+              copiedMessage
+                && (
+                  <h4
+                    data-testid="horizontal-copied-msg"
+                    className="done-recipes-link-copied"
+                  >
+                    Link copied!
+                  </h4>
+                )
+            }
           </div>
           <div className="done-recipes-share-div">
             <button onClick={ () => copyURLToClipboard('meals', recipe.id) }>
@@ -79,9 +90,6 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
                 alt="Share"
               />
             </button>
-            <span>
-              { copiedMessage && <p data-testid="horizontal-copied-msg">Link copied!</p> }
-            </span>
 
           </div>
         </div>
@@ -100,6 +108,18 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
               {' '}
               { recipe.doneDate }
             </p>
+            {
+              copiedMessage
+               && (
+                 <h4
+                   data-testid="horizontal-copied-msg"
+                   className="done-recipes-link-copied"
+                 >
+                   Link copied!
+                 </h4>
+               )
+            }
+
           </div>
           <div className="done-recipes-share-div">
             <button onClick={ () => copyURLToClipboard('drinks', recipe.id) }>
@@ -109,9 +129,6 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
                 alt="Share"
               />
             </button>
-            <span>
-              { copiedMessage && <p data-testid="horizontal-copied-msg">Link copied!</p>}
-            </span>
           </div>
         </div>
       )

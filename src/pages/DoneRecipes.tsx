@@ -25,7 +25,7 @@ function DoneRecipes() {
 
   return (
     <div className="done-recipes-body">
-      <div className="done-recipes-filters">
+      <div className="filters">
         <button
           data-testid="filter-by-all-btn"
           onClick={ () => filterRecipes('all') }
@@ -72,7 +72,7 @@ function DoneRecipes() {
 
           : (
             <>
-              <p>No done recipes yet.</p>
+              <p className="no-recipes">No done recipes yet. <br />Maybe it's time to try something new!</p>
               <Footer />
             </>
           )}

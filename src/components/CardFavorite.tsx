@@ -25,8 +25,8 @@ function CardFavorite({ recipe,
 
   return (
     <div>
-      <div key={ recipe.id } className="favorite-card">
-        <div className="done-recipes-img-and-title">
+      <div key={ recipe.id } className="done-recipes-card">
+        <div className="done-recipes-img-and-dd">
           <Link to={ `/${recipe.type}s/${recipe.id}` }>
             <img
               src={ recipe.image }
@@ -34,12 +34,23 @@ function CardFavorite({ recipe,
               style={ { width: '100px' } }
               data-testid={ `${index}-horizontal-image` }
             />
-            <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
           </Link>
 
+          <button onClick={ () => handleFavoriteBtn(recipe.id) }>
+            <img
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              src={ blackHeartIcon }
+              alt="Black heart icon"
+              width="25"
+            />
+          </button>
         </div>
 
         <div className="done-recipes-card-info">
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
+            <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
+          </Link>
+
           {recipe.type === 'meal' ? (
             <p data-testid={ `${index}-horizontal-top-text` }>
               {`${recipe.nationality} - ${recipe.category}`}
@@ -49,17 +60,18 @@ function CardFavorite({ recipe,
               {`${recipe.alcoholicOrNot}`}
             </p>
           )}
-          {isCopied && <h4>Link copied!</h4>}
+
+          {isCopied && (
+            <h4
+              data-testid="horizontal-copied-msg"
+              className="done-recipes-link-copied"
+            >
+              Link copied!
+            </h4>
+          )}
         </div>
-        <div className="favorite-recipes-share-div">
-          <button onClick={ () => handleFavoriteBtn(recipe.id) }>
-            <img
-              data-testid={ `${index}-horizontal-favorite-btn` }
-              src={ blackHeartIcon }
-              alt="Black heart icon"
-              width="25"
-            />
-          </button>
+
+        <div className="done-recipes-share">
           <div />
           <button
             onClick={ () => handleShareBtn(recipe.type, recipe.id) }

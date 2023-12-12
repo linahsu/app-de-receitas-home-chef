@@ -197,6 +197,106 @@ html, body {
   margin-left: 5px;
 }
 
+.done-recipes-body {
+  background-color: lavenderblush;
+}
+
+.no-recipes {
+  padding-left: 20px;
+}
+
+.done-recipes-card {
+  background-color: white;
+  border: 1px solid navy;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 15px;
+  padding: 0 10px;
+}
+
+.done-recipes-img-and-dd {
+  align-items: center;
+  background-color: lavenderblush;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.done-recipes-img-and-dd button {
+  border: none;
+  padding: 5px 0;
+  scale: 75%;
+}
+
+.done-recipes-img-and-dd button img {
+  filter: invert(10%)
+    sepia(93%) saturate(5742%)
+    hue-rotate(245deg)
+    brightness(94%)
+    contrast(150%);
+}
+
+.done-recipes-done-date {
+  display: flex;
+  flex-direction: row;
+  font-size: 10px;
+  padding: 0 5px;
+  width: 100px;
+}
+
+
+.done-recipes-card-info {
+  color: navy;
+  display: flex;
+  flex-direction: column;
+  margin-right: 30px;
+  padding: 0 10px 10px;
+}
+
+.done-recipes-card-info h3 {
+  border-bottom: 1px solid pink;
+  margin: 10px 0 0;
+}
+
+.done-recipes-card-info p {
+  font-size: 12px;
+}
+
+.done-recipes-card-info p:first-child {
+  margin-bottom: 10px;
+}
+
+.done-recipes-share {
+  background-color: navy;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.done-recipes-share button {
+  background-color: navy;
+  border: none;
+}
+
+.done-recipes-share button img {
+  filter: invert(72%)
+  sepia(8%)
+  saturate(1143%)
+  hue-rotate(302deg)
+  brightness(109%)
+  contrast(107%);
+}
+
+.done-recipes-link-copied {
+  animation: linkCopied 4s;
+  color: blue;
+  display: flex;
+  font-size: 13px;
+  margin: 0;
+  opacity: 0;
+}
+
 .in-progress-finish-btn {
   background-color: blue;
   display: flex;
@@ -296,37 +396,12 @@ html, body {
   font-weight: 600;
   margin-bottom: 50px;
   padding: 10px 5px 10px 10px;
-  position: fixed;
-}
-
-.done-recipes-filters button {
-  background: none;
-  border: 1px solid navy;
-  border-radius: 15px;
-  margin: 0 5px;
-  padding: 5px 10px;
 }
 
 .details-ingredients h3 {
   align-items: center;
   display: flex;
   margin-bottom: 5px;
-}
-
-.done-recipes-meal-card button, .done-recipes-drink-card button {
-  align-self: center;
-  background-color: pink;
-  border: none;
-  border-top-right-radius: 15px;
-  height: 50%;
-}
-
-.favorite-card button:first-child {
-  align-self: center;
-  background-color: pink;
-  border: none;
-  border-top-right-radius: 15px;
-  height: 50%;
 }
 
 .profile-buttons button:last-child {
@@ -372,20 +447,6 @@ html, body {
 
 .details-start-recipe p {
   position: absolute;
-}
-
-.done-recipes-card-info p {
-  color: navy;
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-.done-recipes-card-info h4 {
-  animation: linkCopied 5s;
-  color: blue;
-  font-size: 12px;
-  margin: 5px 0;
-  opacity: 0;
 }
 
 .in-progress-finish-btn button p {
@@ -523,21 +584,6 @@ footer {
   flex-direction: row-reverse;
 }
 
-.done-recipes-img-and-title img {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  padding: 5px 5px 0;
-}
-
-.done-recipes-share-div img {
-  filter: invert(21%)
-    sepia(26%)
-    saturate(6767%)
-    hue-rotate(232deg)
-    brightness(62%)
-    contrast(144%);
-}
-
 .details-ingredients h3 img {
   filter: invert(15%)
     sepia(34%) saturate(6597%)
@@ -558,33 +604,6 @@ footer {
   margin: 1px 0 0 1px;
 }
 
-.favorite-recipes-share-div button:first-child img {
-  filter: invert(21%)
-    sepia(26%)
-    saturate(6767%)
-    hue-rotate(232deg)
-    brightness(62%)
-    contrast(144%);
-}
-
-.favorite-recipes-share-div button:last-child {
-  background-color: navy;
-  border-bottom-right-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  height: 50%;
-  justify-content: center;
-  padding: 0 0 0 10px;
-}
-
-.favorite-recipes-share-div button:last-child img {
-  filter: invert(90%)
-    sepia(83%)
-    saturate(0%)
-    hue-rotate(88deg)
-    brightness(103%)
-    contrast(101%);
-}
 
 .filters button:last-child {
   margin-right: 5px;
@@ -770,73 +789,6 @@ footer {
   width: 360px;
 }
 
-.done-recipes-filters {
-  display: flex;
-  justify-content: center;
-  margin: 5px 0;
-}
-
-.done-recipes-filters .active {
-  background-color: pink;
-  border: 1px solid navy;
-  color: navy;
-  cursor: default;
-  font-weight: 600;
-}
-
-.done-recipes-list {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  width: 360px;
-}
-
-.done-recipes-img-and-title {
-  background-color: white;
-  border-radius: 15px;
-}
-
-
-.done-recipes-img-and-title h3 {
-  display: flex;
-  font-size: 16px;
-  margin: 5px 0;
-  padding-left: 8px;
-  width: 100px;
-}
-
-.done-recipes-meal-card, .done-recipes-drink-card, .favorite-card {
-  background-color: white;
-  border: 1px solid navy;
-  border-radius: 15px;
-  display: flex;
-  margin: 5px 15px;
-  padding: 0;
-}
-
-.favorite-card {
-  display: flex;
-  justify-content: space-between;
-  width: 300px;
-}
-
-.favorite-card button:last-child {
-  border: none;
-  display: flex;
-}
-
-.done-recipes-card-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 10px 10px 0;
-  width: 140px;
-}
-
-.done-recipes-card-info p:first-child {
-  font-weight: 600;
-}
-
 .done-recipes-tags {
   border: 1px solid pink;
   border-radius: 15px;
@@ -845,25 +797,6 @@ footer {
   font-size: 13px;
   justify-content: center;
   margin: 5px 50px 0 0;
-}
-
-.favorite-recipes-share-div {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.done-recipes-share-div {
-  border-bottom-right-radius: 15px;
-  border-top-right-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.done-recipes-share-div span {
-  background-color: navy;
-  height: 50%;
 }
 
 a {

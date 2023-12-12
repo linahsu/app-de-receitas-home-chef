@@ -32,7 +32,7 @@ function FavoriteRecipes() {
 
   return (
     <div className="done-recipes-body">
-      <div className="done-recipes-filters">
+      <div className="filters">
         <button
           id="All"
           data-testid="filter-by-all-btn"
@@ -67,7 +67,7 @@ function FavoriteRecipes() {
               handleFavoriteBtn={ handleFavoriteBtn }
               key={ recipe.id }
             />))) : (
-              <p>Nenhuma receita encontrada.</p>
+              <p className="no-recipes">No favorite recipes yet :(</p>
           )}
       </div>
       <Footer />

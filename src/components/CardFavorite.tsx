@@ -25,42 +25,65 @@ function CardFavorite({ recipe,
 
   return (
     <div>
-      <div key={ recipe.id }>
-        <Link to={ `/${recipe.type}s/${recipe.id}` }>
-          <img
-            src={ recipe.image }
-            alt="Foto da comida"
-            style={ { width: '300px' } }
-            data-testid={ `${index}-horizontal-image` }
-          />
-          <h2 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h2>
-        </Link>
-        {recipe.type === 'meal' ? (
-          <p data-testid={ `${index}-horizontal-top-text` }>
-            {`${recipe.nationality} - ${recipe.category}`}
-          </p>
-        ) : (
-          <p data-testid={ `${index}-horizontal-top-text` }>
-            {`${recipe.alcoholicOrNot}`}
-          </p>
-        )}
-        <button onClick={ () => handleFavoriteBtn(recipe.id) }>
-          <img
-            data-testid={ `${index}-horizontal-favorite-btn` }
-            src={ blackHeartIcon }
-            alt="Black heart icon"
-          />
-        </button>
-        <button
-          onClick={ () => handleShareBtn(recipe.type, recipe.id) }
-        >
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            src="/src/images/shareIcon.svg"
-            alt="Share icon"
-          />
-        </button>
-        {isCopied && <p>Link copied!</p>}
+      <div key={ recipe.id } className="done-recipes-card">
+        <div className="done-recipes-img-and-dd">
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
+            <img
+              src={ recipe.image }
+              alt="Foto da comida"
+              style={ { width: '100px' } }
+              data-testid={ `${index}-horizontal-image` }
+            />
+          </Link>
+
+          <button onClick={ () => handleFavoriteBtn(recipe.id) }>
+            <img
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              src={ blackHeartIcon }
+              alt="Black heart icon"
+              width="25"
+            />
+          </button>
+        </div>
+
+        <div className="done-recipes-card-info">
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
+            <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
+          </Link>
+
+          {recipe.type === 'meal' ? (
+            <p data-testid={ `${index}-horizontal-top-text` }>
+              {`${recipe.nationality} - ${recipe.category}`}
+            </p>
+          ) : (
+            <p data-testid={ `${index}-horizontal-top-text` }>
+              {`${recipe.alcoholicOrNot}`}
+            </p>
+          )}
+
+          {isCopied && (
+            <h4
+              data-testid="horizontal-copied-msg"
+              className="done-recipes-link-copied"
+            >
+              Link copied!
+            </h4>
+          )}
+        </div>
+
+        <div className="done-recipes-share">
+          <div />
+          <button
+            onClick={ () => handleShareBtn(recipe.type, recipe.id) }
+          >
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src="/src/images/shareIconBS.svg"
+              alt="Share icon"
+              width="16"
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

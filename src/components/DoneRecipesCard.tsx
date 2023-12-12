@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DoneRecipeType } from '../types';
 
 function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: number }) {
@@ -7,13 +7,13 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
 
   const copyURLToClipboard = (type: string, id: string) => {
     setCopiedMessage(true);
-    navigator.clipboard.writeText(`http://localhost:3000/${type}/${id}`);
+    navigator.clipboard.writeText(`http://localhost:3000/${type}s/${id}`);
   };
 
-  const generateImageAndHeader = (type: 'meals' | 'drinks') => {
-    return (
-      <div className="done-recipes-img-and-title">
-        <NavLink to={ `/${type}/${recipe.id}` }>
+  return (
+    <div className="done-recipes-card">
+      <div className="done-recipes-img-and-dd">
+        <Link to={ `/${recipe.type}s/${recipe.id}` }>
           <img
             src={ recipe.image }
             alt={ recipe.name }
@@ -21,100 +21,81 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
             width="100"
             height="100"
           />
-          <h3 data-testid={ `${index}-horizontal-name` }>
+        </Link>
+
+        <div className="done-recipes-done-date">
+          <p data-testid={ `${index}-horizontal-done-date` }>
+            <b>Done in:</b>
+            {' '}
+            { recipe.doneDate }
+          </p>
+        </div>
+      </div>
+
+      <div className="done-recipes-card-info">
+        <Link to={ `/${recipe.type}s/${recipe.id}` }>
+          <h3
+            data-testid={ `${index}-horizontal-name` }
+            className="done-recipes-name"
+          >
             { recipe.name }
           </h3>
-        </NavLink>
-      </div>
-    );
-  };
+        </Link>
 
-  // // Parar formatar data salva no localStorage para modelo "DD-MM-AAAA HH:MM"
-  // const formatDate = (date: string) => {
-  //   const secondColon = date.indexOf(':') + 1;
-  //   return (
-  //     date
-  //       .slice(0, date.indexOf(':', secondColon))
-  //       .replace('T', ' // ')
-  //   );
-  // };
-
-  const { type } = recipe;
-
-  return (
-    type === 'meal'
-      ? (
-        <div className="done-recipes-meal-card">
-          {generateImageAndHeader('meals')}
-
-          <div className="done-recipes-card-info">
-            <p data-testid={ `${index}-horizontal-top-text` }>
-              {`${recipe.nationality} - ${recipe.category} `}
-            </p>
-            {
-              recipe.tags
+        {
+          recipe.type === 'meal'
+            ? (
+              <div>
+                <p data-testid={ `${index}-horizontal-top-text` }>
+                  {`${recipe.nationality} - ${recipe.category} `}
+                </p>
+                {
+                recipe.tags
                 && (recipe.tags.slice(0, 2)).map((tag, key) => {
                   return (
-                    <h3
+                    <p
                       data-testid={ `${index}-${tag}-horizontal-tag` }
                       key={ key }
                       className="done-recipes-tags"
                     >
-                      { tag }
-                    </h3>
+                      {tag}
+                    </p>
                   );
                 })
               }
-            <p data-testid={ `${index}-horizontal-done-date` }>
-              <b>Done in:</b>
-              {' '}
-              { recipe.doneDate }
-            </p>
-          </div>
-          <div className="done-recipes-share-div">
-            <button onClick={ () => copyURLToClipboard('meals', recipe.id) }>
-              <img
-                data-testid={ `${index}-horizontal-share-btn` }
-                src="src/images/shareIconBS.svg"
-                alt="Share"
-              />
-            </button>
-            <span>
-              { copiedMessage && <p data-testid="horizontal-copied-msg">Link copied!</p> }
-            </span>
+              </div>
+            )
+            : (
+              <div>
+                <p data-testid={ `${index}-horizontal-top-text` }>
+                  { `${recipe.alcoholicOrNot} - ${recipe.category}` }
+                </p>
+              </div>
+            )
+        }
+        {
+          copiedMessage
+            && (
+              <h4
+                data-testid="horizontal-copied-msg"
+                className="done-recipes-link-copied"
+              >
+                Link copied!
+              </h4>
+            )
+        }
+      </div>
+      <div className="done-recipes-share">
+        <button onClick={ () => copyURLToClipboard(recipe.type, recipe.id) }>
+          <img
+            data-testid={ `${index}-horizontal-share-btn` }
+            src="src/images/shareIconBS.svg"
+            alt="Share"
+          />
+        </button>
 
-          </div>
-        </div>
-      )
-
-      : (
-        <div className="done-recipes-drink-card">
-          {generateImageAndHeader('drinks')}
-
-          <div className="done-recipes-card-info">
-            <p data-testid={ `${index}-horizontal-top-text` }>
-              { `${recipe.alcoholicOrNot} - ${recipe.category}` }
-            </p>
-            <p data-testid={ `${index}-horizontal-done-date` }>
-              <b>Done in:</b>
-              {' '}
-              { recipe.doneDate }
-            </p>
-          </div>
-          <div className="done-recipes-share-div">
-            <button onClick={ () => copyURLToClipboard('drinks', recipe.id) }>
-              <img
-                data-testid={ `${index}-horizontal-share-btn` }
-                src="src/images/shareIconBS.svg"
-                alt="Share"
-              />
-            </button>
-            <span>
-              { copiedMessage && <p data-testid="horizontal-copied-msg">Link copied!</p>}
-            </span>
-          </div>
-        </div>
-      )
+      </div>
+    </div>
   );
 }
 

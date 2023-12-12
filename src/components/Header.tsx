@@ -60,7 +60,7 @@ function Header() {
     <>
       <div className="header">
         <Link to="/meals">
-          <h1>/Recipes-App</h1>
+          <h1>/Home-Chef</h1>
         </Link>
 
         <div className="profile-button">
@@ -90,7 +90,12 @@ function Header() {
         </div>
       </div>
 
-      {showSearch && <SearchBar />}
+      {
+        (showSearch
+          && (window.location.pathname === '/meals'
+            || window.location.pathname === '/drinks'))
+              && <SearchBar />
+      }
       <Outlet />
     </>
   );

@@ -2,13 +2,16 @@ import { useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { FavoriteRecipeType } from '../types';
 import CardFavorite from '../components/CardFavorite';
+import Footer from '../components/Footer';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useLocalStorage('favoriteRecipes', []);
   const [showFavorites,
     setShowFavorites] = useState<Array<FavoriteRecipeType>>(favoriteRecipes);
+  const [currentFilter, setCurrentFilter] = useState('');
 
   const handleClickFilter = (filter: string) => {
+    setCurrentFilter(filter);
     setShowFavorites(favoriteRecipes);
 
     if (filter !== 'all') {
@@ -28,13 +31,13 @@ function FavoriteRecipes() {
   };
 
   return (
-    <>
-      <div>
-        <h1>Favorite Recipes</h1>
+    <div className="done-recipes-body">
+      <div className="filters">
         <button
           id="All"
           data-testid="filter-by-all-btn"
           onClick={ () => handleClickFilter('all') }
+          className={ (currentFilter === 'all') ? 'active' : '' }
         >
           All
         </button>
@@ -42,6 +45,7 @@ function FavoriteRecipes() {
           id="Meals"
           data-testid="filter-by-meal-btn"
           onClick={ () => handleClickFilter('meal') }
+          className={ (currentFilter === 'meal') ? 'active' : '' }
         >
           Meals
         </button>
@@ -49,11 +53,12 @@ function FavoriteRecipes() {
           id="Drinks"
           data-testid="filter-by-drink-btn"
           onClick={ () => handleClickFilter('drink') }
+          className={ (currentFilter === 'drink') ? 'active' : '' }
         >
           Drinks
         </button>
       </div>
-      <div>
+      <div className="done-recipes-list">
         {showFavorites.length > 0
           ? (
             showFavorites.map((recipe, index) => (<CardFavorite
@@ -62,10 +67,11 @@ function FavoriteRecipes() {
               handleFavoriteBtn={ handleFavoriteBtn }
               key={ recipe.id }
             />))) : (
-              <p>Nenhuma receita encontrada.</p>
+              <p className="no-recipes">Nenhuma receita encontrada.</p>
           )}
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }
 

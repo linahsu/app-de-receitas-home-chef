@@ -20,6 +20,15 @@
 }
 
 .carousel-card {
-  margin-right: 10px;
-  min-width: 300px;
+  margin-bottom: 50px;
+  margin-right: 5px;
+  min-width: 180px;
+}
+
+.carousel-card img {
+  width: 180px;
+}
+
+.carousel-card p {
+  padding-left: 5px;
 }

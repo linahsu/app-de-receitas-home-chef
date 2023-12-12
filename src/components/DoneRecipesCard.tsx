@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DoneRecipeType } from '../types';
 
 function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: number }) {

@@ -60,7 +60,7 @@ function Header() {
     <>
       <div className="header">
         <Link to="/meals">
-          <h1>/Recipes-App</h1>
+          <h1>/Home-Chef</h1>
         </Link>
 
         <div className="profile-button">

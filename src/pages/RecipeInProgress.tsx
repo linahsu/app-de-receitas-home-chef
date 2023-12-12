@@ -208,7 +208,7 @@ function RecipeInProgress() {
   return (
     <div>
       <div className="header">
-        <Link to="/meals"><h1>/Recipes-App</h1></Link>
+        <Link to="/meals"><h1>/Home-Chef</h1></Link>
         <div className="profile-button">
           <Link to="/profile">
             <img

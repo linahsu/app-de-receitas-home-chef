@@ -72,7 +72,9 @@ function DoneRecipes() {
 
           : (
             <>
-              <p className="no-recipes">No done recipes yet. <br />Maybe it's time to try something new!</p>
+              <p className="no-recipes">
+                No done recipes yet :(
+              </p>
               <Footer />
             </>
           )}

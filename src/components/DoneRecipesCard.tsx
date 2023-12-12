@@ -14,7 +14,7 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
     <div className="done-recipes-card">
       <div className="done-recipes-img-and-dd">
         <Link to={ `/${recipe.type}s/${recipe.id}` }>
-          <img 
+          <img
             src={ recipe.image }
             alt={ recipe.name }
             data-testid={ `${index}-horizontal-image` }
@@ -32,10 +32,9 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
         </div>
       </div>
 
-
       <div className="done-recipes-card-info">
-        <Link to={ `/${recipe.type}s/${recipe.id}`}>
-          <h3 
+        <Link to={ `/${recipe.type}s/${recipe.id}` }>
+          <h3
             data-testid={ `${index}-horizontal-name` }
             className="done-recipes-name"
           >
@@ -50,13 +49,13 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
                 <p data-testid={ `${index}-horizontal-top-text` }>
                   {`${recipe.nationality} - ${recipe.category} `}
                 </p>
-              {
+                {
                 recipe.tags
                 && (recipe.tags.slice(0, 2)).map((tag, key) => {
                   return (
                     <p
-                      data-testid={`${index}-${tag}-horizontal-tag`}
-                      key={key}
+                      data-testid={ `${index}-${tag}-horizontal-tag` }
+                      key={ key }
                       className="done-recipes-tags"
                     >
                       {tag}
@@ -98,7 +97,6 @@ function DoneRecipesCard({ recipe, index }: { recipe: DoneRecipeType, index: num
       </div>
     </div>
   );
-
 }
 
 export default DoneRecipesCard;

@@ -197,8 +197,27 @@ html, body {
   margin-left: 5px;
 }
 
+.in-progress-finish-btn button {
+  align-items: center;
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+}
+
+.details-category-container p {
+  background-color: aliceblue;
+  border-radius: 15px;
+  color: navy;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.7;
+  padding: 5px 10px;
+}
+
 .done-recipes-body {
-  background-color: lavenderblush;
+  background-color: aliceblue;
 }
 
 .no-recipes {
@@ -223,10 +242,26 @@ html, body {
   font-size: 13px;
 }
 
+.recipe-card img {
+  border-top-left-radius: 8%;
+  border-top-right-radius: 8%;
+  padding: 6px;
+}
+
 .done-recipes-img-and-dd button {
   border: none;
   padding: 5px 0;
   scale: 75%;
+}
+
+.profile-icon-and-email img {
+  filter: invert(15%)
+    sepia(34%)
+    saturate(6597%)
+    hue-rotate(235deg)
+    brightness(75%)
+    contrast(139%);
+  margin-right: 2px;
 }
 
 .done-recipes-img-and-dd button img {
@@ -263,6 +298,23 @@ html, body {
   font-size: 12px;
 }
 
+.details-start-recipe p {
+  position: absolute;
+}
+
+.favorite-and-share-btn p {
+  font-size: 12px;
+  margin-right: 22px;
+  margin-top: 60px;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+}
+
+.in-progress-finish-btn button p {
+  margin: 5px;
+}
+
 .done-recipes-card-info p:first-child {
   margin-bottom: 10px;
 }
@@ -281,11 +333,11 @@ html, body {
 
 .done-recipes-share button img {
   filter: invert(72%)
-  sepia(8%)
-  saturate(1143%)
-  hue-rotate(302deg)
-  brightness(109%)
-  contrast(107%);
+    sepia(8%)
+    saturate(1143%)
+    hue-rotate(302deg)
+    brightness(109%)
+    contrast(107%);
 }
 
 .done-recipes-link-copied {
@@ -305,15 +357,6 @@ html, body {
   width: 360px;
 }
 
-.in-progress-finish-btn button {
-  align-items: center;
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-}
-
 .filters button {
   background-color: aliceblue;
   border: 1px solid navy;
@@ -325,6 +368,20 @@ html, body {
   margin: 0 5px;
   padding: 4px 10px;
   transition: 750ms;
+}
+
+.details-start-recipe {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.start-recipe-btn {
+  bottom: 0;
+  margin: auto;
+  padding: 10px;
+  position: fixed;
+  right: 0;
+  width: 2;
 }
 
 .footer-div button {
@@ -377,15 +434,6 @@ html, body {
   padding: 5px 15px;
 }
 
-.start-recipe-btn {
-  bottom: 0;
-  margin: auto;
-  padding: 10px;
-  position: fixed;
-  right: 0;
-  width: 20%;
-}
-
 .details-start-recipe button {
   border: none;
   border-top-left-radius: 15px;
@@ -396,6 +444,7 @@ html, body {
   font-weight: 600;
   margin-bottom: 50px;
   padding: 10px 5px 10px 10px;
+  position: fixed;
 }
 
 .details-ingredients h3 {
@@ -424,33 +473,6 @@ html, body {
 
 .not-finished-recipe-text {
   color: grey;
-}
-
-.favorite-and-share-btn p {
-  font-size: 12px;
-  margin-right: 22px;
-  margin-top: 60px;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-}
-
-.details-category-container p {
-  background-color: aliceblue;
-  border-radius: 15px;
-  color: navy;
-  font-size: 12px;
-  font-weight: 600;
-  opacity: 0.7;
-  padding: 5px 10px;
-}
-
-.details-start-recipe p {
-  position: absolute;
-}
-
-.in-progress-finish-btn button p {
-  margin: 5px;
 }
 
 .finish-recipe-img {
@@ -558,30 +580,9 @@ footer {
   padding: 0 15px;
 }
 
-.recipe-card img {
-  border-top-left-radius: 8%;
-  border-top-right-radius: 8%;
-  padding: 6px;
-}
-
 .profile-icon-and-email {
   color: navy;
   display: flex;
-}
-
-.profile-icon-and-email img {
-  filter: invert(15%)
-    sepia(34%)
-    saturate(6597%)
-    hue-rotate(235deg)
-    brightness(75%)
-    contrast(139%);
-  margin-right: 2px;
-}
-
-.details-start-recipe {
-  display: flex;
-  flex-direction: row-reverse;
 }
 
 .details-ingredients h3 img {
@@ -781,12 +782,6 @@ footer {
 
 .details-video iframe {
   border: none;
-}
-
-.done-recipes-body {
-  background-color: aliceblue;
-  padding-bottom: 60px;
-  width: 360px;
 }
 
 .done-recipes-tags {

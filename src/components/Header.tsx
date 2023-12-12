@@ -90,7 +90,12 @@ function Header() {
         </div>
       </div>
 
-      {showSearch && <SearchBar />}
+      {
+        (showSearch
+          && (window.location.pathname === '/meals'
+            || window.location.pathname === '/drinks'))
+              && <SearchBar />
+      }
       <Outlet />
     </>
   );

@@ -67,7 +67,7 @@ function FavoriteRecipes() {
               handleFavoriteBtn={ handleFavoriteBtn }
               key={ recipe.id }
             />))) : (
-              <p className="no-recipes">No favorite recipes yet :(</p>
+              <p className="no-recipes">Nenhuma receita encontrada.</p>
           )}
       </div>
       <Footer />

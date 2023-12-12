@@ -80,7 +80,7 @@ function CardFavorite({ recipe,
               data-testid={ `${index}-horizontal-share-btn` }
               src="/src/images/shareIconBS.svg"
               alt="Share icon"
-              width="20"
+              width="16"
             />
           </button>
         </div>

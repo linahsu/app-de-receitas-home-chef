@@ -226,7 +226,6 @@ html, body {
 
 .done-recipes-card {
   background-color: white;
-  border: 1px solid navy;
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
@@ -265,11 +264,12 @@ html, body {
 }
 
 .done-recipes-img-and-dd button img {
-  filter: invert(10%)
-    sepia(93%) saturate(5742%)
-    hue-rotate(245deg)
-    brightness(94%)
-    contrast(150%);
+  filter: invert(9%)
+    sepia(96%)
+    saturate(4428%)
+    hue-rotate(242deg)
+    brightness(80%)
+    contrast(130%);
 }
 
 .done-recipes-done-date {

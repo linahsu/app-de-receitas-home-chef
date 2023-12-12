@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import { FavoriteRecipeType,
   RootState, MealDetailsType,
   DrinkDetailsType } from '../types';
+
 import useLocalStorage from '../hooks/useLocalStorage';
 import MealInProgress from '../components/MealInProgress';
 import DrinkInProgress from '../components/DrinkInProgress';
 import { fetchDrinkById } from '../utils/apiDrinks';
 import { fetchMealById } from '../utils/apiMeals';
 import { ActionDetailsDrink, ActionDetailsMeal } from '../redux/actions/actions';
+import profileIconBS from '../images/profileIconBS.svg';
 
 function RecipeInProgress() {
   const dispatch = useDispatch();
@@ -202,9 +205,20 @@ function RecipeInProgress() {
     }
     navigate('/done-recipes');
   };
-
   return (
     <div>
+      <div className="header">
+        <Link to="/meals"><h1>/Recipes-App</h1></Link>
+        <div className="profile-button">
+          <Link to="/profile">
+            <img
+              src={ profileIconBS }
+              alt="Perfil"
+              data-testid="profile-top-btn"
+            />
+          </Link>
+        </div>
+      </div>
       {pathname.includes('meals') ? (
         <MealInProgress
           currentMeal={ currentMeal }
